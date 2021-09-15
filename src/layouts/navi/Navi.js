@@ -13,7 +13,7 @@ export default function Navi() {
       <div className="row">
         <div className="col-lg-3 col-md-3">
           <div className="header__logo">
-            <a routerLink="/">
+            <a href="/">
               <img src={logo} alt="logo" />
             </a>
           </div>
@@ -28,31 +28,31 @@ export default function Navi() {
               </li>
 
               <li>
-                <a>SAYFALAR</a>
+                <a href="/">SAYFALAR</a>
                 <ul className="dropdown">
                 <li>
                     <Menu.Item>
-                      <Link>ÜRÜNLER</Link>
+                      <Link to="/">ÜRÜNLER</Link>
                     </Menu.Item>
                   </li>
                   <li>
                     <Menu.Item>
-                      <Link>KATEGORİLER</Link>
+                      <Link to="/">KATEGORİLER</Link>
                     </Menu.Item>
                   </li>
                   <li>
                     <Menu.Item>
-                      <Link>HAKKIMIZDA</Link>
+                      <Link to="/">HAKKIMIZDA</Link>
                     </Menu.Item>
                   </li>
                   <li>
                     <Menu.Item>
-                      <Link>İLETİŞİM</Link>
+                      <Link to="/">İLETİŞİM</Link>
                     </Menu.Item>
                   </li>
                   <li>
                     <Menu.Item>
-                      <Link>ADMIN</Link>
+                      <Link to="/">ADMIN</Link>
                     </Menu.Item>
                   </li>
                 </ul>
@@ -62,13 +62,13 @@ export default function Navi() {
         </div>
         <div className="col-lg-3 col-md-3">
           <div className="header__nav__option">
-            <a  className="search-switch">
+            <a href="/" className="search-switch">
               <img src={search} alt="search-icon" />
             </a>
-            <a >
+            <a href="/">
               <img src={heart} alt="heart-icon" />
             </a>
-            <a >
+            <a href="/">
               <img src={cart} alt="cart-icon" /> <span>0</span>
             </a>
             <div className="price">$0.00</div>
