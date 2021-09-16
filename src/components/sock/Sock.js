@@ -32,7 +32,7 @@ export default function Sock() {
                   <div className="product__item__pic set-bg">
                     <img
                       className="card-img-top"
-                      src="https://localhost:44385/uploads/9fc30ebd-8d3d-4f43-a047-bf24a023325e_5_5_2021.jpg"
+                      src={sock.image}
                       alt="item.png"
                     />
                     <ul className="product__hover">

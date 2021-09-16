@@ -36,6 +36,7 @@
 
 .product__item {
 	overflow: hidden;
+	margin: 10px;
 	margin-bottom: 40px;
 }
 

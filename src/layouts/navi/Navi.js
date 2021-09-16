@@ -32,12 +32,12 @@ export default function Navi() {
                 <ul className="dropdown">
                 <li>
                     <Menu.Item>
-                      <Link to="/">ÜRÜNLER</Link>
+                      <Link to="/socks">ÜRÜNLER</Link>
                     </Menu.Item>
                   </li>
                   <li>
                     <Menu.Item>
-                      <Link to="/">KATEGORİLER</Link>
+                      <Link to="/categories">KATEGORİLER</Link>
                     </Menu.Item>
                   </li>
                   <li>
