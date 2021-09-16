@@ -23,7 +23,7 @@ export default function Navi() {
             <ul>
               <li className="active">
                 <Menu.Item>
-                  <Link to="/asd">ANA SAYFA</Link>
+                  <Link to="/">ANA SAYFA</Link>
                 </Menu.Item>
               </li>
 
