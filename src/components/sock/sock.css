@@ -577,3 +577,94 @@
 		margin-top: 180px;
 	}
 }
+
+.shop__sidebar__accordion .card-heading {
+	cursor: pointer;
+}
+
+.shop__sidebar__accordion .card-heading a {
+	color: #111111;
+	font-size: 16px;
+	font-weight: 700;
+	text-transform: uppercase;
+	display: block;
+}
+
+.shop__sidebar__accordion .card:last-child .card-body {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.shop__sidebar__accordion .card-body {
+	padding: 0;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.shop__sidebar__color {
+	padding-top: 15px;
+}
+
+.shop__sidebar__color label {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 10px;
+	display: inline-block;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+.shop__sidebar__color label.c-1 {
+	background: #0b090c;
+}
+
+.shop__sidebar__color label.c-2 {
+	background: #20315f;
+}
+
+.shop__sidebar__color label.c-3 {
+	background: #f1af4d;
+}
+
+.shop__sidebar__color label.c-4 {
+	background: #636068;
+}
+
+.shop__sidebar__color label.c-5 {
+	background: #57594d;
+}
+
+.shop__sidebar__color label.c-6 {
+	background: #e8bac4;
+}
+
+.shop__sidebar__color label.c-7 {
+	background: #d6c1d7;
+}
+
+.shop__sidebar__color label.c-8 {
+	background: #ed1c24;
+}
+
+.shop__sidebar__color label.c-9 {
+	background: #ffffff;
+}
+
+.shop__sidebar__color label:after {
+	position: absolute;
+	left: -3px;
+	top: -3px;
+	height: 36px;
+	width: 36px;
+	border: 1px solid #e5e5e5;
+	content: "";
+	border-radius: 50%;
+}
+
+.shop__sidebar__color label input {
+	position: absolute;
+	visibility: hidden;
+}

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../categories/categories.css"
+import "../categories/categories.css";
 import CategoryService from "../../services/CategoryService";
+import { Link } from "react-router-dom";
 
-export default function Categories() {
+export default function AllCategories() {
   const [categories, setCategories] = useState([]);
+
 
   useEffect(() => {
     let categoryService = new CategoryService();
@@ -19,13 +21,18 @@ export default function Categories() {
           <div className="row product__filter">
             <div className="col-lg-3 box">
               {categories.map((category) => (
-                <div className="product__item">
-                  <h2>{category.name} Çorapları</h2>
+                <div className="product__item" key={category.id}>
+                  <h2 style={{ textAlign: "center" }}>
+                    {category.name} Çorapları
+                  </h2>
                   <div className="product__item__pic set-bg">
-                    <img
-                      src={category.image} width="100%"
-                      alt={category.name}
-                    />
+                    <Link to={`/category/${category.id}`}>
+                      <img
+                        src={category.image}
+                        width="100%"
+                        alt={category.name}
+                      />
+                    </Link>
                   </div>
                 </div>
               ))}
