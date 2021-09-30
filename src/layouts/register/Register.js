@@ -17,6 +17,7 @@ export default function Register() {
       firstName: "",
       lastName: "",
       userName: "",
+      phoneNumber:"",
       email: "",
       password: "",
     },
@@ -117,9 +118,11 @@ export default function Register() {
                       </Grid>
                     </Form.Field>
 
+                    
+
                     <Form.Field>
                       <Grid stackable>
-                        <Grid.Column>
+                        <Grid.Column width={8}>
                           <Input
                             style={{ width: "100%" }}
                             id="email"
@@ -129,16 +132,39 @@ export default function Register() {
                             onBlur={formik.handleBlur}
                             type="text"
                             error={formik.errors.email}
-                            placeholder="E-mail"
+                            placeholder="Email"
                           />
-                          {formik.errors.email && formik.touched.email && (
-                            <div className={"ui pointing red basic label"}>
-                              {formik.errors.email}
-                            </div>
-                          )}
+                          {formik.errors.email &&
+                            formik.touched.email && (
+                              <div className={"ui pointing red basic label"}>
+                                {formik.errors.email}
+                              </div>
+                            )}
+                        </Grid.Column>
+
+                        <Grid.Column width={8}>
+                          <Input
+                            style={{ width: "100%" }}
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            onChange={formik.handleChange}
+                            value={formik.values.phoneNumber}
+                            onBlur={formik.handleBlur}
+                            type="tel"
+                            error={formik.errors.phoneNumber}
+                            placeholder="Telefon Numarası"
+                          />
+                          {formik.errors.phoneNumber &&
+                            formik.touched.phoneNumber && (
+                              <div className={"ui pointing red basic label"}>
+                                {formik.errors.phoneNumber}
+                              </div>
+                            )}
                         </Grid.Column>
                       </Grid>
                     </Form.Field>
+
+                 
 
                     <Form.Field>
                       <Grid stackable>

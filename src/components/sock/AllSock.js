@@ -3,7 +3,7 @@ import "./sock.css";
 import SockService from "../../services/SockService";
 import CategoryService from "../../services/CategoryService";
 import search from "../sock/img/icon/search.png";
-import heart from "../sock/img/icon/heart.png";
+import favoriteAdded from "../sock/img/icon/favoriteAdded.png";
 import compare from "../sock/img/icon/compare.png";
 import { Link } from "react-router-dom";
 import { Rating, Grid } from "semantic-ui-react";
@@ -13,11 +13,12 @@ import { Rating, Grid } from "semantic-ui-react";
 import FilterSock from "../../layouts/filterSock/FilterSock";
 import FavoriteService from "../../services/FavoriteService"
 import { toast } from "react-toastify";
+import empytFavorite from "./img/icon/empytFavorite.png"
 
 export default function AllSock() {
   let sockService = new SockService();
   let categoryService = new CategoryService();
-
+  let favoriteService = new FavoriteService();
 
   const [socks, setSocks] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -26,22 +27,27 @@ export default function AllSock() {
   useEffect(() => {
     sockService.getAllSock().then((result) => setSocks(result.data.data));
     categoryService.getAllCategory().then((result) => setCategories(result.data.data));
-  });
+  },[]);
 
   const handleAddFavorite = (sockId) => {
-  let favoriteService = new FavoriteService();
-    favoriteService.addFavorites(56, sockId).then((result)=>toast.success(result.data.message))
-  };
-
-  // useEffect(() => {
-  //   sockService.getByFilter(filter).then((result) => {
-  //       setSocks(result.data.data);
-  //     });
-  // }, [filter]);
+      favoriteService.addFavorites(60, sockId).then((result)=>toast.success(result.data.message))
+    };
+  
+    const removeFromFavorite = (sockId) => {
+        // favoriteService.addFavorites(60, sockId).then((result)=>toast.success("Favorilerinizden kaldırıldı"))
+        favoriteService.existsByCustomerIdAndSockId(60, sockId).then((result)=>toast.success("Favorilerinizden kaldırıldı"))
+      };
+    
 
   const handleOnFilter = (filter) => {
     setFilter(filter);
   };
+
+  function dom() {
+    let myFavoriteDOM = document.querySelector("#myFavorite");
+    myFavoriteDOM.src="https://res.cloudinary.com/uludag-sock/image/upload/v1632921673/favoriteAdded_gekw12.png"
+
+  }
 
   return (
     <>
@@ -75,12 +81,18 @@ export default function AllSock() {
                         <img src={sock.sockImage.image1} alt={sock.name} />
                         <ul className="product__hover">
                           <li>
-                            <a onClick={()=>handleAddFavorite(sock.id)}>
-                              <img src={heart} alt="heart-icon" />
+                          <a onClick={()=>handleAddFavorite(sock.id)}>
+                              <img id="myFavorite"
+                              src="https://res.cloudinary.com/uludag-sock/image/upload/v1632920818/empytFavorite_gmr0mu.png"
+                              
+                              onClick={()=>dom()} alt="favorite-icon" />
                               <span style={{ left: "-8rem" }}>
                                 Favorilerime Ekle
                               </span>
                             </a>
+
+
+
                           </li>
                           <li>
                             <a href="/">

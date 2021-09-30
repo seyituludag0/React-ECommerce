@@ -7,7 +7,7 @@ import "./menu.css"
 import { Icon } from "semantic-ui-react";
 
 
-export default function MenuTabs() {
+export default function RegisterLoginLayout() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

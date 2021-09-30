@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import SockService from "/react/sock-ecommerce/src/services/SockService";
 import CategoryService from "../../services/CategoryService";
 import search from "../sock/img/icon/search.png";
-import heart from "../sock/img/icon/heart.png";
+import favoriteAdded from "./img/icon/favoriteAdded.png"
 import compare from "../sock/img/icon/compare.png";
 import { Link } from "react-router-dom";
 import { Rating } from "semantic-ui-react";
@@ -61,7 +61,7 @@ export default function SockByCategory() {
                   <ul className="product__hover">
                     <li>
                       <a href="/">
-                        <img src={heart} alt="heart-icon" />
+                        <img src={favoriteAdded} alt="favorite-icon" />
                         <span style={{ left: "-8rem" }}>Favorilerime Ekle</span>
                       </a>
                     </li>

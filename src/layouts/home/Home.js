@@ -1,9 +1,11 @@
 import React from "react";
+import Basket from "../basket/Basket";
 
 export default function Home() {
   return (
     <div>
-      ANA SAYFA
+      {/* ANA SAYFA */}
+      <Basket />
     </div>
   );
 }

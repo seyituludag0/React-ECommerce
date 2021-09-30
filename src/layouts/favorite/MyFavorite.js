@@ -8,12 +8,12 @@ import {
   Divider,
   ListItemIcon,
 } from "@material-ui/core";
-import heart from "../navi/img/icon/heart.png";
+import favorite from "../navi/img/icon/empyt-favorite.png";
 // import FavoriteService from "../../services/FavoriteService";
 import CardItem from "../favoriteProductItems/FavoriteProductItems";
 import { Favorite } from "@material-ui/icons";
 
-export default function UserProfileMenu() {
+export default function MyFavorite() {
   // const [favorites, setFavorites] = useState([]);
   // useEffect(() => {
   //   let favoriteService = new FavoriteService();
@@ -39,7 +39,7 @@ export default function UserProfileMenu() {
       >
         <Tooltip title="Favorilerim">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            <img alt="Favorilerim" src={heart} />
+            <img alt="Favorilerim" src={favorite} />
           </IconButton>
         </Tooltip>
       </Box>

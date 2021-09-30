@@ -4,7 +4,7 @@ const API_URL = "http://localhost:8080/api/auth/"
 
 export default class UserService{
     register(user){
-        return axios.post(API_URL + "register", user)
+        return axios.post(API_URL + "customer-register", user)
     }
 
     login(credentials){

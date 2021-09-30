@@ -160,7 +160,7 @@ export default function SockDetail() {
                     </div>
                     <div className="product__details__btns__option">
                       <a href="/">
-                        <i className="fa fa-heart" />
+                        <i className="fa fa-favorite" />
                         FAVORİYE EKLE
                       </a>
                     </div>

@@ -20,4 +20,8 @@ export default class FavoriteService{
       getBycustomerIdFavorites(customerId){
         return axios.get("http://localhost:8080/api/favorites/getByCustomerId?customerId=" + customerId)
       }
+
+      existsByCustomerIdAndSockId(customerId, sockId){
+        return axios.get(`http://localhost:8080/api/favorites/existsByCustomerIdAndSockId?customerId=${customerId}&sockId=${sockId}`)
+      }
 }

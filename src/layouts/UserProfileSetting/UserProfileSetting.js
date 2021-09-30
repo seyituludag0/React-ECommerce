@@ -2,7 +2,7 @@ import React,{ useState } from "react";
 import { Menu, MenuItem, Avatar, Box, Tooltip, IconButton, Divider, ListItemIcon } from "@material-ui/core";
 import { Settings, ExitToApp } from "@material-ui/icons";
 
-export default function UserProfileMenu() {
+export default function UserProfileSetting() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,6 +18,8 @@ export default function UserProfileMenu() {
   const userName = localStorage.getItem("userName")
   
   return (
+    <div className="menu-item" style={{marginRight:"11rem", marginTop:"-2.2rem"}}>
+      
     <React.Fragment>
       <Box sx={{ display: 'contents', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Hesap Ayarları">
@@ -88,5 +90,7 @@ export default function UserProfileMenu() {
         </MenuItem>
       </Menu>
     </React.Fragment>
+  
+    </div>
   );
 }
