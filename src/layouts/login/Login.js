@@ -87,6 +87,7 @@ export default function Login() {
                             style={{ width: "100%" }}
                             id="userName"
                             name="userName"
+                            autoFocus
                             onChange={formik.handleChange}
                             value={formik.values.userName}
                             onBlur={formik.handleBlur}

@@ -10,4 +10,8 @@ export default class UserService{
     login(credentials){
         return axios.post(API_URL + "login", credentials)
     }
+
+    getByUserName(userName){
+        return axios.get("http://localhost:8080/api/users/getByUserName?userName=" + userName)
+    }
 }

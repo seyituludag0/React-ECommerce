@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/styles.css";
 import { useFormik } from "formik";
 import UserService from "../../services/UserService";
@@ -7,9 +7,17 @@ import { Button, Form, Grid, Input } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import BasketService from "../../services/BasketService";
 
 
 export default function Register() {
+  let basketService = new BasketService();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    Object.keys(user).length > 0 && basketService.add(user)
+  }, [user]);
+
   let history = useHistory();
 
   const formik = useFormik({

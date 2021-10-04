@@ -2,7 +2,8 @@ import React from "react";
 import "../navi.css";
 import cart from "../img/icon/cart.png";
 import search from "../img/icon/search.png";
-import MyFavorite from "../../favorite/MyFavorite"
+import MyFavorite from "../../favorite/MyFavorite";
+import Basket from "../../basket/Basket";
 
 export default function NavItems() {
   return (
@@ -11,10 +12,9 @@ export default function NavItems() {
         <img src={search} alt="search-icon" />
       </a>
       <MyFavorite />
-      <a href="/">
-        <img src={cart} alt="cart-icon" /> <span>0</span>
+      <a>
+        <Basket />
       </a>
-      <div className="price">0.00₺</div>
     </div>
   );
 }

@@ -11,6 +11,11 @@ import Register from "../register/Register"
 import Login from "../login/Login"
 import NotFound from "../404page/NotFound";
 import ActivationCodeVerification from "../../components/activationCodeVerification/ActivationCodeVerification";
+import Admin from "../../components/admin/Admin";
+import SockCard from "../../components/admin/cards/SockCard";
+import SockEditPage from "../../components/admin/sockEditPage/SockEditPage";
+import CategoryEditPage from "../../components/admin/categoryEditPage/CategoryEditPage";
+import BrandEditPage from "../../components/admin/brandEditPage/BrandEditPage";
 
 
 export default function Dashboard() {
@@ -27,6 +32,23 @@ export default function Dashboard() {
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path="/activationcodeverification" component={ActivationCodeVerification} />
+        <Route path="/admin" component={Admin} />
+        <Route path="/sockcard" component={SockCard} />
+        <Route path="/sockeditpage" component={SockEditPage} />
+        <Route path="/categoryeditpage" component={CategoryEditPage} />
+        <Route path="/brandeditpage" component={BrandEditPage} />
+
+
+
+
+
+
+
+
+
+
+
+
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
