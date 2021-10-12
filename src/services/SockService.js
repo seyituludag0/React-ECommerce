@@ -46,5 +46,8 @@ export default class SockService {
         return axios.get(`http://localhost:8080/api/socks/searchKeyword?keyword=${keyword}&pageNo=${pageNo}`)
     }
 
-}
+    getMainSocks(){
+        return axios.get("http://localhost:8080/api/socks/getAllPagination?pageNo=2");
+    }
 
+}

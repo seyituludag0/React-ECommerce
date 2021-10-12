@@ -25,7 +25,7 @@ export default function AdminNavi() {
   function switchToUserView() {
     setUserView(true);
     localStorage.setItem("userView", userView);
-    history.push("/socks");
+    history.push("/");
     let userDOM = document.querySelector("#switchToUserButton");
     userDOM.addEventListener("click", changeStyleUserButton());
   }

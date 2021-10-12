@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import "./home.css";
+import "./bootstrap.css";
+import "./owl.carousel.min.css";
+import HomeSlider from "./HomeSlider";
+import HomeCategories from "./HomeCategories";
+import HomeSocks from "./HomeSocks";
+import InstagramPosts from "./InstagramPosts";
 
 export default function Home() {
-
-
-
   return (
     <div>
-      <h1 style={{textAlign:"center"}}>ULUDAĞ ÇORAP</h1>
-      
+        <HomeSlider />
+        <HomeCategories /> 
+        <HomeSocks />
+        <InstagramPosts />
     </div>
   );
 }
