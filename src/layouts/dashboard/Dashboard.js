@@ -16,7 +16,7 @@ import SockCard from "../../components/admin/cards/SockCard";
 import SockEditPage from "../../components/admin/sockEditPage/SockEditPage";
 import CategoryEditPage from "../../components/admin/categoryEditPage/CategoryEditPage";
 import BrandEditPage from "../../components/admin/brandEditPage/BrandEditPage";
-
+import ForgotPassword from "../../layouts/forgotPassword/ForgotPassword"
 
 export default function Dashboard() {
   return (
@@ -37,7 +37,7 @@ export default function Dashboard() {
         <Route path="/sockeditpage" component={SockEditPage} />
         <Route path="/categoryeditpage" component={CategoryEditPage} />
         <Route path="/brandeditpage" component={BrandEditPage} />
-
+        <Route path="/forgotpassword" component={ForgotPassword} />
 
 
 

@@ -12,9 +12,12 @@ import {
   TableBody,
 } from "@material-ui/core";
 import SockService from "../../../services/SockService";
+import SockImageService from "../../../services/SockImageService";
 import SockAdd from "./SockAdd";
 import SockUpdate from "./SockUpdate";
+import SockImageUpload from "../../../components/SockImageUpload"
 import SockDelete from "./SockDelete";
+import NullImages from "./NullImages";
 const style = {
   position: "absolute",
   top: "50%",
@@ -22,17 +25,22 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "65rem",
   height: "45rem",
-  // bgcolor: "gray",
   boxShadow: 24,
   p: 4,
 };
 function Row() {
   const [socks, setSocks] = useState([]);
+  let [image, setImage] = useState({});
   useEffect(() => {
     let sockService = new SockService();
     sockService.getAllSock().then((result) => setSocks(result.data.data));
   }, [socks]);
 
+  const updateSockImageValues = () => {
+    // cvService.getByCandidateId(id).then((result) => {setCv(result.data.data)})
+    let sockService = new SockService();
+    sockService.getBySockId(28).then((result)=>setImage(result.data.data)) 
+  }
 
   return (
     <>
@@ -50,6 +58,7 @@ function Row() {
             <TableCell align="right">{sock.price}₺</TableCell>
             <TableCell align="right">
             <SockUpdate sock={sock} />
+            {/* <SockImageUpload id={24} updateSockImageValues={updateSockImageValues} /> */}
             </TableCell>
             <TableCell align="right">
               <SockDelete id={sock.id}/>
@@ -62,16 +71,22 @@ function Row() {
 }
 
 export default function SockEditPage() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openSock, setOpenSock] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
+
+  const handleOpenSock = () => setOpenSock(true);
+  const handleCloseSock = () => setOpenSock(false);
+
+  const handleOpenImage = () => setOpenImage(true);
+  const handleCloseImage = () => setOpenImage(false);
+
 
   return (
     <div className="my-component" style={{ marginTop: "4rem" }}>
-      <Button style={{float:"right"}} onClick={handleOpen}>EKLE</Button>
+      <Button style={{float:"right"}} onClick={handleOpenSock}>EKLE</Button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openSock}
+        onClose={handleCloseSock}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -79,6 +94,22 @@ export default function SockEditPage() {
           <SockAdd />
         </Box>
       </Modal>
+      
+      {/* ------------------------------------------------------------------ */}
+
+      <Button style={{float:"right"}} onClick={handleOpenImage}>RESMİ OLMAYAN ÜRÜNLER</Button>
+      <Modal
+        open={openImage}
+        onClose={handleCloseImage}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <NullImages />
+        </Box>
+      </Modal>
+     
+      
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>

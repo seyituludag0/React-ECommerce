@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
 import Cards from "./cards/Cards";
-import Modal from "../../Modal"
 
 export default function Admin() {
 

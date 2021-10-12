@@ -10,6 +10,8 @@ import { useHistory } from "react-router";
 import { useUserContext } from "../../contexts/UserContext";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
+import { FilledInput, InputAdornment, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 export default function Login() {
   let history = useHistory();
@@ -118,6 +120,32 @@ export default function Login() {
                             error={formik.errors.password}
                             placeholder="Parola"
                           />
+
+                          {/* <FilledInput
+                            style={{ width: "23rem" }}
+                            id="password"
+                            name="password"
+                            type={values.showPassword ? "text" : "password"}
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {values.showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          /> */}
+
                           {formik.errors.password &&
                             formik.touched.password && (
                               <div className={"ui pointing red basic label"}>
@@ -128,7 +156,17 @@ export default function Login() {
                       </Grid>
                     </Form.Field>
                   </div>
-
+                  <span>
+                    <Link
+                      to="/forgotpassword"
+                      style={{
+                        textDecoration: "none",
+                        color: "rgb(251, 119, 26)",
+                      }}
+                    >
+                      Parolamı Unuttum
+                    </Link>
+                  </span>
                   <Button
                     variant="contained"
                     style={{
@@ -140,12 +178,23 @@ export default function Login() {
                     Giriş Yap
                   </Button>
                 </form>
+
                 <span
                   style={{
                     margin: "25px 0px 0px 74px",
                   }}
                 >
-                  Henüz üye değil misiniz? Hemen<Link to="/register" style={{textDecoration:"none", color:"rgb(251, 119, 26)"}}> üye ol</Link>
+                  Henüz üye değil misiniz? Hemen
+                  <Link
+                    to="/register"
+                    style={{
+                      textDecoration: "none",
+                      color: "rgb(251, 119, 26)",
+                    }}
+                  >
+                    {" "}
+                    üye ol
+                  </Link>
                 </span>
               </div>
             </div>

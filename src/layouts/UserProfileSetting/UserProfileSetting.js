@@ -33,7 +33,7 @@ export default function UserProfileSetting() {
   return (
     <div
       className="menu-item"
-      style={{ marginRight: "11rem", marginTop: "-2.2rem" }}
+      style={{ marginRight: "-11rem", marginTop: "-3rem" }}
     >
       <React.Fragment>
         <Box

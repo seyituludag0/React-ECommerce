@@ -1,10 +1,11 @@
 import { useFormik } from "formik";
+import SockImageUpload from "../../../components/SockImageUpload"
 import React, { useEffect, useState } from "react";
 import SockService from "../../../services/SockService";
 import CategoryService from "../../../services/CategoryService";
 import BrandService from "../../../services/BrandService";
 import ColorService from "../../../services/ColorService";
-import validationRules from "./validationRules";
+// import validationRules from "./validationRules";
 import {
   Button,
   Dropdown,
@@ -16,7 +17,9 @@ import {
   Image,
 } from "semantic-ui-react";
 import { toast } from "react-toastify";
+import { useParams } from "react-router";
 export default function SockAdd() {
+  let [image, setImage] = useState({});
   let formik = useFormik({
     initialValues: {
       name: "",
@@ -38,7 +41,7 @@ export default function SockAdd() {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [colors, setColors] = useState([]);
-
+  let { id } = useParams();
   useEffect(() => {
     let categoryService = new CategoryService();
     let brandService = new BrandService();
@@ -73,10 +76,16 @@ export default function SockAdd() {
     formik.setFieldValue(fieldName, value);
   };
 
+  const updateSockImageValues = () => {
+    // cvService.getByCandidateId(id).then((result) => {setCv(result.data.data)})
+    let sockService = new SockService();
+    sockService.getBySockId(28).then((result)=>setImage(result.data.data)) 
+  }
+
   return (
     <div className="my-div">
       <Grid.Column>
-        <div>
+        <div className="xxxxxxx" style={{marginTop:"-4rem"}}>
           <Card fluid>
             <Card.Content header="Ürün Ekle" />
             <Card.Content>
@@ -224,6 +233,7 @@ export default function SockAdd() {
                           </div>
                         )}
                     </Form.Field>
+                    {/* <SockImageUpload id={id} updateSockImageValues={updateSockImageValues} /> */}
                 <Button content="Ekle"
                   labelPosition="right"
                   icon="add"

@@ -8,4 +8,7 @@ export default class BasketService{
     add(values){
         return axios.post("http://localhost:8080/api/baskets/add", values)
     }
+    findTopByOrderByIdDesc(){
+        return axios.get("http://localhost:8080/api/users/findTopByOrderByIdDesc")
+    }
 }

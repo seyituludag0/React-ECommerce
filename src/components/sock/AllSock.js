@@ -38,7 +38,7 @@ export default function AllSock() {
 
   const handleAddFavorite = (sockId) => {
     favoriteService
-      .addFavorites(60, sockId)
+      .addFavorites(58, sockId)
       .then((result) => toast.success(result.data.message));
   };
 

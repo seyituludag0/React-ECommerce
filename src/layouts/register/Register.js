@@ -9,14 +9,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import BasketService from "../../services/BasketService";
 
-
 export default function Register() {
-  let basketService = new BasketService();
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    Object.keys(user).length > 0 && basketService.add(user)
-  }, [user]);
 
   let history = useHistory();
 
@@ -25,18 +18,23 @@ export default function Register() {
       firstName: "",
       lastName: "",
       userName: "",
-      phoneNumber:"",
-      email: "",
-      password: "",
+      phoneNumber: "05523657896",
+      email: "@gmail.com",
+      password: "123456",
     },
     validationSchema: validationRules,
     onSubmit: (values) => {
       // console.log("Values: ", values);
       let userService = new UserService();
-      userService.register(values).then((result)=>toast.success(result.data.message)).catch((error)=>toast.error("HATA"))
-      history.push("/activationcodeverification")
+      userService
+        .register(values)
+        .then((result) => toast.success(result.data.message))
+        .catch((error) => toast.error("HATA"));
+      history.push("/activationcodeverification");
     },
   });
+
+
 
   return (
     <div className="d-md-flex half">
@@ -126,8 +124,6 @@ export default function Register() {
                       </Grid>
                     </Form.Field>
 
-                    
-
                     <Form.Field>
                       <Grid stackable>
                         <Grid.Column width={8}>
@@ -142,12 +138,11 @@ export default function Register() {
                             error={formik.errors.email}
                             placeholder="Email"
                           />
-                          {formik.errors.email &&
-                            formik.touched.email && (
-                              <div className={"ui pointing red basic label"}>
-                                {formik.errors.email}
-                              </div>
-                            )}
+                          {formik.errors.email && formik.touched.email && (
+                            <div className={"ui pointing red basic label"}>
+                              {formik.errors.email}
+                            </div>
+                          )}
                         </Grid.Column>
 
                         <Grid.Column width={8}>
@@ -172,8 +167,6 @@ export default function Register() {
                       </Grid>
                     </Form.Field>
 
-                 
-
                     <Form.Field>
                       <Grid stackable>
                         <Grid.Column>
@@ -188,24 +181,67 @@ export default function Register() {
                             error={formik.errors.epasswordmail}
                             placeholder="Parola"
                           />
-                          {formik.errors.password && formik.touched.password && (
-                            <div className={"ui pointing red basic label"}>
-                              {formik.errors.password}
-                            </div>
-                          )}
+                          {/* <FilledInput
+                            style={{ width: "23rem" }}
+                            id="password"
+                            name="password"
+                            type={values.showPassword ? "text" : "password"}
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {values.showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          /> */}
+                          {formik.errors.password &&
+                            formik.touched.password && (
+                              <div className={"ui pointing red basic label"}>
+                                {formik.errors.password}
+                              </div>
+                            )}
                         </Grid.Column>
                       </Grid>
                     </Form.Field>
                   </div>
-                  <Button variant="contained" style={{backgroundColor: "#fb771a", margin:"25px 0px 15px 100px"}}>Kaydol</Button>
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#fb771a",
+                      margin: "25px 0px 15px 100px",
+                    }}
+                  >
+                    Kaydol
+                  </Button>
                 </form>
-                
-                <span 
+
+                <span
                   style={{
                     margin: "25px 0px 0px 74px",
                   }}
                 >
-                  Zaten üye misin? Hemen<Link to="/login" style={{textDecoration:"none", color:"rgb(251, 119, 26)"}}> giriş yap</Link>
+                  Zaten üye misin? Hemen
+                  <Link
+                    to="/login"
+                    style={{
+                      textDecoration: "none",
+                      color: "rgb(251, 119, 26)",
+                    }}
+                  >
+                    {" "}
+                    giriş yap
+                  </Link>
                 </span>
               </div>
             </div>

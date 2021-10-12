@@ -17,8 +17,7 @@ export default function AddToBasketButton({ sock }) {
 
   const handleAddToCart = (sock) => {
     let sockService = new SockService();
-    // sockService.addToCardSock(15,7).then((result)=>toast.success(result.data.message))
-    sockService.addToCardSock(15,sock.id).then((result)=>toast.success(result.data.message))
+    sockService.addToCardSock(1, sock.id).then((result)=>toast.success(result.data.message))
     dispatch(addtoCart(sock))
   };
 

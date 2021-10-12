@@ -83,6 +83,7 @@ export default function FilterSock({ handleOnFilter }) {
           <Form.Field >
           <Input
           style={{width:"14rem"}}
+          id="filterText"
         name="filterText"
         placeholder="Ara"
         icon="search"
