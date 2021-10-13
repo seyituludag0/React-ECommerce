@@ -69,12 +69,12 @@ export default function Navi() {
                   </li>
                   <li>
                     <Menu.Item>
-                      <Link to="/">HAKKIMIZDA</Link>
+                      <Link to="/about">HAKKIMIZDA</Link>
                     </Menu.Item>
                   </li>
                   <li>
                     <Menu.Item>
-                      <Link to="/">İLETİŞİM</Link>
+                      <Link to="/contact">İLETİŞİM</Link>
                     </Menu.Item>
                   </li>
                   <li>

@@ -23,7 +23,7 @@ export default function Footer() {
                     <Link to="/socks">Ürünlerimiz</Link>
                   </li>
                   <li>
-                    <Link href="/about">Hakkımızda</Link>
+                    <Link to="/about">Hakkımızda</Link>
                   </li>
                   <li>
                     <Link to="/contact">Bizimle iletişime geçin</Link>
