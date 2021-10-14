@@ -6,6 +6,7 @@ import HomeSlider from "./HomeSlider";
 import HomeCategories from "./HomeCategories";
 import HomeSocks from "./HomeSocks";
 import InstagramPosts from "./InstagramPosts";
+import BasicSpeedDial from "../../layouts/wp/BasicSpeedDial"
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <HomeCategories /> 
         <HomeSocks />
         <InstagramPosts />
+        <BasicSpeedDial />
     </div>
   );
 }
