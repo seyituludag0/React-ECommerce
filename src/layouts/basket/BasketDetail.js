@@ -1,86 +1,124 @@
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Typography,
-  ButtonBase,
-} from "@material-ui/core";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Close } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import BasketService from "../../services/BasketService";
-import { Button } from "@material-ui/core"
+import "./basket.css";
 
 export default function BasketDetail() {
-  const { cartItems } = useSelector((state) => state.cart);
+  const [baskets, setBaskets] = useState([]);
 
-  const [amount, setAmount] = useState(1)
 
-  const addFromToBasket = () =>{
-    setAmount(amount + 1)
-  }
+  useEffect(() => {
+    let basketService = new BasketService();
+    basketService.getByUserId().then((result) => setBaskets(result.data.data));
+  }, []);
 
-  const removeFromToBasket = () =>{
-    setAmount(amount - 1)
-  }
-
-  // const [cartItems, setCartItems] = useState([])
-
-  // useEffect(()=>{
-  //   let basketService = new BasketService();
-  //   basketService.getByUserId(60).then((result)=>setCartItems(result.data.data.data))
-  // },[])
-
-  console.log("cartItems total: ", cartItems.sock);
+  
 
   
 
   return (
-    <Card
-      style={{ width: "25rem", overflow: "scroll" }}
-    >
-      {cartItems.length == 0 ? (
-        <span>
-          Henüz sepetinizde ürününüz yok! Hemen sepetinize ürün eklemek için
-          ürünler sayfasına <Link to="/socks">göz atın</Link>
-        </span>
-      ) : (
-        <span>Sepetinizde {cartItems.length} adet ürün var</span>
-      )}
-
-      {cartItems.map((cartItem, key) => (
-        <CardActionArea
-          key={key}
-          className="my-card"
-          style={{ marginTop: "75px" }}
-        >
-          <CardMedia
-            component="img"
-            height="140"
-            image={cartItem.sock.sockImage.image1}
-            alt={cartItem.sock.name}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {cartItem.sock.name}
-            </Typography>
-            <Typography variant="body2">{cartItem.sock.description}</Typography>
-            <Typography style={{ textAlign: "right" }}>
-              {cartItem.sock.price}₺
-            </Typography>
-          </CardContent>
-
-          <CardContent>
-            <Button variant="outlined" onClick={()=>addFromToBasket()}>+</Button>
-            {amount}
-            {amount==2 ? <Button variant="outlined" onClick={()=>removeFromToBasket()}>-</Button>
-            :<Button variant="contained" disabled>-</Button>}
-          </CardContent>
-        <hr />
-        </CardActionArea>
-      ))}
-      <h2>Total: cartItems?.socks?.price₺</h2>
-    </Card>
+    <div>
+      <section className="shopping-cart spad">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-8">
+              <div className="shopping__cart__table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ürün</th>
+                      <th>Adet</th>
+                      <th>Toplam Fiyat</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {baskets.map((basket) =>
+                      basket.sock.map((sock) => (
+                        <tr key={sock.id}>
+                          <td className="product__cart__item">
+                          <Link to={`/sock-detail/${sock.id}`} style={{ color: "#000" }} target="_blank">
+                            <div className="product__cart__item__pic">
+                              <img src={sock.sockImage.image1} alt="" />
+                            </div>
+                            <div className="product__cart__item__text">
+                              <h6>{sock.name}</h6>
+                              <span>Marka: {sock.brand.name}</span> <br />
+                              <span>Numara / Beden: {sock.bodySize}</span> <br />
+                              <span>Renk: {sock.color.name}</span>
+                            </div>
+                            </Link>
+                          </td>
+                          <td clasName="quantity__item">
+                            <div className="quantity-input">
+                              <button className="quantity-input__modifier quantity-input__modifier--left">
+                                -
+                              </button>
+                              <input
+                                className="quantity-input__screen"
+                                type="text"
+                                defaultValue="1"
+                              />
+                              <button className="quantity-input__modifier quantity-input__modifier--right">
+                                +
+                              </button>
+                            </div>
+                          </td>
+                          <td className="cart__price">{sock.price}₺</td>
+                          <td className="cart__close">
+                            <Close
+                              style={{ cursor: "pointer" }}
+                              onClick={() => alert("Removed")}
+                            />
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="row">
+                <div className="col-lg-6 col-md-6 col-sm-6">
+                  <div className="continue__btn">
+                    <Link to="/socks">Alışverişe Dön</Link>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-6">
+                  <div className="continue__btn update__btn">
+                    <a href="#">
+                      <i className="fa fa-spinner" /> Sepeti Güncelle
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="cart__discount">
+                <h6>İndirim Kodu Uygula</h6>
+                <form action="#">
+                  <input type="text" placeholder="Kupon Kodu" />
+                  <button type="submit">Uygula</button>
+                </form>
+              </div>
+              <div className="cart__total">
+                <h6>Toplam Fiyat</h6>
+                <ul>
+                  <li>
+                    Aratoplam <span>₺ 169.50</span>
+                  </li>
+                  <li>
+                    Toplam <span>₺ 169.50</span>
+                  </li>
+                </ul>
+                <Link to="#" className="primary-btn" style={{ color: "#fff" }}>
+                  Ödemeye Git
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

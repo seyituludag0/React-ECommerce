@@ -48,7 +48,6 @@ export default function Navi() {
                   <Link to="/">ANA SAYFA</Link>
                 </Menu.Item>
               </li>
-
               <li>
                 <a href="/">SAYFALAR</a>
                 <ul className="dropdown">
@@ -96,7 +95,10 @@ export default function Navi() {
       </div>
     </div>
     ):(
+      <>
       <AdminNavi />
+      
+      </>
     )}
     </div>
   );

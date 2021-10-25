@@ -1,59 +1,62 @@
-import React, { useEffect, useState } from "react";
-import "./styles/styles.css";
+import React from "react";
+import "./userInfos.css";
+import { Person } from "@material-ui/icons";
 import { useFormik } from "formik";
 import UserService from "../../services/UserService";
-import validationRules from "./validationRules";
-import { Button, Form, Grid, Input } from "semantic-ui-react";
+import { Form, Grid, Button } from "semantic-ui-react";
+import { Input } from "@material-ui/core";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
-import BasketService from "../../services/BasketService";
 
-export default function Register() {
-
-  let history = useHistory();
+export default function UserInfos({ user }) {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      userName: "",
-      phoneNumber: "05523657896",
-      email: "@gmail.com",
-      password: "123456",
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      userName: user?.userName,
+      phoneNumber: user?.phoneNumber,
+      email: user?.email,
+      password: user?.password
     },
-    validationSchema: validationRules,
+    // validationSchema: validationRules,
     onSubmit: (values) => {
-      // console.log("Values: ", values);
+      console.log("Values: ", values);
       let userService = new UserService();
-      userService
-        .register(values)
+      userService.Regsister(values)
         .then((result) => toast.success(result.data.message))
         .catch((error) => toast.error("HATA"));
-      history.push("/activationcodeverification");
     },
   });
 
 
-
   return (
-    <div className="d-md-flex half">
-      <div
-        className="bg"
-        style={{
-          backgroundImage:
-            "url('https://res.cloudinary.com/uludag-sock/image/upload/v1632418721/bg_1_xrmebo.jpg')",
-        }}
-      />
-      <div className="contents">
-        <div className="container">
-          <div className="row align-items-center justify-content-center">
-            <div className="col-md-12">
-              <div className="form-block mx-auto">
-                <div className="text-center mb-5">
-                  <h3>Kayıt Ol</h3>
+    <div>
+        <div className="row">
+          <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0" style={{margin:"0px 0px 0px 35rem"}}>
+              <div className="card card-profile shadow">
+                <div className="row justify-content-center">
+                  <div className="col-lg-3 order-lg-2">
+                    <div className="card-profile-image">
+                      <a href="#">
+                        <Person style={{ fontSize: "10rem" }} />
+                      </a>
+                    </div>
+                  </div>
                 </div>
-
+                <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                  <div className="d-flex justify-content-between">
+                    <a href="#" className="btn btn-sm btn-info mr-4">
+                      Connect
+                    </a>
+                    <p>EZGİ ULUDAG</p>
+                    <a href="#" className="btn btn-sm btn-default float-right">
+                      Message
+                    </a>
+                  </div>
+                </div>
+                <div className="card-body pt-0 pt-md-4">
+                  <div className="row">
+                    <div className="col">
                 <form onSubmit={formik.handleSubmit}>
                   <div>
                     <Form.Field>
@@ -215,39 +218,22 @@ export default function Register() {
                       </Grid>
                     </Form.Field>
                   </div>
-                  <Button
+                  <Button type="submit"
                     variant="contained"
                     style={{
                       backgroundColor: "#fb771a",
                       margin: "25px 0px 15px 100px",
                     }}
                   >
-                    Kaydol
+                    Bilgilerimi Güncelle
                   </Button>
-                </form>
-
-                <span
-                  style={{
-                    margin: "25px 0px 0px 74px",
-                  }}
-                >
-                  Zaten üye misin? Hemen
-                  <Link
-                    to="/login"
-                    style={{
-                      textDecoration: "none",
-                      color: "rgb(251, 119, 26)",
-                    }}
-                  >
-                    {" "}
-                    giriş yap
-                  </Link>
-                </span>
+                    </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   );
 }

@@ -10,13 +10,12 @@ import { useHistory } from "react-router";
 import { useUserContext } from "../../contexts/UserContext";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
-import { FilledInput, InputAdornment, IconButton } from "@mui/material";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 export default function Login() {
   let history = useHistory();
   const [state, dispatch] = useUserContext();
   let userService = new UserService();
+
 
   const handleLogin = () => {
     userService

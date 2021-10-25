@@ -1,5 +1,5 @@
 import React from 'react'
-import banner from "./img/about-us.jpg"
+import banner from "./img/banner.jpg"
 import author from "./img/testimonial-author.jpg"
 import johnSmith from "./img/team-1.jpg"
 import christineWise from "./img/team-2.jpg"
@@ -32,7 +32,7 @@ export default function About() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="breadcrumb__text">
-                  <h4>About Us</h4>
+                  <h4>Hakkımızda</h4>
                   {/* <div className="breadcrumb__links">
                     <a href="./index.html">Ana Sayfa</a>
                     <span>About Us</span>
@@ -57,23 +57,20 @@ export default function About() {
             <div className="row">
               <div className="col-lg-4 col-md-4 col-sm-6">
                 <div className="about__item">
-                  <h4>Who We Are ?</h4>
-                  <p>Contextual advertising programs sometimes have strict policies that need to be adhered too.
-                    Let’s take Google as an example.</p>
+                  <h4>Biz Kimiz ?</h4>
+                  <p>İçeriğe dayalı reklamcılık programlarının bazen de uyulması gereken katı politikaları vardır. Örnek olarak Google'ı ele alalım.</p>
                 </div>
               </div>
               <div className="col-lg-4 col-md-4 col-sm-6">
                 <div className="about__item">
-                  <h4>Who We Do ?</h4>
-                  <p>In this digital generation where information can be easily obtained within seconds, business
-                    cards still have retained their importance.</p>
+                  <h4>Ne Yapıyoruz ?</h4>
+                  <p>Bilginin saniyeler içinde kolayca elde edilebildiği bu dijital nesilde kartvizitler önemini korumaya devam ediyor.</p>
                 </div>
               </div>
               <div className="col-lg-4 col-md-4 col-sm-6">
                 <div className="about__item">
-                  <h4>Why Choose Us</h4>
-                  <p>A two or three storey house is the ideal way to maximise the piece of earth on which our home
-                    sits, but for older or infirm people.</p>
+                  <h4>Neden Bizi Seçmelisiniz ?</h4>
+                  <p>İki veya üç katlı bir ev, evimizin oturduğu toprak parçasını en üst düzeye çıkarmak için ideal bir yoldur, ancak yaşlı veya halsiz insanlar için.</p>
                 </div>
               </div>
             </div>

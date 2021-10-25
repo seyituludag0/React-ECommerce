@@ -23,10 +23,7 @@ export const UserProvider = ({ children }) => {
       let userService = new UserService();
       userService.getByUserName(localStorageUserName()).then((result) => {
         dispatch({ type: "SET_USER", payload: result.data });
-        dispatch({
-          type: "SET_IS_ADMIN",
-          payload: result.data.roles.some((role) => role.name === "ADMIN"),
-        });
+        dispatch({ type: "SET_IS_ADMIN", payload: result.data.roles.some((role) => role.name === "ADMIN")});
       });
       
     }

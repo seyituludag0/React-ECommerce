@@ -1,8 +1,8 @@
 import React from "react";
 import "./home.css";
-import women from "./images/a1.jpg";
-import men from "./images/a2.jpg";
-import kid from "./images/a3.jpg";
+import women from "./images//themeforest/x1.jpg";
+import men from "./images/themeforest/x.jpg";
+import kid from "./images//themeforest/x2.jpg";
 import { Link } from "react-router-dom"
 
 export default function HomeCategories() {

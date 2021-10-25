@@ -16,6 +16,7 @@ import {
 import UserProfileSetting from "../UserProfileSetting/UserProfileSetting";
 import "./style.css";
 import logo from "../../layouts/navi/img/logo.jpg";
+import { Menu } from "semantic-ui-react";
 
 export default function AdminNavi() {
   const [userView, setUserView] = useState(false);
@@ -69,7 +70,51 @@ export default function AdminNavi() {
                       <img src={logo} alt="logo" />
                     </a>
                   </div>
-                  <NavbarBrand
+                  <nav className="header__menu mobile-menu" style={{marginLeft:"13rem"}}>
+            <ul>
+              <li className="active">
+                <Menu.Item>
+                  <Link to="/">ANA SAYFA</Link>
+                </Menu.Item>
+              </li>
+              <li>
+                <a href="/">SAYFALAR</a>
+                <ul className="dropdown">
+                  <li>
+                    <Menu.Item>
+                      <Link to="/socks">ÜRÜNLER</Link>
+                    </Menu.Item>
+                  </li>
+                  <li>
+                    <Menu.Item>
+                      <Link to="/categories">KATEGORİLER</Link>
+                    </Menu.Item>
+                  </li>
+                  <li>
+                    <Menu.Item>
+                      <Link to="/brands">MARKALAR</Link>
+                    </Menu.Item>
+                  </li>
+                  <li>
+                    <Menu.Item>
+                      <Link to="/about">HAKKIMIZDA</Link>
+                    </Menu.Item>
+                  </li>
+                  <li>
+                    <Menu.Item>
+                      <Link to="/contact">İLETİŞİM</Link>
+                    </Menu.Item>
+                  </li>
+                  <li>
+                    <Menu.Item>
+                      <Link to="/admin">ADMIN</Link>
+                    </Menu.Item>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+                  {/* <NavbarBrand
                     style={{ marginLeft: "30rem" }}
                     onClick={(e) => e.preventDefault()}
                   >
@@ -86,28 +131,11 @@ export default function AdminNavi() {
                     >
                       Admin Görünümüne Geç
                     </Button>
-                  </NavbarBrand>
+                  </NavbarBrand> */}
                   <button className="navbar-toggler" id="nav-inner-primary">
                     <span className="navbar-toggler-icon" />
                   </button>
                   <UncontrolledCollapse navbar toggler="#nav-inner-primary">
-                    <div className="navbar-collapse-header">
-                      <Row>
-                        <Col className="collapse-brand" xs="6">
-                          <Link to="/"></Link>
-                        </Col>
-                        <Col className="collapse-close" xs="6">
-                          <button
-                            className="navbar-toggler"
-                            id="nav-inner-primary"
-                            type="button"
-                          >
-                            <span />
-                            <span />
-                          </button>
-                        </Col>
-                      </Row>
-                    </div>
                     <Nav className="ml-lg-auto nav" navbar>
                       <NavItem>
                         <NavLink onClick={(e) => e.preventDefault()}>

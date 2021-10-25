@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { Settings, ExitToApp } from "@material-ui/icons";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function UserProfileSetting() {
   var history = useHistory();
@@ -93,7 +94,7 @@ export default function UserProfileSetting() {
             Seçenekler
           </MenuItem>
 
-          <MenuItem>{localStorage.getItem("userName")}</MenuItem>
+          <MenuItem><Link to={`/userprofile/106`} style={{ color:"#000" }}>{localStorage.getItem("userName")}</Link></MenuItem>
           <Divider />
 
           <MenuItem>

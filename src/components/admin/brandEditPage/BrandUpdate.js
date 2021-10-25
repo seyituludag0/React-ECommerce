@@ -1,17 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import BrandService from "../../../services/BrandService";
 import { toast } from "react-toastify";
-import {
-  Button,
-  Form,
-  Grid,
-  Input,
-  TextArea,
-  Modal,
-  Icon,
-  Dropdown,
-} from "semantic-ui-react";
+import { Button, Form, Input, Modal } from "semantic-ui-react";
 
 export default function BrandUpdate({ brand }) {
   const [open, setOpen] = useState(false);

@@ -6,16 +6,20 @@ import HomeSlider from "./HomeSlider";
 import HomeCategories from "./HomeCategories";
 import HomeSocks from "./HomeSocks";
 import InstagramPosts from "./InstagramPosts";
-import BasicSpeedDial from "../../layouts/wp/BasicSpeedDial"
+import WidgetWhatsApp from "../wp/WidgetWhatsApp"
+import Comment from "../comments/Comment";
+import UserInfos from "../userInfos/UserInfos";
+import MyPage from "../userInfos/MyPage";
 
 export default function Home() {
   return (
     <div>
-        <HomeSlider />
+         {/* <HomeSlider />
         <HomeCategories /> 
         <HomeSocks />
-        <InstagramPosts />
-        <BasicSpeedDial />
+        <InstagramPosts /> */}
+        {/* <UserInfos /> */}
+        <MyPage />
     </div>
   );
 }

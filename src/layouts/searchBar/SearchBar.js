@@ -33,7 +33,7 @@ export default function SearchBar() {
 
   const formik = useFormik({
     initialValues: {
-      keyword: "Erkek",
+      keyword: "",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -91,7 +91,7 @@ export default function SearchBar() {
                   onChange={formik.handleChange}
                   value={formik.values.keyword}
                   onBlur={formik.handleBlur}
-                  placeholder="Kelime Ara"
+                  placeholder="Kelime Ara..."
                 />
                 {/* <button style={{ color: "#000", marginTop:"-4.5rem", marginRight:"13px" }} onClick={handleOpen}>
                   Ara
@@ -126,7 +126,7 @@ export default function SearchBar() {
                           <div className="product__item" key={sock.id}>
                             <div className="product__item__pic set-bg">
                               <img
-                                src={sock.sockImage.image1}
+                                src={sock.sockImage?.image1}
                                 alt={sock.name}
                               />
                               <ul className="product__hover">

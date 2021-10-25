@@ -1,46 +1,27 @@
-import React, { useState } from "react";
-import { Button, Drawer } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import cart from "../../layouts/navi/img/icon/cart.png";
-import BasketDetail from "./BasketDetail";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import BasketService from "../../services/BasketService";
 
 export default function Basket() {
-  const [state, setState] = useState({
-    right: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-  const { cartItems } = useSelector((state) => state.cart);
+  // const { cartItems } = useSelector((state) => state.cart);
+  const [socks, setSocks] = useState([])
+  useEffect(()=>{
+    let basketService = new BasketService();
+    basketService.getByUserId(106).then((result)=>setSocks(result.data.data))
+  }, [])
   return (
     <div>
-      {["right"].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <img style={{ cursor: "pointer" }}
-            src={cart}
-            alt="cart-icon"
-            onClick={toggleDrawer(anchor, true)}
-          />
-          {/* <span>{cartItems.length}</span> */}
-          <div className="price" style={{marginLeft:"5px"}}>0.00₺</div>
-          <Drawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-          >
-            <BasketDetail />
-          </Drawer>
-        </React.Fragment>
-      ))}
+      <React.Fragment>
+          <img src={cart} className="cart-icon" alt="cart-icon" />
+        <Link to="/basketdetail">
+          <span>{socks.length==0 ? <h3>0</h3>:<h3>{socks.length}</h3>}</span>
+        </Link>
+        <div className="price" style={{ marginLeft: "5px" }}>
+          0.00₺
+        </div>
+      </React.Fragment>
     </div>
   );
 }

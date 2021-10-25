@@ -39,7 +39,7 @@ export default function ImageCarousel() {
       </Slide>
     </Slider>
         <Divider />
-        <CustomDotGroup slides={4} />
+        <CustomDotGroup slides={4}  />
       </CarouselProvider>
     </div>
   );

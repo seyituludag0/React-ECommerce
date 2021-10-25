@@ -4,8 +4,12 @@ import { useParams } from "react-router";
 import SockService from "/react/sock-ecommerce/src/services/SockService";
 import payment from "../img/icon/payment.png";
 import ImageCarousel from "../../../layouts/carousel/ImageCarousel";
-import { Breadcrumb } from "semantic-ui-react";
+import { Breadcrumb, Icon } from "semantic-ui-react";
 // import ImageSlider from "../../../layouts/carousel/ImageSlider";
+import Comment from "../../../layouts/comments/Comment";
+import CommentBulb from "../../../layouts/comments/CommentBulb";
+import Button from '@mui/material/Button';
+import { Delete } from "@material-ui/icons"
 
 export default function SockDetail() {
   const [sock, setSock] = useState(null);
@@ -14,13 +18,12 @@ export default function SockDetail() {
   useEffect(() => {
     let sockService = new SockService();
     sockService.getBySockId(sockId).then((result) => setSock(result.data.data));
-  });
+  }, []);
 
   const sections = [
-    { key: 'Ürünler', content: 'Ürünler', link: true },
-    { key: 'Ürün Detayı', content: 'Ürün Detayı', link: true, active:true },
-  ]
-  
+    { key: "Ürünler", content: "Ürünler", link: true },
+    { key: "Ürün Detayı", content: "Ürün Detayı", link: true, active: true },
+  ];
 
   return (
     <div className="sock-detail">
@@ -31,7 +34,11 @@ export default function SockDetail() {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="product__details__breadcrumb">
-                  <Breadcrumb icon='right angle' sections={sections} className="siyah"  />
+                    <Breadcrumb
+                      icon="right angle"
+                      sections={sections}
+                      className="siyah"
+                    />
                   </div>
                 </div>
               </div>
@@ -123,7 +130,7 @@ export default function SockDetail() {
                   <div className="product__details__text">
                     <h4>{sock?.name}</h4>
                     <h3>
-                      {sock?.price}₺<span>70.00</span>
+                      {sock?.price}₺<span>70.00₺</span>
                     </h3>
                     <p>{sock?.description}</p>
                     <div className="product__details__option">
@@ -155,7 +162,7 @@ export default function SockDetail() {
                         </div>
                       </div>
                       <a href="/" className="primary-btn">
-                        add to cart
+                        Sepete Ekle
                       </a>
                     </div>
                     <div className="product__details__btns__option">
@@ -164,7 +171,20 @@ export default function SockDetail() {
                         FAVORİYE EKLE
                       </a>
                     </div>
-                    <div className="product__details__last__option">
+                    <CommentBulb sockId={sock?.id} />
+                    <br />
+                    <div className="alt-menu alt-2">
+                      <label htmlFor="dropbox" className="dropbox">
+                      <Icon name='comment outline' color="orange" /> Ürünü Değerlendir
+                      </label>
+                      <input type="checkbox" id="dropbox" />
+                      <div id="menu">
+                        <Comment sockId={sock?.id} />
+                      </div>
+                    </div>
+                    <br />
+
+                    {/* <div className="product__details__last__option">
                       <h5>
                         <span>Garantili Güvenli Ödeme</span>
                       </h5>
@@ -180,7 +200,7 @@ export default function SockDetail() {
                           <span>Etiket:</span> Clothes, Skin, Body
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

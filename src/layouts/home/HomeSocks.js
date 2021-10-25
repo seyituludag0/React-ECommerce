@@ -22,12 +22,11 @@ export default function HomeSocks() {
   useEffect(() => {
     sockService.getMainSocks().then((result) => setMainSocks(result.data.data));
     categoryService.getAllCategory().then((result)=>setCategories(result.data.data))
-}, []);
+});
 
   const handleAddFavorite = (sockId) => {
-    favoriteService
-      .addFavorites(58, sockId)
-      .then((result) => toast.success(result.data.message));
+    // favoriteService.addFavorites(106, sockId).then((result) => toast.success(result.data.message));
+    favoriteService.existsByCustomerIdAndSockId(106, sockId).then((result) => toast.success(result.data.message))
   };
 
   return (
@@ -44,8 +43,8 @@ export default function HomeSocks() {
               role="tablist"
             >
               {
-                categories.map((category)=>(
-                  <li className="nav-item">
+                categories.map((category, key)=>(
+                  <li className="nav-item" key={key}>
                 <a
                   className="nav-link active"
                   href="#men"
@@ -62,17 +61,17 @@ export default function HomeSocks() {
             </ul>
           </nav>
           <div style={{ display: "flex" }}>
-            {mainSocks.map((sock) => (
-              <div className="product__item" key={sock.id}>
+            {mainSocks.map((sock, key) => (
+              <div className="product__item" key={key}>
                 <div className="product__item__pic set-bg">
-                  <img src={sock.sockImage.image1} alt={sock.name} />
+                  <img src={sock.sockImage?.image1} alt={sock.name} />
                   <ul className="product__hover">
                     <li>
                       <a onClick={() => handleAddFavorite(sock.id)}>
                         <img
                           id="myFavorite"
                           src="https://res.cloudinary.com/uludag-sock/image/upload/v1632920818/empytFavorite_gmr0mu.png"
-                          onClick={() => alert("Favorited")}
+                          // onClick={() => alert("Favorited")}
                           alt="favorite-icon"
                         />
                         <span style={{ left: "-8rem" }}>Favorilerime Ekle</span>

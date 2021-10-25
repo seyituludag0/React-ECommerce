@@ -55,7 +55,7 @@ export default function SockByCategory() {
                 <div className="product__item__pic set-bg">
                   <img
                     className="card-img-top"
-                    src={sock.sockImage.image1}
+                    src={sock.sockImage?.image1}
                     alt="item.png"
                   />
                   <ul className="product__hover">

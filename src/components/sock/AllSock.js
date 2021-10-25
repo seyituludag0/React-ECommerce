@@ -38,7 +38,7 @@ export default function AllSock() {
 
   const handleAddFavorite = (sockId) => {
     favoriteService
-      .addFavorites(58, sockId)
+      .addFavorites(106, sockId)
       .then((result) => toast.success(result.data.message));
   };
 
@@ -51,6 +51,7 @@ export default function AllSock() {
 
   const handleOnFilter = (filter) => {
     setFilter(filter);
+    console.log("filter: ", filter);
   };
 
   function dom() {
@@ -97,7 +98,7 @@ export default function AllSock() {
                   {socks.map((sock) => (
                     <div className="product__item" key={sock.id}>
                       <div className="product__item__pic set-bg">
-                        <img src={sock.sockImage.image1} alt={sock.name} />
+                        <img src={sock.sockImage?.image1} alt={sock.name} />
                         <ul className="product__hover">
                           <li>
                             <a onClick={() => handleAddFavorite(sock.id)}>

@@ -518,8 +518,8 @@ ol {
 	color: #0d0d0d;
 	font-size: 11px;
 	position: absolute;
-	left: 5px;
-	top: 8px;
+	left: -8px;
+	top: -11px;
 }
 
 .header__nav__option a:last-child {
@@ -2239,6 +2239,7 @@ ol {
 }
 
 .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__pic {
+	width: 8rem;
 	float: left;
 	margin-right: 30px;
 }
@@ -3754,4 +3755,8 @@ ol {
 	.categories__text:before {
 		height: 250px;
 	}
+}
+
+.dropbox{
+	cursor: pointer;
 }

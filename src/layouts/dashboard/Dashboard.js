@@ -7,7 +7,6 @@ import Sock from "../../components/sock/AllSock";
 import SockDetail from "../../components/sock/sock-detail/SockDetail";
 import SockByCategory from "../../components/sock/SockByCategory";
 import Home from "../home/Home";
-import Register from "../register/Register"
 import Login from "../login/Login"
 import NotFound from "../404page/NotFound";
 import ActivationCodeVerification from "../../components/activationCodeVerification/ActivationCodeVerification";
@@ -19,6 +18,9 @@ import BrandEditPage from "../../components/admin/brandEditPage/BrandEditPage";
 import ForgotPassword from "../../layouts/forgotPassword/ForgotPassword"
 import Contact from "../contact/Contact";
 import About from "../about/About";
+import BasketDetail from "../basket/BasketDetail";
+import RegisterLayout from "../RegisterLoginLayout/RegisterLayout";
+import UserInfos from "../userInfos/UserInfos";
 
 export default function Dashboard() {
   return (
@@ -31,7 +33,7 @@ export default function Dashboard() {
         <Route exact path="/brands" component={AllBrands} />
         <Route exact path="/category/:categoryId" component={SockByCategory} />
         <Route exact path="/sock-detail/:sockId" component={SockDetail} />
-        <Route path="/register" component={Register} />
+        <Route path="/register" component={RegisterLayout} />
         <Route path="/login" component={Login} />
         <Route path="/activationcodeverification" component={ActivationCodeVerification} />
         <Route path="/admin" component={Admin} />
@@ -42,8 +44,8 @@ export default function Dashboard() {
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/contact" component={Contact} />
         <Route path="/about" component={About} />
-
-
+        <Route path="/basketdetail" component={BasketDetail}/>
+        <Route exact path="/userprofile/:userId" component={UserInfos} />
 
 
 
