@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import BasketService from "../../services/BasketService";
 
-export default function CustomerRegister() {
+export default function Register() {
 
   let history = useHistory();
   let basketService = new BasketService();
@@ -24,12 +24,12 @@ export default function CustomerRegister() {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "customer",
-      lastName: "customer",
-      userName: "customer",
-      phoneNumber: "05523657896",
-      email: "customer@gmail.com",
-      password: "123456",
+      firstName: "",
+      lastName: "",
+      userName: "",
+      phoneNumber: "",
+      email: "",
+      password: "",
     },
     validationSchema: validationRules,
     onSubmit: (values) => {
@@ -38,7 +38,7 @@ export default function CustomerRegister() {
       userService.customerRegister(values)
         .then((result) => toast.success(result.data.message))
         .catch((error) => toast.error("HATA"));
-      // history.push("/activationcodeverification");
+      history.push("/activationcodeverification");
     },
   });
 
@@ -77,6 +77,7 @@ export default function CustomerRegister() {
                             type="text"
                             error={formik.errors.firstName}
                             placeholder="Ad"
+                            autoFocus
                           />
                           {formik.errors.firstName &&
                             formik.touched.firstName && (

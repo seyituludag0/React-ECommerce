@@ -12,10 +12,13 @@ import {
 import { Settings, ExitToApp } from "@material-ui/icons";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../contexts/UserContext";
 
 export default function UserProfileSetting() {
   var history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
+  const[state] = useUserContext();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +33,9 @@ export default function UserProfileSetting() {
   };
 
   const userName = localStorage.getItem("userName");
+
+  
+  const userId = state?.authenticatedUser?.id;
 
   return (
     <div
@@ -94,7 +100,7 @@ export default function UserProfileSetting() {
             Seçenekler
           </MenuItem>
 
-          <MenuItem><Link to={`/userprofile/106`} style={{ color:"#000" }}>{localStorage.getItem("userName")}</Link></MenuItem>
+          <MenuItem><Link to={`/userprofile/${userId}`} style={{ color:"#000" }}>{localStorage.getItem("userName")}</Link></MenuItem>
           <Divider />
 
           <MenuItem>

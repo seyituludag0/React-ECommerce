@@ -6,7 +6,7 @@ import search from "../sock/img/icon/search.png";
 import favoriteAdded from "../sock/img/icon/favoriteAdded.png";
 import compare from "../sock/img/icon/compare.png";
 import { Link } from "react-router-dom";
-import { Rating, Grid, Pagination } from "semantic-ui-react";
+import { Grid, Pagination } from "semantic-ui-react";
 // import Categories from "../categories/Categories";
 // import Brands from "../brands/Brands";
 // import MySlider from "../MySlider";
@@ -15,6 +15,9 @@ import FavoriteService from "../../services/FavoriteService";
 import { toast } from "react-toastify";
 import empytFavorite from "./img/icon/empytFavorite.png";
 import AddToBasketButton from "../../layouts/basketButton/AddToBasketButton";
+import CommentService from "../../services/CommentService";
+import { Rating } from "@mui/material";
+
 export default function AllSock() {
   let sockService = new SockService();
   let categoryService = new CategoryService();
@@ -23,6 +26,13 @@ export default function AllSock() {
   const [socks, setSocks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState([]);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    let commentService = new CommentService();
+    commentService.getBySockId(19)
+      .then((result) => setComments(result.data.data));
+  });
 
   const [activePage, setActivePage] = useState(1);
   const [pageSize, setPageSize] = useState(2);
@@ -133,7 +143,9 @@ export default function AllSock() {
                         <h6> {sock.name} </h6>
                         <AddToBasketButton sock={sock} />
                         <div className="rating">
-                          <Rating icon="star" defaultRating={3} maxRating={5} />
+                        
+                      <Rating name="read-only" value={3} readOnly />
+
                         </div>
                         <h5> {sock.price}₺</h5>
                         <div className="product__color__select">

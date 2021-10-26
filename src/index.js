@@ -9,7 +9,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from "../src/contexts/UserContext"
 import { Provider } from 'react-redux';
 import { configureStore } from './store/configureStore';
-import WidgetWhatsApp from './layouts/wp/WidgetWhatsApp';
 
 const store = configureStore();
 

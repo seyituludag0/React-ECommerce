@@ -17,10 +17,13 @@ export default function CommentBulb({ sockId }) {
       <div>
         {comments.map((comment, key) => (
           <div key={key}>
-          <Rating name="read-only" value={comment.starCount} readOnly />
+         <div>
+         {comment.customer.firstName} {comment.customer.lastName}
           <p className="bubble thought comment-bulb" key={comment.id}>
             {comment.description}
           </p>
+          <Rating name="read-only" value={comment.starCount} readOnly />
+         </div>
           </div>
         ))}
         

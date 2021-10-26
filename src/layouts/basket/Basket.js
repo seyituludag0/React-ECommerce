@@ -16,7 +16,7 @@ export default function Basket() {
       <React.Fragment>
           <img src={cart} className="cart-icon" alt="cart-icon" />
         <Link to="/basketdetail">
-          <span>{socks.length==0 ? <h3>0</h3>:<h3>{socks.length}</h3>}</span>
+          <span>{socks.length==0 ? <h3>0</h3>:<h5>{socks.length}</h5>}</span>
         </Link>
         <div className="price" style={{ marginLeft: "5px" }}>
           0.00₺

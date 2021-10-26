@@ -20,7 +20,11 @@ export default class UserService{
     }
 
     getByUserId(userId){
-        return axios.get("http://localhost:8080/api/users/getByUserId?userId=" + userId)
+        return axios.get("http://localhost:8080/api/customers/getByCustomerId?customerId=" + userId)
+    }
+
+    customerUpdate(user){
+        return axios.post("http://localhost:8080/api/customers/updateDto", user)
     }
 }
 
