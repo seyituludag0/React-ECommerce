@@ -8,7 +8,7 @@ import CommentService from "../../services/CommentService";
 import { toast } from "react-toastify";
 import { useUserContext } from "../../contexts/UserContext";
 
-export default function Comment({ sockId }) {
+export default function CommentUpdate({ comment, sockId }) {
   const labels = {
     1: "Çok Kötü",
     2: "Kötü",
@@ -20,12 +20,13 @@ export default function Comment({ sockId }) {
   const [state] = useUserContext();
   const userId = state?.authenticatedUser?.id;
 
-  const [rating, setRating] = useState(null);
+  const [rating, setRating] = useState(comment.starCount);
   const [hover, setHover] = useState(null);
   const formik = useFormik({
     initialValues: {
-      starCount: null,
-      description: "",
+      id: comment.id,
+      starCount: comment.starCount,
+      description: comment.description,
     },
     onSubmit: (values) => {
       values.customerId = userId;
@@ -34,7 +35,7 @@ export default function Comment({ sockId }) {
       console.log("Values: ", values);
       let commentService = new CommentService();
       commentService
-        .addComment(values)
+        .updateComment(values)
         .then((result) => toast.success(result.data.message));
       values.starCount = null;
       values.description = "";
@@ -53,8 +54,8 @@ export default function Comment({ sockId }) {
                 <input
                   key={i}
                   type="radio"
-                  name="rating"
-                  value={ratingValue}
+                  name="starCount"
+                  value={comment.starCount}
                   onClick={() => setRating(ratingValue)}
                 />
                 <FaStar

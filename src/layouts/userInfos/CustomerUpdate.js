@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./userInfos.css";
-import { Person } from "@material-ui/icons";
 import { useFormik } from "formik";
 import UserService from "../../services/UserService";
 import { Form, Grid, Button } from "semantic-ui-react";

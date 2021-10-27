@@ -6,10 +6,11 @@ import payment from "../img/icon/payment.png";
 import ImageCarousel from "../../../layouts/carousel/ImageCarousel";
 import { Breadcrumb, Icon } from "semantic-ui-react";
 // import ImageSlider from "../../../layouts/carousel/ImageSlider";
-import Comment from "../../../layouts/comments/Comment";
+import CommentForm from "../../../layouts/comments/CommentForm";
 import CommentBulb from "../../../layouts/comments/CommentBulb";
 import Button from '@mui/material/Button';
 import { Delete } from "@material-ui/icons"
+import CommentUpdate from "../../../layouts/comments/CommentUpdate";
 
 export default function SockDetail() {
   const [sock, setSock] = useState(null);
@@ -179,7 +180,7 @@ export default function SockDetail() {
                       </label>
                       <input type="checkbox" id="dropbox" />
                       <div id="menu">
-                        <Comment sockId={sock?.id} />
+                        <CommentForm sockId={sock?.id} />
                       </div>
                     </div>
                     <br />
