@@ -6,31 +6,71 @@ import CategoryService from "../../services/CategoryService";
 import { Rating } from "semantic-ui-react";
 import AddToBasketButton from "../basketButton/AddToBasketButton";
 import { toast } from "react-toastify";
-import search from "../../components/sock/img/icon/search.png"
+import search from "../../components/sock/img/icon/search.png";
 import compare from "../../components/sock/img/icon/compare.png";
 import { Link } from "react-router-dom";
-
+import { CartContextValue } from "../../contexts/ContextProvider";
+import { HttpPostwithToken } from "../../configs/HttpConfig";
+import { useUserContext } from "../../contexts/UserContext"
+import CartService from "../../services/CartService";
 
 export default function HomeSocks() {
+  const[state] = useUserContext();
+
   const [mainSocks, setMainSocks] = useState([]);
-  const [categories, setCategories] = useState([])
-  
+  const [categories, setCategories] = useState([]);
+  const [cartData, dispatch] = CartContextValue();
   let sockService = new SockService();
   let categoryService = new CategoryService();
   let favoriteService = new FavoriteService();
 
+
   useEffect(() => {
     sockService.getMainSocks().then((result) => setMainSocks(result.data.data));
-    categoryService.getAllCategory().then((result)=>setCategories(result.data.data))
-});
+    categoryService.getAllCategory().then((result) => setCategories(result.data.data));
+  });
 
   const handleAddFavorite = (sockId) => {
     // favoriteService.addFavorites(106, sockId).then((result) => toast.success(result.data.message));
-    favoriteService.existsByCustomerIdAndSockId(106, sockId).then((result) => toast.success(result.data.message))
+    favoriteService
+      .existsByCustomerIdAndSockId(106, sockId)
+      .then((result) => toast.success(result.data.message));
   };
+
+  
+
+  const addCartApi=(sockObj)=>{
+		let obj = {
+			"sockId":sockObj.id,			
+			"quantity":1,
+			"price":sockObj.price
+			
+		}
+		HttpPostwithToken("addToCart/addSock", obj)
+		.then((res)=>{		
+      console.log("obj", obj);
+			res.json().then(data=>{
+				if(res.ok){
+					dispatch({
+						"type":"add_cart",
+						"data":data
+					})
+					toast.success("Ürün sepetinize eklendi")
+				}else{
+					toast.error(data.message)
+				}
+			})     
+		}).catch(function(res){
+			console.log("Error ",res);
+			//alert(error.message);
+		}
+		)
+	}
+
 
   return (
     <div>
+     
       <section className="tabs_pro py-md-5 pt-sm-3 pb-5">
         <h5 className="head_agileinfo text-center text-capitalize pb-5">
           <span style={{ color: "#4043bf" }}>B</span>aşlıca Ürünlerimiz
@@ -42,22 +82,20 @@ export default function HomeSocks() {
               className="nav nav-tabs tabs-style-line"
               role="tablist"
             >
-              {
-                categories.map((category, key)=>(
-                  <li className="nav-item" key={key}>
-                <a
-                  className="nav-link active"
-                  href="#men"
-                  role="tab"
-                  id="men-tab"
-                  data-toggle="tab"
-                  aria-controls="men"
-                >
-                  {category.name} Çorapları
-                </a>
-              </li>
-                ))
-              }
+              {categories.map((category, key) => (
+                <li className="nav-item" key={key}>
+                  <a
+                    className="nav-link active"
+                    href="#men"
+                    role="tab"
+                    id="men-tab"
+                    data-toggle="tab"
+                    aria-controls="men"
+                  >
+                    {category.name} Çorapları
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
           <div style={{ display: "flex" }}>
@@ -93,7 +131,9 @@ export default function HomeSocks() {
                 </div>
                 <div className="product__item__text">
                   <h6> {sock.name} </h6>
-                  <AddToBasketButton sock={sock} />
+                  <a onClick={() => addCartApi(sock)} href="javascript:void(0)">
+                    Add Cart
+                  </a>
                   <div className="rating">
                     <Rating icon="star" defaultRating={3} maxRating={5} />
                   </div>

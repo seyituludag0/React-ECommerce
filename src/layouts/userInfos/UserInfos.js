@@ -14,6 +14,8 @@ export default function UserInfos() {
 const[state] = useUserContext();
     const userId = state?.authenticatedUser?.id;
 
+    
+
 useEffect(()=>{
   let userService = new UserService();
   userService.getByUserId(userId).then((result)=>setCustomer(result.data.data))

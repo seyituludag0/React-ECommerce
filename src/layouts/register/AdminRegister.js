@@ -44,7 +44,7 @@ export default function AdminRegister() {
   return (
     <div className="d-md-flex half">
       <div
-        className="bg"
+        className="background"
         style={{
           backgroundImage:
             "url('https://res.cloudinary.com/uludag-sock/image/upload/v1632418721/bg_1_xrmebo.jpg')",

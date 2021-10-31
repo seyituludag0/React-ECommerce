@@ -3,8 +3,8 @@ import "../navi.css";
 import cart from "../img/icon/cart.png";
 import search from "../img/icon/search.png";
 import MyFavorite from "../../favorite/MyFavorite";
-import Basket from "../../basket/Basket";
 import SearchBar from "../../searchBar/SearchBar";
+import CartPreview from "../../basket/CartPreview";
 
 export default function NavItems() {
   return (
@@ -14,7 +14,7 @@ export default function NavItems() {
       </a>
         <MyFavorite />
         <a>
-          <Basket />
+          <CartPreview />
         </a>
       </div>
   );

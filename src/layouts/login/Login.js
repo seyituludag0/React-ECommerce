@@ -11,10 +11,12 @@ import { useUserContext } from "../../contexts/UserContext";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 
+
 export default function Login() {
   let history = useHistory();
   const [state, dispatch] = useUserContext();
   let userService = new UserService();
+  const userId = state?.authenticatedUser?.id;
 
 
   const handleLogin = () => {
@@ -49,7 +51,7 @@ export default function Login() {
     localStorage.setItem("isAdmin", false);
     localStorage.setItem("userName", formik.values.userName);
     dispatch({ type: "SET_IS_ADMIN", payload: false });
-    history.push("/socks");
+    history.push("/");
   }
 
   // FORMIK
@@ -64,7 +66,7 @@ export default function Login() {
   return (
     <div className="d-md-flex half">
       <div
-        className="bg"
+        className="background"
         style={{
           backgroundImage:
             "url('https://res.cloudinary.com/uludag-sock/image/upload/v1632418721/bg_1_xrmebo.jpg')",

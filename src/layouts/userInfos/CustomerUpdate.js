@@ -1,5 +1,4 @@
 import React from "react";
-import "./userInfos.css";
 import { useFormik } from "formik";
 import UserService from "../../services/UserService";
 import { Form, Grid, Button } from "semantic-ui-react";

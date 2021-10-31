@@ -10,7 +10,7 @@ import CommentForm from "../../../layouts/comments/CommentForm";
 import CommentBulb from "../../../layouts/comments/CommentBulb";
 import Button from '@mui/material/Button';
 import { Delete } from "@material-ui/icons"
-import CommentUpdate from "../../../layouts/comments/CommentUpdate";
+import AddToBasketButton from "../../../layouts/basketButton/AddToBasketButton"
 
 export default function SockDetail() {
   const [sock, setSock] = useState(null);
@@ -162,9 +162,10 @@ export default function SockDetail() {
                           <input type="number" defaultValue={1} min="1" />
                         </div>
                       </div>
-                      <a href="/" className="primary-btn">
+                      {/* <a href="/" className="primary-btn">
                         Sepete Ekle
-                      </a>
+                      </a> */}
+                      <AddToBasketButton sock={sock} />
                     </div>
                     <div className="product__details__btns__option">
                       <a href="/">

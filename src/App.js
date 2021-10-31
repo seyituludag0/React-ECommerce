@@ -10,6 +10,8 @@ import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { styled } from "@material-ui/styles";
 import { useState } from "react";
 import { FormControlLabel, FormGroup, Paper, Switch } from "@material-ui/core";
+import { ContextProvider, reducer, cartState } from "./contexts/ContextProvider";
+import AuthVerify from "./layouts/authVerify/AuthVerify"
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -70,26 +72,31 @@ function App() {
   }));
 
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    // <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+
+    <ContextProvider reducer={reducer} cartState={cartState}>
       <div className="App">
         <Paper>
           <Navi />
-          <FormGroup>
-          <FormControlLabel
-            control={
-              <MaterialUISwitch
-                sx={{ m: 1 }}
-                checked={darkMode}
-                onChange={() => setDarkMode(!darkMode)}
-              />
-            }
-          />
-        </FormGroup>
+          {/* <FormGroup>
+            <FormControlLabel
+              control={
+                <MaterialUISwitch
+                  sx={{ m: 1 }}
+                  checked={darkMode}
+                  onChange={() => setDarkMode(!darkMode)}
+                />
+              }
+            />
+          </FormGroup> */}
           <WidgetWhatsApp />
           <Dashboard />
+          <AuthVerify />
         </Paper>
       </div>
-    </ThemeProvider>
+    </ContextProvider>
+
+    // </ThemeProvider>
   );
 }
 
