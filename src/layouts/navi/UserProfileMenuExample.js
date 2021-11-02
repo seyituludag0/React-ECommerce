@@ -1,5 +1,6 @@
 import React from 'react'
-import UserProfileSetting from "../UserProfileSetting/UserProfileSetting"
+import UserProfileSetting from "../../layouts/userProfileSetting/UserProfileSetting"
+
 import NavItems from './userProfileMenu/NavItems'
 
 

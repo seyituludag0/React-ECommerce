@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Close } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import BasketService from "../../services/BasketService";
 import "./basket.css";
+import { CartContextValue } from "../../contexts/ContextProvider";
 
 export default function BasketDetail() {
-  const [baskets, setBaskets] = useState([]);
 
+  const [cartData, dispatch] = CartContextValue();
 
-  useEffect(() => {
-    let basketService = new BasketService();
-    basketService.getByUserId().then((result) => setBaskets(result.data.data));
-  }, []);
+  const getTotalAmount=()=>{
+    return cartData.cartItems.reduce((prevValue,currentValue)=>prevValue+currentValue.price,0);
+  }
 
-  
-
-  
 
   return (
     <div>
@@ -34,19 +30,18 @@ export default function BasketDetail() {
                     </tr>
                   </thead>
                   <tbody>
-                    {baskets.map((basket) =>
-                      basket.sock.map((sock) => (
-                        <tr key={sock.id}>
+                  {cartData.cartItems.map((sock) => (
+                    <tr>
                           <td className="product__cart__item">
                           <Link to={`/sock-detail/${sock.id}`} style={{ color: "#000" }} target="_blank">
                             <div className="product__cart__item__pic">
-                              <img src={sock.sockImage.image1} alt="" />
+                              <img src={sock.productImage} alt="" />
                             </div>
                             <div className="product__cart__item__text">
-                              <h6>{sock.name}</h6>
-                              <span>Marka: {sock.brand.name}</span> <br />
+                              <h6>{sock.sockName}</h6>
+                              <span>Marka: {sock.brandName}</span> <br />
                               <span>Numara / Beden: {sock.bodySize}</span> <br />
-                              <span>Renk: {sock.color.name}</span>
+                              <span>Renk: {sock.colorName}</span>
                             </div>
                             </Link>
                           </td>
@@ -73,8 +68,7 @@ export default function BasketDetail() {
                             />
                           </td>
                         </tr>
-                      ))
-                    )}
+                  ))}
                   </tbody>
                 </table>
               </div>
@@ -105,10 +99,10 @@ export default function BasketDetail() {
                 <h6>Toplam Fiyat</h6>
                 <ul>
                   <li>
-                    Aratoplam <span>₺ 169.50</span>
+                    Aratoplam <span>169.50₺</span>
                   </li>
                   <li>
-                    Toplam <span>₺ 169.50</span>
+                    Toplam <span>{getTotalAmount()}₺</span>
                   </li>
                 </ul>
                 <Link to="#" className="primary-btn" style={{ color: "#fff" }}>

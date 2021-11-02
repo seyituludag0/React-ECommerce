@@ -5,14 +5,15 @@ import FavoriteService from "../../services/FavoriteService";
 import CategoryService from "../../services/CategoryService";
 import { Rating } from "semantic-ui-react";
 import AddToBasketButton from "../basketButton/AddToBasketButton";
-import { toast } from "react-toastify";
 import search from "../../components/sock/img/icon/search.png";
 import compare from "../../components/sock/img/icon/compare.png";
 import { Link } from "react-router-dom";
 import { CartContextValue } from "../../contexts/ContextProvider";
 import { HttpPostwithToken } from "../../configs/HttpConfig";
 import { useUserContext } from "../../contexts/UserContext"
-import CartService from "../../services/CartService";
+import { toast } from "react-toastify";
+
+
 
 export default function HomeSocks() {
   const[state] = useUserContext();
@@ -132,7 +133,7 @@ export default function HomeSocks() {
                 <div className="product__item__text">
                   <h6> {sock.name} </h6>
                   <a onClick={() => addCartApi(sock)} href="javascript:void(0)">
-                    Add Cart
+                    + Sepete Ekle
                   </a>
                   <div className="rating">
                     <Rating icon="star" defaultRating={3} maxRating={5} />

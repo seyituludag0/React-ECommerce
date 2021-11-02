@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Menu, Button } from "@mui/material"
+import { Menu, Button, Badge, IconButton, Divider } from "@mui/material"
 import { ShoppingCart } from "@material-ui/icons"
 import { styled } from '@material-ui/styles';
 import Table from '@mui/material/Table';
@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { CartContextValue } from '../../contexts/ContextProvider';
+import { Link } from 'react-router-dom';
 
 
 export default function CartPreview() {
@@ -26,7 +27,7 @@ export default function CartPreview() {
   
 // ------------------------------------------------------------------------------------------
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#000",
     color: "#fff",
@@ -36,7 +37,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   '&:nth-of-type(odd)': {
     backgroundColor: "#fff",
   },
@@ -51,6 +52,19 @@ const getTotalAmount=()=>{
   return cartData.cartItems.reduce((prevValue,currentValue)=>prevValue+currentValue.price,0);
 }
 
+const StyledBadge = styled(Badge)(() => ({
+  '& .MuiBadge-badge': {
+    left: 5,
+    top: 13,
+    border: `2px solid purple`,
+    color:"#fff",
+    width:"1px"
+  },
+}));
+
+const MyDivider = styled('div')(() => ({
+  width: '265%'
+}));
 
   return (
     <div>
@@ -61,8 +75,16 @@ const getTotalAmount=()=>{
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
+        <IconButton aria-label="cart">
+      <StyledBadge badgeContent={cartData.cartItems.length} color="secondary">
         <ShoppingCart />
+      </StyledBadge>
+    </IconButton>
       </Button>
+
+   
+
+
       <Menu style={{ marginRight: "-11rem", marginTop: "3rem" }}
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
@@ -78,7 +100,8 @@ const getTotalAmount=()=>{
           horizontal: 'left',
         }}
       >
-        <TableContainer component={Paper}>
+
+<TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -94,21 +117,25 @@ const getTotalAmount=()=>{
           key={cartObj.id}
           >
               <StyledTableCell component="th" scope="row">
-                <img src="https://res.cloudinary.com/uludag-sock/image/upload/v1634503267/cart-1_xp67iz.jpg"/>
+              <img src={cartObj.productImage} style={{width:"100px"}}/>
+                {/* <img src="https://res.cloudinary.com/uludag-sock/image/upload/v1634503267/cart-1_xp67iz.jpg"/> */}
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
-              {cartObj.name}
+              {cartObj.sockName}
               </StyledTableCell>
               <StyledTableCell align="right">{cartObj.quantity}</StyledTableCell>
               <StyledTableCell align="right">{cartObj.price}₺</StyledTableCell>
             </StyledTableRow>
           ))}
-         <hr />
+          <Link to="/basketdetail"><Button color="secondary">Sepet Detayına Git</Button></Link>
          
-         <StyledTableRow>{getTotalAmount()}₺</StyledTableRow>
+         <MyDivider>
+            <Divider>Toplam Tutar: {getTotalAmount()}₺</Divider>
+        </MyDivider>
         </TableBody>
       </Table>
     </TableContainer>
+
       </Menu>
     </div>
   );

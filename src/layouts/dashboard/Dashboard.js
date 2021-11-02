@@ -19,8 +19,9 @@ import ForgotPassword from "../../layouts/forgotPassword/ForgotPassword"
 import Contact from "../contact/Contact";
 import About from "../about/About";
 import BasketDetail from "../basket/BasketDetail";
-import RegisterLayout from "../RegisterLoginLayout/RegisterLayout";
+import RegisterLayout from "../registerLoginLayout/RegisterLayout";
 import UserInfos from "../userInfos/UserInfos";
+import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert";
 
 export default function Dashboard() {
   return (
@@ -53,7 +54,7 @@ export default function Dashboard() {
 
 
 
-
+        <Route path="/tokenexpiredalert" component={TokenExpiredAlert} />
         <Route path="*" component={NotFound} />
       </Switch>
     </div>

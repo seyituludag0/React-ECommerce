@@ -10,7 +10,7 @@ import CommentForm from "../../../layouts/comments/CommentForm";
 import CommentBulb from "../../../layouts/comments/CommentBulb";
 import Button from '@mui/material/Button';
 import { Delete } from "@material-ui/icons"
-import AddToBasketButton from "../../../layouts/basketButton/AddToBasketButton"
+import GlobalAddToCartButton from "../../../layouts/globalAddToCartButton/GlobalAddToCartButton";
 
 export default function SockDetail() {
   const [sock, setSock] = useState(null);
@@ -165,7 +165,9 @@ export default function SockDetail() {
                       {/* <a href="/" className="primary-btn">
                         Sepete Ekle
                       </a> */}
-                      <AddToBasketButton sock={sock} />
+                      
+                      <GlobalAddToCartButton sock={sock} />
+                      
                     </div>
                     <div className="product__details__btns__option">
                       <a href="/">

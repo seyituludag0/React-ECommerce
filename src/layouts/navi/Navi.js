@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import "../navi/navi.css";
 import logo from "../navi/img/logo.jpg";
-import RegisterLoginLayout from "../RegisterLoginLayout/RegisterLoginLayout";
+import RegisterLoginLayout from "../registerLoginLayout/RegisterLoginLayout";
 import UserProfileMenuExample from "./UserProfileMenuExample";
 import { useUserContext } from "../../contexts/UserContext";
 import {
@@ -21,21 +21,61 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import UserProfileSetting from "../UserProfileSetting/UserProfileSetting";
+import UserProfileSetting from "../userProfileSetting/UserProfileSetting";
 import AdminNavi from "../admin/AdminNavi";
 import { CartContextValue } from "../../contexts/ContextProvider";
+import * as authActionType from "../../store/actions/authAction";
+import { useHistory } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert"
+import { HttpPostwithToken } from "../../configs/HttpConfig";
 
 
 export default function Navi() {
   const [cartData, dispatch] = CartContextValue();
   const [state] = useUserContext();
-
+  const history = useHistory();
  
+  //----------------------------------------------------------------------------------------------------
+  useEffect(() => {
+    getCartApi();
+    var token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        logout();
+      }
+    }
+  });
 
+  const logout = () => {
+    dispatch({ type: authActionType.LOGOUT });
+    // alert("Yallah")
+    localStorage.clear()
+    history.push("/login");
+    
+  };
 
-  const getTotalAmount=()=>{
-		return cartData.cartItems.reduce((prevValue,currentValue)=>prevValue+currentValue.price,0);
-	}
+  const getCartApi = () => {
+    HttpPostwithToken("addToCart/getCartsByUserId", {}).then(
+      (res) => {
+        res.json().then((data) => {
+          if (res.ok) {
+            dispatch({
+              type: "add_cart",
+              data: data,
+            });
+            //alert("Successfully added..")
+          } else {
+            alert(data.message);
+          }
+        });
+      }
+      // error=>{
+      // 	alert(error.message);
+      // }
+    );
+  };
 
   return (
     <div>
@@ -117,8 +157,6 @@ export default function Navi() {
         </>
       )}
       {/* Navbar */}
-
-
 
       {/* <Link to={"/checkoutcart/"}>Checkout Cart</Link>
       <div style={{ float: "right", cursor: "pointer" }}>X</div>

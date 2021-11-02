@@ -13,7 +13,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import UserProfileSetting from "../UserProfileSetting/UserProfileSetting";
+import UserProfileSetting from "../userProfileSetting/UserProfileSetting";
 import "./style.css";
 import logo from "../../layouts/navi/img/logo.jpg";
 import { Menu } from "semantic-ui-react";

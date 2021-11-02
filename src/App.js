@@ -8,12 +8,12 @@ import "react-whatsapp-widget/dist/index.css";
 import WidgetWhatsApp from "./layouts/wp/WidgetWhatsApp";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { styled } from "@material-ui/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormControlLabel, FormGroup, Paper, Switch } from "@material-ui/core";
 import { ContextProvider, reducer, cartState } from "./contexts/ContextProvider";
-import AuthVerify from "./layouts/authVerify/AuthVerify"
 
 function App() {
+
   const [darkMode, setDarkMode] = useState(false);
 
   const darkTheme = createMuiTheme({
@@ -71,6 +71,8 @@ function App() {
     },
   }));
 
+  
+
   return (
     // <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
 
@@ -91,7 +93,6 @@ function App() {
           </FormGroup> */}
           <WidgetWhatsApp />
           <Dashboard />
-          <AuthVerify />
         </Paper>
       </div>
     </ContextProvider>

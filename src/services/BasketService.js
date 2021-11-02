@@ -5,11 +5,11 @@ export default class BasketService{
         return axios.get("http://localhost:8080/api/baskets/getByUserId?userId=106");
     }
 
-    add(values){
-        return axios.post("http://localhost:8080/api/baskets/add", values)
-    }
+    // add(values){
+    //     return axios.post("http://localhost:8080/api/baskets/add", values)
+    // }
 
-    update(values){
-        return axios.post("http://localhost:8080/api/baskets/update", values)
-    }
+    // update(values){
+    //     return axios.post("http://localhost:8080/api/baskets/update", values)
+    // }
 }

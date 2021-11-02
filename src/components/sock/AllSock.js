@@ -17,6 +17,8 @@ import empytFavorite from "./img/icon/empytFavorite.png";
 import AddToBasketButton from "../../layouts/basketButton/AddToBasketButton";
 import CommentService from "../../services/CommentService";
 import { Rating } from "@mui/material";
+import GlobalAddToCartButton from "../../layouts/globalAddToCartButton/GlobalAddToCartButton";
+import AllSockPageAddToCartButton from "../../layouts/allSockPageAddToCartButton/AllSockPageAddToCartButton";
 
 export default function AllSock() {
   let sockService = new SockService();
@@ -141,7 +143,7 @@ export default function AllSock() {
                       </div>
                       <div className="product__item__text">
                         <h6> {sock.name} </h6>
-                        <AddToBasketButton sock={sock} />
+                        <AllSockPageAddToCartButton sock={sock} />
                         <div className="rating">
                         
                       <Rating name="read-only" value={3} readOnly />
