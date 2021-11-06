@@ -21,13 +21,13 @@ export default function SockByCategory() {
     sockService
       .getSockByCategoryId(categoryId)
       .then((result) => setSocks(result.data.data));
-  });
+  }, []);
 
   useEffect(() => {
     categoryService
       .getAllCategory()
       .then((result) => setCategories(result.data.data));
-  });
+  }, []);
 
   return (
     <section className="product">
@@ -36,12 +36,14 @@ export default function SockByCategory() {
           <div className="col-lg-12">
             <ul className="filter__controls">
               <ul className="filter__controls">
-              <li><Link to="/socks" style={{ textDecoration: "none", color: "#000" }}
-                  >Tüm Ürünler</Link></li>
+              <li>
+                <Link to="/socks" style={{ textDecoration: "none", color: "#000" }}>Tüm Ürünler</Link></li>
                 {categories.map((category) => (
-                  <li key={category.id}>
+                    <li key={category.id}>
                     <Link to={`/category/${category.id}`} style={{ textDecoration: "none", color: "#000" }}
-                  >{category.name}</Link>
+                  >
+                    {category.name}
+                  </Link>
                   </li>
                 ))}
               </ul>

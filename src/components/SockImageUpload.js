@@ -3,10 +3,12 @@ import { toast } from "react-toastify";
 import { Card, Button } from "semantic-ui-react";
 import SockImageService from "../services/SockImageService"
 
-export default class UpdateImage extends Component {
+export default class SockImageUpload extends Component {
     state = {
       selectedFile: null,
+      nullImages: []
     };
+    
   
     fileSelectedHandler = (event) => {
       this.setState({
@@ -17,27 +19,40 @@ export default class UpdateImage extends Component {
     fileUploadHandler = () => {
       const formData = new FormData();
       formData.append(
-        "file",
+        "file1",
+        // "file2",
+        // "file3",
+        // "file4",
+        // "file5",
         this.state.selectedFile,
         this.state.selectedFile.name
       );
       let sockImageService = new SockImageService();
-      sockImageService
-        .upload(this.props.id, formData)
-        .then((result) => {
-          toast.success(result.data.message);
-        //   this.props.updateCvValues();
-        console.log(result);
-        })
+      sockImageService.uploadPhoto1(this.props.id, formData).then((result) => {toast.success(result.data.message)})
+      // sockImageService.uploadPhoto2(this.props.id, formData).then((result) => {toast.success(result.data.message)})
+      // sockImageService.uploadPhoto3(this.props.id, formData).then((result) => {toast.success(result.data.message)})
+      // sockImageService.uploadPhoto4(this.props.id, formData).then((result) => {toast.success(result.data.message)})
+      // sockImageService.uploadPhoto5(this.props.id, formData).then((result) => {toast.success(result.data.message)})
         .catch((result) => {
           toast.error(result.response.data.message);
         });
     };
+
+    getNullImages = () => {
+      let sockImageService = new SockImageService();
+      sockImageService.getAllSockImageNull().then((result)=>this.setState({nullImages: result.data.data}))
+    };
+
+    componentDidMount() {
+      this.getNullImages();
+    }
   
     render() {
       return (
         <div>
-          <Card fluid color={"black"}>
+          {
+            this.state.nullImages.map((images)=>(
+              <Card fluid color={"black"}>
             <Card.Content header="Resim Yükle" />
             <Card.Content style={{}}>
               <input
@@ -50,6 +65,8 @@ export default class UpdateImage extends Component {
               <Button color={"green"} onClick={this.fileUploadHandler} disabled={this.state.selectedFile==null}>Yükle</Button>
             </Card.Content>
           </Card>
+            ))
+          }
         </div>
       );
     }

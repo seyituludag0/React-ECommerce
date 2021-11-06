@@ -7,18 +7,18 @@ import { Button, Form, Grid, Input } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import BasketService from "../../services/BasketService";
+import CartService from "../../services/CartService";
 
 export default function Register() {
 
   let history = useHistory();
-  let basketService = new BasketService();
+  let cartService = new CartService();
 
   const [user, setUser] = useState({});
 
   useEffect(() => {
     // console.log(user);
-    Object.keys(user).length > 0 && basketService.add(user);
+    Object.keys(user).length > 0 && cartService.add(user);
   }, [user]);
 
 

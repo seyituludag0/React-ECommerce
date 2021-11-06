@@ -6,11 +6,9 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
-    TableBody,
+    Paper
   } from "@material-ui/core";
 import SockImageUpload from "../../SockImageUpload"
-import SockImage from "../../../services/SockService"
 
 
 export default function NullImages() {
@@ -21,13 +19,7 @@ export default function NullImages() {
     sockImageService
       .getAllSockImageNull()
       .then((result) => setNullImages(result.data.data));
-  });
-
-//   const updateSockImageValues = () => {
-//     // cvService.getByCandidateId(id).then((result) => {setCv(result.data.data)})
-//     let sockService = new SockService();
-//     sockService.getBySockId(28).then((result)=>setImage(result.data.data)) 
-//   }
+  }, []);
 
   return (
     <>
@@ -47,16 +39,8 @@ export default function NullImages() {
             <TableCell component="th" scope="row">
               {image.sockId}
             </TableCell>
-            {/* <TableCell align="right" />
-            <TableCell align="right" />
-            <TableCell align="right" />
-            <TableCell align="right" />
-            <TableCell align="right" />
-            <TableCell align="right" />*/}
             <TableCell align="right"> 
-            <SockImageUpload id={image.id} 
-            // updateSockImageValues={updateSockImageValues}
-             />
+            <SockImageUpload id={image.id} />
             </TableCell>
             
             

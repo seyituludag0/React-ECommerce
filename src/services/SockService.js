@@ -22,8 +22,8 @@ export default class SockService {
         return axios.post("http://localhost:8080/api/socks/getByFilter", values)
     }
 
-    addToCardSock(basketId, sockId) {
-        return axios.post(`http://localhost:8080/api/socks/sock/${basketId}/${sockId}`);
+    addToCardSock(cartId, sockId) {
+        return axios.post(`http://localhost:8080/api/socks/sock/${cartId}/${sockId}`);
     }
 
     add(sock){

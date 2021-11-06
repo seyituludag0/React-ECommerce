@@ -14,7 +14,6 @@ import FilterSock from "../../layouts/filterSock/FilterSock";
 import FavoriteService from "../../services/FavoriteService";
 import { toast } from "react-toastify";
 import empytFavorite from "./img/icon/empytFavorite.png";
-import AddToBasketButton from "../../layouts/basketButton/AddToBasketButton";
 import CommentService from "../../services/CommentService";
 import { Rating } from "@mui/material";
 import GlobalAddToCartButton from "../../layouts/globalAddToCartButton/GlobalAddToCartButton";
@@ -32,9 +31,9 @@ export default function AllSock() {
 
   useEffect(() => {
     let commentService = new CommentService();
-    commentService.getBySockId(19)
+    commentService.getBySockId()
       .then((result) => setComments(result.data.data));
-  });
+  }, []);
 
   const [activePage, setActivePage] = useState(1);
   const [pageSize, setPageSize] = useState(2);

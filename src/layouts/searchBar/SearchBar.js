@@ -16,7 +16,7 @@ import "./style.css";
 import compare from "../../components/sock/img/icon/compare.png";
 import search from "../../components/sock/img/icon/search.png";
 import { Link } from "react-router-dom";
-import AddToBasketButton from "../basketButton/AddToBasketButton";
+import AddToCartButton from "../cartButton/AddToCartButton";
 import { Cancel } from "@material-ui/icons";
 
 export default function SearchBar() {
@@ -161,7 +161,7 @@ export default function SearchBar() {
                             </div>
                             <div className="product__item__text">
                               <h6> {sock.name} </h6>
-                              <AddToBasketButton sock={sock} />
+                              <AddToCartButton sock={sock} />
                               <div className="rating">
                                 <Rating
                                   icon="star"

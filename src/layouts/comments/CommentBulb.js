@@ -12,7 +12,7 @@ export default function CommentBulb({ sockId }) {
     let commentService = new CommentService();
     commentService.getBySockId(sockId)
       .then((result) => setComments(result.data.data));
-  });
+  }, []);
   return (
     <div>
       <h1>Yorumlar</h1>

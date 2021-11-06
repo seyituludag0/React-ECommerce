@@ -14,13 +14,6 @@ import CardItem from "../favoriteProductItems/FavoriteProductItems";
 import { Favorite } from "@material-ui/icons";
 
 export default function MyFavorite() {
-  // const [favorites, setFavorites] = useState([]);
-  // useEffect(() => {
-  //   let favoriteService = new FavoriteService();
-  //   favoriteService
-  //     .getFavorites()
-  //     .then((result) => setFavorites(result.data.data));
-  // });
 
   const [anchorEl, setAnchorEl] = useState(false);
   const open = Boolean(anchorEl);

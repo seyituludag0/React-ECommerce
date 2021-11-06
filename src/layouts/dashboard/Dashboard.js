@@ -18,7 +18,7 @@ import BrandEditPage from "../../components/admin/brandEditPage/BrandEditPage";
 import ForgotPassword from "../../layouts/forgotPassword/ForgotPassword"
 import Contact from "../contact/Contact";
 import About from "../about/About";
-import BasketDetail from "../basket/BasketDetail";
+import CartDetail from "../cart/CartDetail";
 import RegisterLayout from "../registerLoginLayout/RegisterLayout";
 import UserInfos from "../userInfos/UserInfos";
 import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert";
@@ -45,7 +45,7 @@ export default function Dashboard() {
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/contact" component={Contact} />
         <Route path="/about" component={About} />
-        <Route path="/basketdetail" component={BasketDetail}/>
+        <Route path="/cartdetail" component={CartDetail}/>
         <Route exact path="/userprofile/:userId" component={UserInfos} />
 
 

@@ -9,4 +9,8 @@ export default class CartService{
         return axios.get("http://localhost:8080/api/addToCart/getCartsByUserId?userId=106")
     }
 
+    getByUserId(){
+        return axios.get("http://localhost:8080/api/carts/getByUserId?userId=106");
+    }
+
 }

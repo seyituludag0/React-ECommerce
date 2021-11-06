@@ -13,11 +13,14 @@ import { Settings, ExitToApp } from "@material-ui/icons";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWrench } from "@fortawesome/free-solid-svg-icons";
+import jwtDecode from "jwt-decode";
 
 export default function UserProfileSetting() {
   var history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
-  const[state] = useUserContext();
+  const [state] = useUserContext();
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -29,13 +32,19 @@ export default function UserProfileSetting() {
 
   const handleLogout = () => {
     localStorage.clear();
-    history.push("/")
+    history.push("/");
   };
 
   const userName = localStorage.getItem("userName");
 
-  
   const userId = state?.authenticatedUser?.id;
+
+  // if (token) {
+  var token = localStorage.getItem("token");
+  const decodedToken = jwtDecode(token);
+  //   if (decodedToken.roles == "ROLE_ADMIN") {
+
+  //   }
 
   return (
     <div
@@ -97,11 +106,27 @@ export default function UserProfileSetting() {
             <ListItemIcon>
               <Avatar fontSize="small" />
             </ListItemIcon>
-            Seçenekler
+            <Link to={`/userprofile/${userId}`} style={{ color: "#000" }}>
+              {localStorage.getItem("userName")}
+            </Link>
           </MenuItem>
 
-          <MenuItem><Link to={`/userprofile/${userId}`} style={{ color:"#000" }}>{localStorage.getItem("userName")}</Link></MenuItem>
+          <MenuItem>Seçenekler</MenuItem>
           <Divider />
+
+          {/* {  decodedToken.roles == "ROLE_ADMIN" ? <FontAwesomeIcon icon={faWrench} style={{ fontSize: "1.3rem" }} >dfg</FontAwesomeIcon> : null } */}
+          
+
+          <MenuItem>
+          {decodedToken.roles === "ROLE_ADMIN" ? (
+             <Link to="/admin" style={{ color: "#000" }}>
+           <ListItemIcon>
+            <FontAwesomeIcon icon={faWrench} style={{ fontSize: "1.3rem" }} />
+            </ListItemIcon>
+            Admin Paneli
+           </Link>
+          ) : null}
+          </MenuItem>
 
           <MenuItem>
             <ListItemIcon>

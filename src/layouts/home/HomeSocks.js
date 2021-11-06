@@ -4,7 +4,7 @@ import SockService from "../../services/SockService";
 import FavoriteService from "../../services/FavoriteService";
 import CategoryService from "../../services/CategoryService";
 import { Rating } from "semantic-ui-react";
-import AddToBasketButton from "../basketButton/AddToBasketButton";
+import AddToCartButton from "../cartButton/AddToCartButton";
 import search from "../../components/sock/img/icon/search.png";
 import compare from "../../components/sock/img/icon/compare.png";
 import { Link } from "react-router-dom";
@@ -29,7 +29,7 @@ export default function HomeSocks() {
   useEffect(() => {
     sockService.getMainSocks().then((result) => setMainSocks(result.data.data));
     categoryService.getAllCategory().then((result) => setCategories(result.data.data));
-  });
+  }, []);
 
   const handleAddFavorite = (sockId) => {
     // favoriteService.addFavorites(106, sockId).then((result) => toast.success(result.data.message));
@@ -87,7 +87,6 @@ export default function HomeSocks() {
                 <li className="nav-item" key={key}>
                   <a
                     className="nav-link active"
-                    href="#men"
                     role="tab"
                     id="men-tab"
                     data-toggle="tab"

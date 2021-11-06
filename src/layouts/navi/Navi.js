@@ -46,7 +46,7 @@ export default function Navi() {
         logout();
       }
     }
-  });
+  }, []);
 
   const logout = () => {
     dispatch({ type: authActionType.LOGOUT });

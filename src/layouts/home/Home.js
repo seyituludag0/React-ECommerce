@@ -9,23 +9,24 @@ import InstagramPosts from "./InstagramPosts";
 import { useUserContext } from "../../contexts/UserContext";
 
 
+
 export default function Home() {
   const [state] = useUserContext();
   const userId = state?.authenticatedUser?.id;
 
 
   useEffect(() => {
-    localStorage.setItem("userId", userId);
-  });
+    localStorage.setItem("userId", 115);
+  }, []);
 
   return (
     <div>
       {/* <TokenExpiredAlert /> */}
-       {/* <HomeSlider />
+      <HomeSlider />
       <HomeCategories />
       <HomeSocks />
-      <InstagramPosts /> */}
-      <HomeSocks />
+      <InstagramPosts />
+      
     </div>
   );
 }

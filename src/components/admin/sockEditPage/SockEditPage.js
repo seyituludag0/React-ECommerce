@@ -47,6 +47,7 @@ function Row() {
       <React.Fragment>
         {socks.map((sock, key) => (
           <TableRow key={key} sx={{ "& > *": { borderBottom: "unset" } }}>
+            <TableCell>{sock.id}</TableCell>
             <TableCell component="th" scope="row">
               {sock.name}
             </TableCell>
@@ -114,6 +115,7 @@ export default function SockEditPage() {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
+              <TableCell>Ürün Id</TableCell>
               <TableCell>Ürün Adı</TableCell>
               <TableCell align="right">Kategori</TableCell>
               <TableCell align="right">Marka</TableCell>
