@@ -18,6 +18,7 @@ import CommentService from "../../services/CommentService";
 import { Rating } from "@mui/material";
 import GlobalAddToCartButton from "../../layouts/globalAddToCartButton/GlobalAddToCartButton";
 import AllSockPageAddToCartButton from "../../layouts/allSockPageAddToCartButton/AllSockPageAddToCartButton";
+import SocksPageCategoryList from "../../layouts/socksPageCategoryList/SocksPageCategoryList";
 
 export default function AllSock() {
   let sockService = new SockService();
@@ -31,7 +32,7 @@ export default function AllSock() {
 
   useEffect(() => {
     let commentService = new CommentService();
-    commentService.getBySockId()
+    commentService.getBySockId(19)
       .then((result) => setComments(result.data.data));
   }, []);
 
@@ -74,9 +75,18 @@ export default function AllSock() {
   const onChange = (e, pageInfo) => {
     setActivePage(pageInfo.activePage);
   };
-  let pageAble = (pageNo) => {
-    setPageSize(pageNo);
+  
+  const getProducts = (categoryId) => {
+    let url = "http://localhost:8080/api/socks/";
+    if(categoryId){
+        url += "getSockByCategoryId?categoryId=" + categoryId
+    }
+    sockService.getSockByCategoryId(categoryId).then((result)=>setSocks(result.data.data))
   };
+
+  const changeCategory = (category) => {
+    getProducts(category.id);
+  }
 
   return (
     <>
@@ -87,22 +97,7 @@ export default function AllSock() {
         <Grid.Column width={10}>
           <section className="my-products">
             <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <ul className="filter__controls">
-                    {categories.map((category) => (
-                      <li key={category.id}>
-                        <Link
-                          to={`/category/${category.id}`}
-                          style={{ textDecoration: "none", color: "#000" }}
-                        >
-                          {category.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <SocksPageCategoryList changeCategory={changeCategory}/>
               <div className="row product__filter">
                 <h3 style={{ textAlign: "center" }}>Tüm Ürünler</h3>
                 <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 new-arrivals">

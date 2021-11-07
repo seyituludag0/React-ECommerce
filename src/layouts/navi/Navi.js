@@ -85,9 +85,9 @@ export default function Navi() {
           <div className="row">
             <div className="col-lg-3 col-md-3">
               <div className="header__logo">
-                <a href="/">
+                <Link to="/">
                   <img src={logo} alt="logo" />
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-6 col-md-6">
@@ -99,7 +99,7 @@ export default function Navi() {
                     </Menu.Item>
                   </li>
                   <li>
-                    <a href="/">SAYFALAR</a>
+                  <Link to="/">SAYFALAR</Link>
                     <ul className="dropdown">
                       <li>
                         <Menu.Item>

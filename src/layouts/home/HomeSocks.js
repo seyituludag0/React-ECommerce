@@ -68,6 +68,17 @@ export default function HomeSocks() {
 		)
 	}
 
+  const getProducts = (categoryId) => {
+    let url = "http://localhost:8080/api/socks/";
+    if(categoryId){
+        url += "getSockByCategoryId?categoryId=" + categoryId
+    }
+    sockService.getSockByCategoryId(categoryId).then((result)=>setMainSocks(result.data.data))
+  };
+
+  const changeCategory = (category) => {
+    getProducts(category.id);
+  }
 
   return (
     <div>
@@ -84,16 +95,10 @@ export default function HomeSocks() {
               role="tablist"
             >
               {categories.map((category, key) => (
-                <li className="nav-item" key={key}>
-                  <a
-                    className="nav-link active"
-                    role="tab"
-                    id="men-tab"
-                    data-toggle="tab"
-                    aria-controls="men"
-                  >
-                    {category.name} Çorapları
-                  </a>
+                <li className="nav-item" key={key} 
+                style={{cursor: "pointer"}}
+                onClick={()=> changeCategory(category)}>
+                  <a className="nav-link active">{category.name} Çorapları</a>
                 </li>
               ))}
             </ul>

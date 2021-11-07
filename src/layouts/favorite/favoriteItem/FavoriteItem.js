@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, Paper, Divider } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
-import FavoriteService from "../../services/FavoriteService";
+import FavoriteService from "../../../services/FavoriteService";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom"
 
-export default function FavoriteProductItems() {
+export default function FavoriteItems() {
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
     let favoriteService = new FavoriteService();

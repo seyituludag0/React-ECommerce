@@ -8,10 +8,10 @@ import {
   Divider,
   ListItemIcon,
 } from "@material-ui/core";
-import favorite from "../navi/img/icon/empyt-favorite.png";
+import { FavoriteBorder } from "@material-ui/icons";
+import FavoriteItem from "./favoriteItem/FavoriteItem";
 // import FavoriteService from "../../services/FavoriteService";
-import CardItem from "../favoriteProductItems/FavoriteProductItems";
-import { Favorite } from "@material-ui/icons";
+
 
 export default function MyFavorite() {
 
@@ -32,7 +32,7 @@ export default function MyFavorite() {
       >
         <Tooltip title="Favorilerim">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            <img alt="Favorilerim" src={favorite} />
+            <FavoriteBorder />
           </IconButton>
         </Tooltip>
       </Box>
@@ -73,16 +73,7 @@ export default function MyFavorite() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <ListItemIcon>
-            <Favorite fontSize="small" />
-          </ListItemIcon>
-          Favorilerim
-        </MenuItem>
-
-        <Divider />
-
-        <MenuItem>
-          <CardItem />
+          <FavoriteItem />
         </MenuItem>
         
       </Menu>
