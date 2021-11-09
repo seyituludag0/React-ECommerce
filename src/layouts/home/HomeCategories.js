@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 export default function HomeCategories() {
   return (
     <div>
-      <div className="row no-gutters pb-5" style={{marginTop:"-57rem"}}>
+      <div className="row no-gutters" style={{marginTop:"-57rem"}}>
         <div className="col-sm-4">
           <div className="hovereffect">
             <img className="img-fluid" src={men} alt="" />
@@ -54,7 +54,7 @@ export default function HomeCategories() {
             </div>
           </div>
         </div> */}
+        </div>
       </div>
-    </div>
   );
 }

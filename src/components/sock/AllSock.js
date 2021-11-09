@@ -120,8 +120,8 @@ export default function AllSock() {
                             </a>
                           </li>
                           <li>
-                            <a href="/">
-                              <img src={compare} alt="compare-icon" />
+                            <a>
+                              <img src={compare} alt="compare-icon" style={{cursor:"pointer"}} />
                               <span>Karşılaştır</span>
                             </a>
                           </li>
