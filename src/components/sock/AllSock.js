@@ -7,9 +7,6 @@ import favoriteAdded from "../sock/img/icon/favoriteAdded.png";
 import compare from "../sock/img/icon/compare.png";
 import { Link } from "react-router-dom";
 import { Grid, Pagination } from "semantic-ui-react";
-// import Categories from "../categories/Categories";
-// import Brands from "../brands/Brands";
-// import MySlider from "../MySlider";
 import FilterSock from "../../layouts/filterSock/FilterSock";
 import FavoriteService from "../../services/FavoriteService";
 import { toast } from "react-toastify";
@@ -19,6 +16,10 @@ import { Rating } from "@mui/material";
 import GlobalAddToCartButton from "../../layouts/globalAddToCartButton/GlobalAddToCartButton";
 import AllSockPageAddToCartButton from "../../layouts/allSockPageAddToCartButton/AllSockPageAddToCartButton";
 import SocksPageCategoryList from "../../layouts/socksPageCategoryList/SocksPageCategoryList";
+import SingleSock from "./SingleSock";
+import { addToComparison, removeToComparison } from "../../store/actions/compareAction"
+import CompareTable from "./CompareTable";
+
 
 export default function AllSock() {
   let sockService = new SockService();
@@ -90,6 +91,7 @@ export default function AllSock() {
 
   return (
     <>
+    <CompareTable />
       <Grid columns={3} padded>
         <Grid.Column width={3} style={{ background: "#d1d8e0" }}>
           <FilterSock handleOnFilter={handleOnFilter} corap={socks} />
@@ -102,61 +104,10 @@ export default function AllSock() {
                 <h3 style={{ textAlign: "center" }}>Tüm Ürünler</h3>
                 <div className="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 new-arrivals">
                   {socks.map((sock) => (
-                    <div className="product__item" key={sock.id}>
-                      <div className="product__item__pic set-bg">
-                        <img src={sock.sockImage?.image1} alt={sock.name} />
-                        <ul className="product__hover">
-                          <li>
-                            <a onClick={() => handleAddFavorite(sock.id)}>
-                              <img
-                                id="myFavorite"
-                                src="https://res.cloudinary.com/uludag-sock/image/upload/v1632920818/empytFavorite_gmr0mu.png"
-                                onClick={() => dom()}
-                                alt="favorite-icon"
-                              />
-                              <span style={{ left: "-8rem" }}>
-                                Favorilerime Ekle
-                              </span>
-                            </a>
-                          </li>
-                          <li>
-                            <a>
-                              <img src={compare} alt="compare-icon" style={{cursor:"pointer"}} />
-                              <span>Karşılaştır</span>
-                            </a>
-                          </li>
-                          <li>
-                            <Link to={`/sock-detail/${sock.id}`}>
-                              <img src={search} alt="search-icon" />
-                              <span style={{ left: "-7rem" }}>
-                                Detayları Gör
-                              </span>
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="product__item__text">
-                        <h6> {sock.name} </h6>
-                        <AllSockPageAddToCartButton sock={sock} />
-                        <div className="rating">
-                        
-                      <Rating name="read-only" value={3} readOnly />
-
-                        </div>
-                        <h5> {sock.price}₺</h5>
-                        <div className="product__color__select">
-                          <label htmlFor="pc-4">
-                            <input type="radio" id="pc-4" />
-                          </label>
-                          <label className="active black" htmlFor="pc-5">
-                            <input type="radio" id="pc-5" />
-                          </label>
-                          <label className="grey" htmlFor="pc-6">
-                            <input type="radio" id="pc-6" />
-                          </label>
-                        </div>
-                      </div>
-                    </div>
+                    <SingleSock products={sock}
+                    addToCompare={addToComparison}
+                    removeToCompare={removeToComparison}
+                    />
                   ))}
                 </div>
               </div>

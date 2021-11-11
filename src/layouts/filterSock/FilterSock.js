@@ -46,7 +46,7 @@ export default function FilterSock({ handleOnFilter }) {
   useEffect(()=>{
       categoryService.getAllCategory().then((result)=>setCategories(result.data.data))
       brandService.getAllBrands().then((result)=>setBrands(result.data.data))
-      console.log(coraps);
+      // console.log(coraps);
   }, []);
 
   const categoryOption = categories.map((category, index) => ({

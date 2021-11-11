@@ -1,53 +1,67 @@
 import axios from "axios";
 
 export default class SockService {
-    getAllSock(){
-        return axios.get("http://localhost:8080/api/socks/getAll")
-    }
-    
-    getSockByCategoryId(categoryId) {
-        return axios.get("http://localhost:8080/api/socks/getSockByCategoryId?categoryId=" + categoryId)
-    }
+  getAllSock() {
+    return axios.get("http://localhost:8080/api/socks/getAll");
+  }
 
-    getBySockId(sockId){
-        return axios.get("http://localhost:8080/api/socks/getBySockId?sockId=" + sockId)
-    }
+  getSockByCategoryId(categoryId) {
+    return axios.get(
+      "http://localhost:8080/api/socks/getSockByCategoryId?categoryId=" +
+        categoryId
+    );
+  }
 
-    filterPrice(max, min){
-        // return axios.post(`http://localhost:8080/api/socks/filterPrice?max=${max}&min=${min}`)
-        return axios.post("http://localhost:8080/api/socks/filterPrice?max=15&min=10")
-    }
+  getBySockId(sockId) {
+    return axios.get(
+      "http://localhost:8080/api/socks/getBySockId?sockId=" + sockId
+    );
+  }
 
-    getByFilter(values){
-        return axios.post("http://localhost:8080/api/socks/getByFilter", values)
-    }
+  filterPrice(max, min) {
+    // return axios.post(`http://localhost:8080/api/socks/filterPrice?max=${max}&min=${min}`)
+    return axios.post(
+      "http://localhost:8080/api/socks/filterPrice?max=15&min=10"
+    );
+  }
 
-    addToCardSock(cartId, sockId) {
-        return axios.post(`http://localhost:8080/api/socks/sock/${cartId}/${sockId}`);
-    }
+  getByFilter(values) {
+    return axios.post("http://localhost:8080/api/socks/getByFilter", values);
+  }
 
-    add(sock){
-        return axios.post("http://localhost:8080/api/socks/addDto", sock)
-    }
+  addToCardSock(cartId, sockId) {
+    return axios.post(
+      `http://localhost:8080/api/socks/sock/${cartId}/${sockId}`
+    );
+  }
 
-    update(sock){
-        return axios.post("http://localhost:8080/api/socks/updateDto", sock)
-    }
+  add(sock) {
+    return axios.post("http://localhost:8080/api/socks/addDto", sock);
+  }
 
-    delete(id){
-        return axios.post(`http://localhost:8080/api/socks/delete/${id}`)
-    }
+  update(sock) {
+    return axios.post("http://localhost:8080/api/socks/updateDto", sock);
+  }
 
-    getAllPagination(pageNo){
-        return axios.get("http://localhost:8080/api/socks/getAllPagination?pageNo=" + pageNo)
-    }
+  delete(id) {
+    return axios.post(`http://localhost:8080/api/socks/delete/${id}`);
+  }
 
-    searchKeyword(keyword, pageNo){
-        return axios.get(`http://localhost:8080/api/socks/searchKeyword?keyword=${keyword}&pageNo=${pageNo}`)
-    }
+  getAllPagination(pageNo) {
+    return axios.get(
+      "http://localhost:8080/api/socks/getAllPagination?pageNo=" + pageNo
+    );
+  }
 
-    getMainSocks(){
-        return axios.get("http://localhost:8080/api/socks/getAllPagination?pageNo=2");
-    }
+  searchKeyword(keyword, pageNo) {
+    return axios.get(
+      `http://localhost:8080/api/socks/searchKeyword?keyword=${keyword}&pageNo=${pageNo}`
+    );
+  }
 
+  getMainSocks() {
+    return axios.get(
+      "http://localhost:8080/api/socks/getAllPagination?pageNo=2"
+    );
+  }
 }
