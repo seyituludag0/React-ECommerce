@@ -22,7 +22,7 @@ export default function cartReducer(state = initialState, { type, payload }) {
     case REMOVE_TO_CART:
       return {
         ...state,
-        cartItems: state.favorite.filter((j) => j.sock.id !== payload.id),
+        cartItems: state.cartItems.filter((j) => j.sock.id !== payload.id),
       };
 
     default:

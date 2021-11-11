@@ -67,11 +67,6 @@ export default function AllSock() {
     console.log("filter: ", filter);
   };
 
-  function dom() {
-    let myFavoriteDOM = document.querySelector("#myFavorite");
-    myFavoriteDOM.src =
-      "https://res.cloudinary.com/uludag-sock/image/upload/v1632921673/favoriteAdded_gekw12.png";
-  }
 
   const onChange = (e, pageInfo) => {
     setActivePage(pageInfo.activePage);

@@ -69,11 +69,6 @@ export default function SearchBar() {
       .then((result) => toast.success(result.data.message));
   };
 
-  function dom() {
-    let myFavoriteDOM = document.querySelector("#myFavorite");
-    myFavoriteDOM.src =
-      "https://res.cloudinary.com/uludag-sock/image/upload/v1632921673/favoriteAdded_gekw12.png";
-  }
 
   return (
     <section>
@@ -135,7 +130,6 @@ export default function SearchBar() {
                                     <img
                                       id="myFavorite"
                                       src="https://res.cloudinary.com/uludag-sock/image/upload/v1632920818/empytFavorite_gmr0mu.png"
-                                      onClick={() => dom()}
                                       alt="favorite-icon"
                                     />
                                     <span style={{ left: "-8rem" }}>

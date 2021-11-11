@@ -13,20 +13,21 @@ import {
   addToComparison,
   removeToComparison,
 } from "../../store/actions/compareAction";
-import CompareTable from "./CompareTable";
+import empytFavorite from "./img/icon/empytFavorite.png"
+import favoriteAdded from "./img/icon/favoriteAdded.png"
 
 export default function SingleSock({ products, addToCompare, removeToCompare }) {
   let favoriteService = new FavoriteService();
   let sockService = new SockService();
 
   const [socks, setSocks] = useState([]);
-  const [added, setAdded] = useState(false);
+  const [addedCompare, setAddedCompare] = useState(false);
+  const [addedFavorite, setAddedFavorite] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const [pageSize, setPageSize] = useState(2);
   const dispatch = useDispatch();
 
   const product = products;
-  // console.log(product);
 
   useEffect(() => {
     sockService
@@ -34,57 +35,70 @@ export default function SingleSock({ products, addToCompare, removeToCompare }) 
       .then((result) => setSocks(result.data.data));
   }, [activePage, pageSize]);
 
+
+
   const handleAddFavorite = (sockId) => {
-    favoriteService
-      .addFavorites(106, sockId)
+    setAddedFavorite(true);
+    favoriteService.addFavorites(106, sockId)
       .then((result) => toast.success(result.data.message));
   };
 
-  const removeFromFavorite = (sockId) => {
-    // favoriteService.addFavorites(60, sockId).then((result)=>toast.success("Favorilerinizden kaldırıldı"))
-    favoriteService
-      .existsByCustomerIdAndSockId(60, sockId)
+  const handleRemoveFromFavorite = (sockId) => {
+    setAddedFavorite(false);
+    favoriteService.removeFromFavorites(106, sockId)
       .then((result) => toast.success("Favorilerinizden kaldırıldı"));
   };
 
-  function dom() {
-    let myFavoriteDOM = document.querySelector("#myFavorite");
-    myFavoriteDOM.src =
-      "https://res.cloudinary.com/uludag-sock/image/upload/v1632921673/favoriteAdded_gekw12.png";
-  }
+  const checkFavoriteByCustomer = (sockId) =>{
+    favoriteService.existsByCustomerIdAndSockId(106, sockId).then((result)=>console.log(result.data))
+  } 
 
   const addToCompareProduct = (product) => {
-    setAdded(true);
-    console.log("added", added);
+    setAddedCompare(true);
     dispatch(addToComparison(product));
   };
 
   const removeToCompareProduct = (product) => {
-    setAdded(false);
-    console.log("added", added);
+    setAddedCompare(false);
     dispatch(removeToComparison(product));
   };
 
+  const favoriteFunctions = () => {
+    handleAddFavorite(1);
+    checkFavoriteByCustomer(1)
+  }
+
   return (
     <div>
-      
       <div className="product__item" key={product.id}>
         <div className="product__item__pic set-bg">
           <img src={product.sockImage?.image1} alt={product.name} />
           <ul className="product__hover">
             <li>
-              <a onClick={() => handleAddFavorite(product.id)}>
-                <img
-                  id="myFavorite"
-                  src="https://res.cloudinary.com/uludag-sock/image/upload/v1632920818/empytFavorite_gmr0mu.png"
-                  onClick={() => dom()}
-                  alt="favorite-icon"
-                />
-                <span style={{ left: "-8rem" }}>Favorilerime Ekle</span>
-              </a>
+            {addedFavorite ? (
+                <>
+                  <img
+                    src={favoriteAdded}
+                    alt="compare-icon"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleRemoveFromFavorite(product.id)}
+                  />
+                  <span>Kaldır</span>
+                </>
+              ) : (
+                <>
+                  <img
+                    src={empytFavorite}
+                    alt="compare-icon"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => favoriteFunctions()}
+                  />
+                  <span>Favorilere Ekle</span>
+                </>
+              )}
             </li>
             <li>
-              {added ? (
+              {addedCompare ? (
                 <>
                   <img
                     src={disCompare}
