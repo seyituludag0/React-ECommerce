@@ -16,7 +16,7 @@ import {
   Dropdown,
 } from "semantic-ui-react";
 
-export default function WorkPlaceUpdate({ sock }) {
+export default function SockUpdate({ sock }) {
   const [open, setOpen] = useState(false);
 
   let formik = useFormik({

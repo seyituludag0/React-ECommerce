@@ -6,6 +6,7 @@ import { CartContextValue } from "../../contexts/ContextProvider";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { HttpPostwithToken } from "../../configs/HttpConfig";
 import { toast } from "react-toastify";
+import DiscountCouponForm from "./DiscountCouponForm";
 
 export default function CartDetail() {
   const [cartData, dispatch] = CartContextValue();
@@ -26,6 +27,13 @@ export default function CartDetail() {
     return cartData.cartItems.reduce(
       (prevValue, currentValue) => prevValue + currentValue.price,
       0
+    );
+  };
+
+  const getDiscountedAmount = () => {
+    return cartData.cartItems.reduce(
+      (prevValue, currentValue) => prevValue + currentValue.price,
+      -10
     );
   };
 
@@ -161,13 +169,7 @@ export default function CartDetail() {
               </div>
             </div>
             <div className="col-lg-4">
-              <div className="cart__discount">
-                <h6>İndirim Kodu Uygula</h6>
-                <form action="#">
-                  <input type="text" placeholder="Kupon Kodu" />
-                  <button type="submit">Uygula</button>
-                </form>
-              </div>
+              <DiscountCouponForm />
               <div className="cart__total">
                 <h6>Toplam Fiyat</h6>
                 <ul>

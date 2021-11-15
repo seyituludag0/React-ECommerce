@@ -9,7 +9,6 @@ import InstagramPosts from "./InstagramPosts";
 import { useUserContext } from "../../contexts/UserContext";
 
 
-
 export default function Home() {
   const [state] = useUserContext();
   const userId = state?.authenticatedUser?.id;
@@ -26,6 +25,7 @@ export default function Home() {
       <HomeCategories />
       <HomeSocks />
       <InstagramPosts />
+
       
     </div>
   );

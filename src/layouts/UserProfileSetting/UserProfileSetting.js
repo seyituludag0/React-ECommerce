@@ -118,7 +118,7 @@ export default function UserProfileSetting() {
           
 
           <MenuItem>
-          {decodedToken.roles === "ROLE_ADMIN" ? (
+          {decodedToken.roles || "ROLE_ADMIN" || "ROLE_USER"  ? (
              <Link to="/admin" style={{ color: "#000" }}>
            <ListItemIcon>
             <FontAwesomeIcon icon={faWrench} style={{ fontSize: "1.3rem" }} />

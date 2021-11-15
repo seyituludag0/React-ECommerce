@@ -22,6 +22,7 @@ import CartDetail from "../cart/CartDetail";
 import RegisterLayout from "../registerLoginLayout/RegisterLayout";
 import UserInfos from "../userInfos/UserInfos";
 import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert";
+import CampaignManagementEditPage from "../../components/admin/campaignManagementEditPage/CampaignManagementEditPage";
 
 export default function Dashboard() {
   return (
@@ -42,6 +43,7 @@ export default function Dashboard() {
         <Route path="/sockeditpage" component={SockEditPage} />
         <Route path="/categoryeditpage" component={CategoryEditPage} />
         <Route path="/brandeditpage" component={BrandEditPage} />
+        <Route path="/campaignmanagementeditpage" component={CampaignManagementEditPage} />
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/contact" component={Contact} />
         <Route path="/about" component={About} />
