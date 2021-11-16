@@ -16,7 +16,7 @@ import {
 export default function CategoryUpdate({ category }) {
   const [open, setOpen] = useState(false);
 
-  let formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       name: category?.name,
       categoryId: category?.id,

@@ -7,7 +7,7 @@ import { Button, Form, Input, Modal } from "semantic-ui-react";
 export default function BrandUpdate({ brand }) {
   const [open, setOpen] = useState(false);
 
-  let formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       name: brand?.name,
       brandId: brand?.id,

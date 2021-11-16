@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router";
 import CampaignManagementService from "../../../services/CampaignManagementService";
 export default function CampaignCreate() {
-  let formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       campaignName: "",
       couponCode: "",
@@ -113,7 +113,7 @@ export default function CampaignCreate() {
                     )}
                 </Form.Field>
                 <Button
-                  content="Güncelle"
+                  content="Kampanyayı Oluştur"
                   labelPosition="right"
                   icon="pencil"
                   primary

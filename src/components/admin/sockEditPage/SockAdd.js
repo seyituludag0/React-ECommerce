@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router";
 export default function SockAdd() {
   let [image, setImage] = useState({});
-  let formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       name: "",
       categoryId: "",

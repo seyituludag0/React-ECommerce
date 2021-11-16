@@ -16,7 +16,7 @@ import {
 export default function CampaignUpdate({ campaign }) {
   const [open, setOpen] = useState(false);
 
-  let formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       id: campaign?.id,
       campaignName: campaign?.campaignName,

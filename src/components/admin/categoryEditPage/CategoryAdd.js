@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import { toast } from "react-toastify";
 export default function CategoryAdd() {
-  let formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       name: "",
     },

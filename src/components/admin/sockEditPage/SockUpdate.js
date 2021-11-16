@@ -19,7 +19,7 @@ import {
 export default function SockUpdate({ sock }) {
   const [open, setOpen] = useState(false);
 
-  let formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       id: sock?.id,
       name: sock?.name,

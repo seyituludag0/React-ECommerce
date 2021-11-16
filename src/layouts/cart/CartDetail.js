@@ -7,6 +7,9 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { HttpPostwithToken } from "../../configs/HttpConfig";
 import { toast } from "react-toastify";
 import DiscountCouponForm from "./DiscountCouponForm";
+import { useFormik } from "formik";
+import CampaignManangementService from "../../services/CampaignManagementService";
+import { Form, Input } from "semantic-ui-react";
 
 export default function CartDetail() {
   const [cartData, dispatch] = CartContextValue();
@@ -22,6 +25,7 @@ export default function CartDetail() {
     "9",
     "10",
   ]);
+  const [couponCodeApplied, setCouponCodeApplied] = useState(false);
 
   const getTotalAmount = () => {
     return cartData.cartItems.reduce(
@@ -30,15 +34,19 @@ export default function CartDetail() {
     );
   };
 
+  const couponCodeApply = () => {
+    setCouponCodeApplied(true);
+  };
   const getDiscountedAmount = () => {
+    // Matematiksel hesaplama formülü: ((100 - 12) / 100) x 2000 = 1760 TL
     return cartData.cartItems.reduce(
       (prevValue, currentValue) => prevValue + currentValue.price,
-      -10
+      -25
     );
   };
 
   const quantityChange = (cartObj, e) => {
-    console.log(cartObj,e.target.value);
+    console.log(cartObj, e.target.value);
     let price = cartObj.price * e.target.value;
     let obj = { cartId: cartObj.id, quantity: e.target.value, price: price };
     HttpPostwithToken("addToCart/updateQuantityForCart", obj)
@@ -81,6 +89,22 @@ export default function CartDetail() {
       });
   };
 
+  //DISCOUNT
+  const formik = useFormik({
+    initialValues: {
+      couponCode: "",
+    },
+    onSubmit: (couponCode) => {
+      console.log(couponCode);
+      let campaignManangementService = new CampaignManangementService();
+      campaignManangementService
+        .verifyCouponCode(couponCode.couponCode)
+        .then((result) => toast.success(result.data.message))
+        // .finally(() => finalMyMethod());
+        couponCodeApply();
+    },
+  });
+  //DISCOUNT
 
   return (
     <div>
@@ -169,16 +193,48 @@ export default function CartDetail() {
               </div>
             </div>
             <div className="col-lg-4">
-              <DiscountCouponForm />
+              <Form onSubmit={formik.handleSubmit}>
+                <Form.Field>
+                  <Input
+                    placeholder="Kupon Kodu"
+                    error={Boolean(formik.errors.couponCode).toString()}
+                    value={formik.values.couponCode}
+                    name="couponCode"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.errors.couponCode && formik.touched.couponCode && (
+                    <div className={"ui pointing red basic label"}>
+                      {formik.errors.couponCode}
+                    </div>
+                  )}
+                </Form.Field>
+                <button style={{ backgroundColor: "black" }}>Uygula</button>
+              </Form>
               <div className="cart__total">
-                <h6>Toplam Fiyat</h6>
+                <h6>Fiyat Bilgileri</h6>
                 <ul>
-                  <li>
+                  {/* <li>
                     Aratoplam <span>0₺</span>
-                  </li>
-                  <li>
-                    Toplam <span>{getTotalAmount()}₺</span>
-                  </li>
+                  </li> */}
+                  {couponCodeApplied ? (
+                    <>
+                      <li className="discount-li">
+                        Toplam Fiyat
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <del>{getTotalAmount()}₺</del>
+                      </li>
+                      <li className="discount-li">
+                        İndirimli Fiyat<span>{getDiscountedAmount()}₺</span>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        Toplam Fiyat<span>{getTotalAmount()}₺</span>
+                      </li>
+                    </>
+                  )}
                 </ul>
                 <Link to="#" className="primary-btn" style={{ color: "#fff" }}>
                   Ödemeye Git

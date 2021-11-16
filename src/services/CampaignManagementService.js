@@ -16,4 +16,9 @@ export default class CampaignManagementService{
     delete(id){
         return axios.post(`http://localhost:8080/api/campaignManagement/delete/${id}`)
     }
+
+    verifyCouponCode(couponCode){
+        return axios.post(`http://localhost:8080/api/campaignManagement/verifyCouponCode?couponCode=${couponCode}`)
+    }
+
 }
