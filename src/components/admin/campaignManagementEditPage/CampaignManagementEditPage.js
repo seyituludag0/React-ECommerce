@@ -67,6 +67,7 @@ function Row() {
                 </CopyToClipboard>
               </Tooltip>
             </TableCell>
+            <TableCell align="right">{campaign.discountRate}</TableCell>
             <TableCell align="right">{campaign.campaignExpiredDate}</TableCell>
             <TableCell align="right">{campaign.campaignDetails}</TableCell>
             <TableCell align="right">
@@ -106,6 +107,7 @@ export default function CampaignManagementEditPage() {
               <TableCell>Kampanya Id</TableCell>
               <TableCell>Kampanya Adı</TableCell>
               <TableCell align="right">Kupon kodu</TableCell>
+              <TableCell align="right">İndirim Oranı</TableCell>
               <TableCell align="right">Kampanyanın Bitiş Tarihi</TableCell>
               <TableCell align="center">Kampanya Detayları</TableCell>
               <TableCell align="right">Güncelle</TableCell>

@@ -24,6 +24,7 @@ export default function CampaignCreate() {
     initialValues: {
       campaignName: "",
       couponCode: "",
+      discountRate:"",
       campaignExpiredDate: "",
       campaignDetails: "",
     },
@@ -75,6 +76,22 @@ export default function CampaignCreate() {
                   {formik.errors.couponCode && formik.touched.couponCode && (
                     <div className={"ui pointing red basic label"}>
                       {formik.errors.couponCode}
+                    </div>
+                  )}
+                </Form.Field>
+                <Form.Field>
+                  <Input
+                    placeholder="İndirim Oranı"
+                    error={Boolean(formik.errors.discountRate).toString()}
+                    value={formik.values.discountRate}
+                    name="discountRate"
+                    type="number"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.errors.discountRate && formik.touched.discountRate && (
+                    <div className={"ui pointing red basic label"}>
+                      {formik.errors.discountRate}
                     </div>
                   )}
                 </Form.Field>

@@ -21,6 +21,7 @@ export default function CampaignUpdate({ campaign }) {
       id: campaign?.id,
       campaignName: campaign?.campaignName,
       couponCode: campaign?.couponCode,
+      discountRate: campaign?.discountRate,
       campaignExpiredDate: campaign?.campaignExpiredDate,
       campaignDetails: campaign?.campaignDetails,
     },
@@ -92,6 +93,22 @@ export default function CampaignUpdate({ campaign }) {
                 </div>
               )}
             </Form.Field>
+            <Form.Field>
+                  <Input
+                    placeholder="İndirim Oranı"
+                    error={Boolean(formik.errors.discountRate).toString()}
+                    value={formik.values.discountRate}
+                    name="discountRate"
+                    type="number"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.errors.discountRate && formik.touched.discountRate && (
+                    <div className={"ui pointing red basic label"}>
+                      {formik.errors.discountRate}
+                    </div>
+                  )}
+                </Form.Field>
             <Form.Field>
               <Input
                 style={{ width: "100%" }}

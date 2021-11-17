@@ -41,7 +41,7 @@ export default function CartDetail() {
     // Matematiksel hesaplama formülü: ((100 - 12) / 100) x 2000 = 1760 TL
     return cartData.cartItems.reduce(
       (prevValue, currentValue) => prevValue + currentValue.price,
-      -25
+      -750
     );
   };
 
