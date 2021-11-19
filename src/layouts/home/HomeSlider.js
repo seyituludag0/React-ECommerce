@@ -1,6 +1,5 @@
 import React from "react";
 import { CarouselProvider, Slide, Slider } from "pure-react-carousel";
-import { Divider } from "semantic-ui-react";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { Link } from "react-router-dom";
 

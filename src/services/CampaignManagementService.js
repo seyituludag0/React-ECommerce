@@ -21,4 +21,8 @@ export default class CampaignManagementService{
         return axios.post(`http://localhost:8080/api/campaignManagement/verifyCouponCode?couponCode=${couponCode}`)
     }
 
+    getRandomCampaign(){
+        return axios.get("http://localhost:8080/api/campaignManagement/getRandomCampaign?limit=1")
+    }
+
 }
