@@ -25,4 +25,9 @@ export default class CampaignManagementService{
         return axios.get("http://localhost:8080/api/campaignManagement/getRandomCampaign?limit=1")
     }
 
+    getByCampaignId(campaignId){
+        return axios.get(`http://localhost:8080/api/campaignManagement/getByCampaignId?campaignId=${campaignId}`)
+    }
+    
+
 }

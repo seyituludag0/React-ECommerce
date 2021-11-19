@@ -19,7 +19,7 @@ import SocksPageCategoryList from "../../layouts/socksPageCategoryList/SocksPage
 import SingleSock from "./SingleSock";
 import { addToComparison, removeToComparison } from "../../store/actions/compareAction"
 import CompareTable from "./CompareTable";
-
+import CampaignTopBanner from "../../layouts/campaigns/campaignbanners/CampaignTopBanner";
 
 export default function AllSock() {
   let sockService = new SockService();
@@ -30,13 +30,6 @@ export default function AllSock() {
   const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState([]);
   const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    let commentService = new CommentService();
-    commentService.getBySockId(19)
-      .then((result) => setComments(result.data.data));
-  }, []);
-
   const [activePage, setActivePage] = useState(1);
   const [pageSize, setPageSize] = useState(2);
 
@@ -94,6 +87,7 @@ export default function AllSock() {
         <Grid.Column width={10}>
           <section className="my-products">
             <div className="container">
+            <CampaignTopBanner />
               <SocksPageCategoryList changeCategory={changeCategory}/>
               <div className="row product__filter">
                 <h3 style={{ textAlign: "center" }}>Tüm Ürünler</h3>

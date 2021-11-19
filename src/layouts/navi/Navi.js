@@ -50,7 +50,6 @@ export default function Navi() {
 
   const logout = () => {
     dispatch({ type: authActionType.LOGOUT });
-    // alert("Yallah")
     localStorage.clear()
     history.push("/login");
     
@@ -65,22 +64,17 @@ export default function Navi() {
               type: "add_cart",
               data: data,
             });
-            //alert("Successfully added..")
           } else {
             alert(data.message);
           }
         });
       }
-      // error=>{
-      // 	alert(error.message);
-      // }
+     
     );
   };
 
   return (
     <div>
-      {/* Navbar */}
-      {!state.isAdmin ? (
         <div className="container">
           <div className="row">
             <div className="col-lg-3 col-md-3">
@@ -151,54 +145,6 @@ export default function Navi() {
             </div>
           </div>
         </div>
-      ) : (
-        <>
-          <AdminNavi />
-        </>
-      )}
-      {/* Navbar */}
-
-      {/* <Link to={"/checkoutcart/"}>Checkout Cart</Link>
-      <div style={{ float: "right", cursor: "pointer" }}>X</div>
-      <ul>
-        {cartData.cartItems.map((cartObj) => (
-          <li
-            key={cartObj.id}
-            className="sbmincart-item sbmincart-item-changed"
-          >
-            <div className="sbmincart-details-name">
-              <a className="sbmincart-name">Name: {cartObj.name}</a>
-              <ul className="sbmincart-attributes"></ul>
-            </div>
-            <div className="sbmincart-details-quantity">
-              <span className="sbmincart-quantity">
-                Quantity: {cartObj.quantity}
-              </span>
-            </div>
-            <div className="sbmincart-details-remove">
-              <button
-                type="button"
-                className="sbmincart-remove"
-                data-sbmincart-idx="0"
-              >
-                ×
-              </button>
-            </div>
-            <div className="sbmincart-details-price">
-              <span className="sbmincart-price">Price: {cartObj.price}₺</span>
-              <hr />
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      <ul>
-      <div>
-			   <span>Total: </span>
-			   
-					<span>{	getTotalAmount()}₺</span>
-		   </div>
-      </ul> */}
     </div>
   );
 }

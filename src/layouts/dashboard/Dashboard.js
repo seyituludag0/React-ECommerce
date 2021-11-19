@@ -23,6 +23,7 @@ import RegisterLayout from "../registerLoginLayout/RegisterLayout";
 import UserInfos from "../userInfos/UserInfos";
 import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert";
 import CampaignManagementEditPage from "../../components/admin/campaignManagementEditPage/CampaignManagementEditPage";
+import CampaignDetails from "../campaigns/campaignDetails/CampaignDetails";
 
 export default function Dashboard() {
   return (
@@ -49,7 +50,7 @@ export default function Dashboard() {
         <Route path="/about" component={About} />
         <Route path="/cartdetail" component={CartDetail}/>
         <Route exact path="/userprofile/:userId" component={UserInfos} />
-
+        <Route path="/campaigndetails/:campaignId" component={CampaignDetails} />
 
 
 

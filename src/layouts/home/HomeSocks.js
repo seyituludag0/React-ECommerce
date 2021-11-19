@@ -12,8 +12,9 @@ import { CartContextValue } from "../../contexts/ContextProvider";
 import { HttpPostwithToken } from "../../configs/HttpConfig";
 import { toast } from "react-toastify";
 import { Grid, Image } from "semantic-ui-react";
-import CampaignLeftBanner from "../campaignbanners/CampaignLeftBanner";
-import CampaignRightBanner from "../campaignbanners/CampaignRightBanner";
+import CampaignLeftBanner from "../../layouts/campaigns/campaignbanners/CampaignLeftBanner"
+import CampaignRightBanner from "../../layouts/campaigns/campaignbanners/CampaignRightBanner"
+
 
 export default function HomeSocks() {
 
@@ -84,7 +85,7 @@ export default function HomeSocks() {
       <Grid celled="internally">
         <Grid.Row>
           <CampaignLeftBanner />
-          <Grid.Column width={12}>
+          <Grid.Column width={10}>
             <section className="tabs_pro py-md-5 pt-sm-3 pb-5">
               <h5 className="head_agileinfo text-center text-capitalize pb-5">
                 <span style={{ color: "#4043bf" }}>B</span>aşlıca Ürünlerimiz

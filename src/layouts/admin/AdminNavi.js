@@ -114,24 +114,6 @@ export default function AdminNavi() {
               </li>
             </ul>
           </nav>
-                  {/* <NavbarBrand
-                    style={{ marginLeft: "30rem" }}
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <Button
-                      id="switchToUserButton"
-                      onClick={() => switchToUserView()}
-                    >
-                      Kullanıcı Görünümüne Geç
-                    </Button>
-
-                    <Button
-                      id="switchToAdminButton"
-                      onClick={() => switchToAdminView()}
-                    >
-                      Admin Görünümüne Geç
-                    </Button>
-                  </NavbarBrand> */}
                   <button className="navbar-toggler" id="nav-inner-primary">
                     <span className="navbar-toggler-icon" />
                   </button>
