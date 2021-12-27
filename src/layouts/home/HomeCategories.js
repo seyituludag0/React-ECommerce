@@ -13,7 +13,7 @@ export default function HomeCategories() {
           <div className="hovereffect">
             <img className="img-fluid" src={men} alt="" />
             <div className="overlay">
-              <h5>Erkek Çorapları</h5>
+              <h5>Erkek Ürünleri</h5>
               <Link className="info"  to="/category/1">
                 Ürünleri Gör
               </Link>
@@ -24,7 +24,7 @@ export default function HomeCategories() {
           <div className="hovereffect">
             <img className="img-fluid" src={women} alt="" />
             <div className="overlay">
-              <h5>Bayan Çorapları</h5>
+              <h5>Bayan Ürünleri</h5>
               <Link className="info" to="/category/2">
                 Ürünleri Gör
               </Link>
@@ -35,7 +35,7 @@ export default function HomeCategories() {
           <div className="hovereffect">
             <img className="img-fluid" src={kid} alt="" />
             <div className="overlay">
-              <h5>Çocuk Çorapları</h5>
+              <h5>Çocuk Ürünleri</h5>
               <Link className="info"  to="/category/4">
                 Ürünleri Gör
               </Link>

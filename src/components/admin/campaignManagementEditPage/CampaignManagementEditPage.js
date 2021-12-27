@@ -37,7 +37,7 @@ function Row() {
     campaignManagementService
       .getAll()
       .then((result) => setCampaigns(result.data.data));
-  }, [campaigns]);
+  }, []);
   const [copiedText, setCopiedText] = useState();
 
   return (

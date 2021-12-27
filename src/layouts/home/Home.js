@@ -4,10 +4,10 @@ import "./bootstrap.css";
 import "./owl.carousel.min.css";
 import HomeSlider from "./HomeSlider";
 import HomeCategories from "./HomeCategories";
-import HomeSocks from "./HomeSocks";
+import HomeProducts from "./HomeProducts";
 import InstagramPosts from "./InstagramPosts";
 import { useUserContext } from "../../contexts/UserContext";
-
+import ButtonExample from "../ButtonExample"
 
 export default function Home() {
   const [state] = useUserContext();
@@ -15,18 +15,16 @@ export default function Home() {
 
 
   useEffect(() => {
-    localStorage.setItem("userId", 106);
+    localStorage.setItem("userId", 121);
   }, []);
 
   return (
     <div>
-      {/* <TokenExpiredAlert /> */}
       <HomeSlider />
       <HomeCategories />
-      <HomeSocks />
+      <HomeProducts />
       <InstagramPosts />
-
-      
+      {/* <ButtonExample /> */}
     </div>
   );
 }

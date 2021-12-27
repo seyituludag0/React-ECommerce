@@ -3,15 +3,15 @@ import { CarouselProvider, Image, Slide, Slider } from "pure-react-carousel";
 import { Divider } from "semantic-ui-react";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import CustomDotGroup from "./CustomDotGroup";
-import SockImageService from "/react/sock-ecommerce/src/services/SockImageService";
+import ProductImageService from "/react/sock-ecommerce/src/services/ProductImageService";
 
 export default function ImageCarousel() {
-  const [sockImages, setSockImages] = useState([]);
+  const [productImages, setProductImages] = useState([]);
   useEffect(() => {
-    let sockImageService = new SockImageService();
-    sockImageService
-      .getBySockId(1)
-      .then((result) => setSockImages(result.data.data));
+    let productImageService = new ProductImageService();
+    productImageService
+      .getByProductId(1)
+      .then((result) => setProductImages(result.data.data));
   }, []);
 
   return (

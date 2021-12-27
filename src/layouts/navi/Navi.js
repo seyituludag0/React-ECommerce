@@ -6,29 +6,13 @@ import logo from "../navi/img/logo.jpg";
 import RegisterLoginLayout from "../registerLoginLayout/RegisterLoginLayout";
 import UserProfileMenuExample from "./UserProfileMenuExample";
 import { useUserContext } from "../../contexts/UserContext";
-import {
-  UncontrolledCollapse,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledDropdown,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
-import UserProfileSetting from "../userProfileSetting/UserProfileSetting";
-import AdminNavi from "../admin/AdminNavi";
 import { CartContextValue } from "../../contexts/ContextProvider";
 import * as authActionType from "../../store/actions/authAction";
 import { useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert"
-import { HttpPostwithToken } from "../../configs/HttpConfig";
+import { HttpGetwithToken } from "../../configs/HttpConfig";
+import CartService from "../../services/CartService";
 
 
 export default function Navi() {
@@ -55,23 +39,28 @@ export default function Navi() {
     
   };
 
-  const getCartApi = () => {
-    HttpPostwithToken("addToCart/getCartsByUserId", {}).then(
-      (res) => {
-        res.json().then((data) => {
-          if (res.ok) {
-            dispatch({
-              type: "add_cart",
-              data: data,
-            });
-          } else {
-            alert(data.message);
-          }
-        });
-      }
+  // const getCartApi = () => {
+  //   HttpGetwithToken("addToCart/getCartByUserId", {}).then(
+  //     (res) => {
+  //       res.json().then((data) => {
+  //         if (res.ok) {
+  //           dispatch({
+  //             type: "add_cart",
+  //             data: data,
+  //           });
+  //         } else {
+  //           alert(data.message);
+  //         }
+  //       });
+  //     }
      
-    );
-  };
+  //   );
+  // };
+
+  const getCartApi = () => {
+    let cartService = new CartService();
+    cartService.getCartsByUserId(121).then((result)=>dispatch({type:"add_cart", data:result.data}))
+  }
 
   return (
     <div>
@@ -97,7 +86,7 @@ export default function Navi() {
                     <ul className="dropdown">
                       <li>
                         <Menu.Item>
-                          <Link to="/socks">ÜRÜNLER</Link>
+                          <Link to="/products">ÜRÜNLER</Link>
                         </Menu.Item>
                       </li>
                       <li>
@@ -118,11 +107,6 @@ export default function Navi() {
                       <li>
                         <Menu.Item>
                           <Link to="/contact">İLETİŞİM</Link>
-                        </Menu.Item>
-                      </li>
-                      <li>
-                        <Menu.Item>
-                          <Link to="/admin">ADMIN</Link>
                         </Menu.Item>
                       </li>
                     </ul>

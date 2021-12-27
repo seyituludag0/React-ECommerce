@@ -16,6 +16,7 @@ import { useUserContext } from "../../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
 import jwtDecode from "jwt-decode";
+import { Icon } from "semantic-ui-react"
 
 export default function UserProfileSetting() {
   var history = useHistory();
@@ -108,6 +109,15 @@ export default function UserProfileSetting() {
             </ListItemIcon>
             <Link to={`/userprofile/${userId}`} style={{ color: "#000" }}>
               {localStorage.getItem("userName")}
+            </Link>
+          </MenuItem>
+
+          <MenuItem>
+            <ListItemIcon>
+              <Icon name="box" />
+            </ListItemIcon>
+            <Link to="/orderinformation" style={{ color: "#000" }}>
+              Siparişlerim
             </Link>
           </MenuItem>
 

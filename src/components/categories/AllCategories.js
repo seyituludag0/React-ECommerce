@@ -23,7 +23,7 @@ export default function AllCategories() {
               {categories.map((category) => (
                 <div className="product__item" key={category.id}>
                   <h2 style={{ textAlign: "center" }}>
-                    {category.name} Çorapları
+                    {category.name} Ürünleri
                   </h2>
                   <div className="product__item__pic set-bg">
                     <Link to={`/category/${category.id}`}>

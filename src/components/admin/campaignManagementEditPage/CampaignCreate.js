@@ -1,11 +1,5 @@
 import { useFormik } from "formik";
-import SockImageUpload from "../../../components/SockImageUpload";
-import React, { useEffect, useState } from "react";
-import SockService from "../../../services/SockService";
-import CategoryService from "../../../services/CategoryService";
-import BrandService from "../../../services/BrandService";
-import ColorService from "../../../services/ColorService";
-// import validationRules from "./validationRules";
+import React from "react";
 import {
   Button,
   Dropdown,
@@ -17,7 +11,6 @@ import {
   Image,
 } from "semantic-ui-react";
 import { toast } from "react-toastify";
-import { useParams } from "react-router";
 import CampaignManagementService from "../../../services/CampaignManagementService";
 export default function CampaignCreate() {
   const formik = useFormik({
@@ -30,7 +23,6 @@ export default function CampaignCreate() {
     },
     // validationSchema: validationRules,
     onSubmit: (campaign) => {
-        console.log(campaign);
       let campaignManagementService = new CampaignManagementService();
       campaignManagementService
         .create(campaign)

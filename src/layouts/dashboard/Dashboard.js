@@ -1,18 +1,16 @@
 import React from "react";
 import { Route, Switch } from "react-router";
+import { Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AllCategories from "../../components/categories/AllCategories";
 import AllBrands from "../../components/brands/AllBrands";
-import Sock from "../../components/sock/AllSock";
-import SockDetail from "../../components/sock/sock-detail/SockDetail";
-import SockByCategory from "../../components/sock/SockByCategory";
+import AllProduct from "../../components/product/AllProduct";
 import Home from "../home/Home";
 import Login from "../login/Login"
 import NotFound from "../404page/NotFound";
 import ActivationCodeVerification from "../../components/activationCodeVerification/ActivationCodeVerification";
 import Admin from "../../components/admin/Admin";
-import SockCard from "../../components/admin/cards/SockCard";
-import SockEditPage from "../../components/admin/sockEditPage/SockEditPage";
+import ProductCard from "../../components/admin/cards/ProductCard";
 import CategoryEditPage from "../../components/admin/categoryEditPage/CategoryEditPage";
 import BrandEditPage from "../../components/admin/brandEditPage/BrandEditPage";
 import ForgotPassword from "../../layouts/forgotPassword/ForgotPassword"
@@ -24,38 +22,51 @@ import UserInfos from "../userInfos/UserInfos";
 import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert";
 import CampaignManagementEditPage from "../../components/admin/campaignManagementEditPage/CampaignManagementEditPage";
 import CampaignDetails from "../campaigns/campaignDetails/CampaignDetails";
+import ProductEditPage from "../../components/admin/productEditPage/ProductEditPage";
+import ProductDetail from "../../components/product/product-detail/ProductDetail"
+import ProductByCategory from "../../components/product/ProductByCategory"
+import SearchFound from "../searchBar/SearchFound";
+import ProductOrderInfo from "../productOrderInfo/ProductOrderInfo";
+import CartSummary from "../cart/CartSummary";
+import Payment from "../payment/Payment";
+import SavedCardsToPay from "../payment/SavedCardsToPay"
+import MyRegisteredCards from "../payment/mySavedCards/MyRegisteredCards";
+import Unauthorized from "../unauthorized/Unauthorized";
+
 
 export default function Dashboard() {
+  const auth = localStorage.getItem("isAdmin");
   return (
     <div>
-      <ToastContainer position="top-right" />
+      <ToastContainer position="top-left" />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/socks" component={Sock} />
+        <Route exact path="/products" component={AllProduct} />
         <Route exact path="/categories" component={AllCategories} />
         <Route exact path="/brands" component={AllBrands} />
-        <Route exact path="/category/:categoryId" component={SockByCategory} />
-        <Route exact path="/sock-detail/:sockId" component={SockDetail} />
+        <Route exact path="/category/:categoryId" component={ProductByCategory} />
+        <Route exact path="/product-detail/:productId" component={ProductDetail} />
         <Route path="/register" component={RegisterLayout} />
         <Route path="/login" component={Login} />
         <Route path="/activationcodeverification" component={ActivationCodeVerification} />
-        <Route path="/admin" component={Admin} />
-        <Route path="/sockcard" component={SockCard} />
-        <Route path="/sockeditpage" component={SockEditPage} />
-        <Route path="/categoryeditpage" component={CategoryEditPage} />
-        <Route path="/brandeditpage" component={BrandEditPage} />
-        <Route path="/campaignmanagementeditpage" component={CampaignManagementEditPage} />
+        <Route path="/productcard" component={ProductCard} />
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/contact" component={Contact} />
         <Route path="/about" component={About} />
         <Route path="/cartdetail" component={CartDetail}/>
         <Route exact path="/userprofile/:userId" component={UserInfos} />
         <Route path="/campaigndetails/:campaignId" component={CampaignDetails} />
-
-
-
-
-
+        <Route path="/search" component={SearchFound} />
+        <Route path="/orderinformation" component={ProductOrderInfo}/>
+        <Route path="/cartsummary" component={CartSummary}/>
+        <Route path="/payment" component={Payment} />
+        <Route path="/savedCardsToPay" component={SavedCardsToPay} />
+        <Route path="/myRegisteredCards" component={MyRegisteredCards} />
+        <Route exact path="/admin">{ auth !== null && auth.includes("true") ? <Admin /> : <Unauthorized /> }</Route>
+        <Route exact path="/producteditpage">{ auth !== null && auth.includes("true") ? <ProductEditPage /> : <Unauthorized /> }</Route>
+        <Route exact path="/categoryeditpage">{ auth !== null && auth.includes("true") ? <CategoryEditPage /> : <Unauthorized /> }</Route>
+        <Route exact path="/brandeditpage">{ auth !== null && auth.includes("true") ? <BrandEditPage /> : <Unauthorized /> }</Route>
+        <Route exact path="/campaignmanagementeditpage">{ auth !== null && auth.includes("true") ? <CampaignManagementEditPage /> : <Unauthorized /> }</Route>
 
         <Route path="/tokenexpiredalert" component={TokenExpiredAlert} />
         <Route path="*" component={NotFound} />

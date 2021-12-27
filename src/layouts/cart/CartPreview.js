@@ -12,7 +12,6 @@ import Paper from "@mui/material/Paper";
 import { CartContextValue } from "../../contexts/ContextProvider";
 import { Link } from "react-router-dom";
 import { HttpPostwithToken } from "../../configs/HttpConfig";
-import { toast } from "react-toastify";
 
 export default function CartPreview() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -71,7 +70,7 @@ export default function CartPreview() {
 
   const removeItem = (cartObj, e) => {
     let obj = { cartId: cartObj.id };
-    HttpPostwithToken("addToCart/removeSockFromCart", obj)
+    HttpPostwithToken("addToCart/removeProductFromCart", obj)
       .then((res) => {
         res.json().then((data) => {
           if (res.ok) {
@@ -148,7 +147,7 @@ export default function CartPreview() {
                       {/* <img src="https://res.cloudinary.com/uludag-sock/image/upload/v1634503267/cart-1_xp67iz.jpg"/> */}
                     </StyledTableCell>
                     <StyledTableCell component="th" scope="row">
-                      {cartObj.sockName}
+                      {cartObj.productName}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {cartObj.quantity}
@@ -177,7 +176,7 @@ export default function CartPreview() {
         ) : (
           <Alert severity="info">
             Sepetinizde henüz ürün yok! Hemen ürün eklemek için ürünlere {" "}
-            <Link to="/socks">göz atın</Link>
+            <Link to="/products">göz atın</Link>
           </Alert>
         )}
       </Menu>

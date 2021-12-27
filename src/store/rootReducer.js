@@ -3,7 +3,7 @@ import cartReducer from "./reducers/cartReducer";
 import compareReducer from "./reducers/compareReducer";
 
 const rootReducer = combineReducers({
-  cart: cartReducer,
+  // cart: cartReducer,
   compareList: compareReducer,
 });
 

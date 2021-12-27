@@ -8,21 +8,21 @@ const initialState = {
 export default function cartReducer(state = initialState, { type, payload }) {
   switch (type) {
     case ADD_TO_CART:
-      let sock = state.cartItems.find((b) => b.sock.id === payload.id);
-      if (sock) {
+      let product = state.cartItems.find((b) => b.product.id === payload.id);
+      if (product) {
         return {
           ...state,
         };
       } else {
         return {
           ...state,
-          cartItems: [...state.cartItems, { sock: payload }],
+          cartItems: [...state.cartItems, { product: payload }],
         };
       }
     case REMOVE_TO_CART:
       return {
         ...state,
-        cartItems: state.cartItems.filter((j) => j.sock.id !== payload.id),
+        cartItems: state.cartItems.filter((j) => j.product.id !== payload.id),
       };
 
     default:

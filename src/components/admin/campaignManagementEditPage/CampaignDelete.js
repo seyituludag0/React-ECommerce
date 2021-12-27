@@ -19,7 +19,9 @@ export default function CampaignDelete( {id} ) {
                 onOpen={() => setOpen(true)}
                 open={open}
                 trigger={
-                    <Icon name="x"/>
+                    <Icon name="x"
+                    style={{ cursor: "pointer" }}
+                    />
                 }
                 style={{height:"15rem", marginLeft:"23rem", marginTop:"17rem"}}
             >

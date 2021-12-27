@@ -1,16 +1,21 @@
 import axios from "axios";
 
 export default class CartService{
-    addSock(sock){
-        return axios.post("http://localhost:8080/api/AddToCart/addSock", sock)
+    addProduct(product){
+        return axios.post("http://localhost:8080/api/AddToCart/addProduct", product)
     }
 
-    getCartsByUserId(){
-        return axios.get("http://localhost:8080/api/addToCart/getCartsByUserId?userId=106")
+    getCartsByUserId(userId){
+        return axios.get("http://localhost:8080/api/addToCart/getCartByUserId?userId=" + userId)
     }
 
-    getByUserId(){
-        return axios.get("http://localhost:8080/api/carts/getByUserId?userId=106");
+    deleteAllCartByUserId(userId){
+        return axios.post("http://localhost:8080/api/addToCart/deleteAllCartByUserId?userId=" + userId)
+    }
+
+    deleteProductFromCart(productId){
+        return axios.post("http://localhost:8080/api/addToCart/deleteProductFromCart?productId=" + productId)
     }
 
 }
+

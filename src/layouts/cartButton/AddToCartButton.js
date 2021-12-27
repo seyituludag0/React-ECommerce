@@ -5,15 +5,15 @@ import { toast } from "react-toastify";
 import CartService from "../../services/CartService"
 
 
-export default function AddToCartButton({ sock }) {
+export default function AddToCartButton({ product }) {
   const dispatch = useDispatch();
 
 
 
-  const handleAddToCart = (sock) => {
+  const handleAddToCart = (product) => {
     let cartService = new CartService();
-    cartService.update(sock).then((result)=>toast.success(result.data.message))
-    dispatch(addtoCart(sock))
+    cartService.update(product).then((result)=>toast.success(result.data.message))
+    dispatch(addtoCart(product))
   };
 
   return (
@@ -21,7 +21,7 @@ export default function AddToCartButton({ sock }) {
       <a
         className="add-cart"
         style={{ cursor: "pointer" }}
-        onClick={() => handleAddToCart(sock)}
+        onClick={() => handleAddToCart(product)}
       >
         + Sepete Ekle
       </a>

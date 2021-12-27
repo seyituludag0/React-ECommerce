@@ -7,19 +7,12 @@ import { Button, Form, Grid, Input } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import CartService from "../../services/CartService";
 
 export default function Register() {
 
   let history = useHistory();
-  let cartService = new CartService();
 
   const [user, setUser] = useState({});
-
-  useEffect(() => {
-    // console.log(user);
-    Object.keys(user).length > 0 && cartService.add(user);
-  }, [user]);
 
 
   const formik = useFormik({

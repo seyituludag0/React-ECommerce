@@ -20,7 +20,7 @@ export default function Footer() {
                     <Link to="/">Ana Sayfa</Link>
                   </li>
                   <li>
-                    <Link to="/socks">Ürünlerimiz</Link>
+                    <Link to="/products">Ürünlerimiz</Link>
                   </li>
                   <li>
                     <Link to="/about">Hakkımızda</Link>

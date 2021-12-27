@@ -1,32 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Close } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import "./cart.css";
 import { CartContextValue } from "../../contexts/ContextProvider";
-import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { HttpPostwithToken } from "../../configs/HttpConfig";
 import { toast } from "react-toastify";
-import DiscountCouponForm from "./DiscountCouponForm";
 import { useFormik } from "formik";
 import CampaignManangementService from "../../services/CampaignManagementService";
 import { Form, Input } from "semantic-ui-react";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import CartService from "../../services/CartService";
+import { useUserContext } from "../../contexts/UserContext";
 
 export default function CartDetail() {
+  // const newQuantityNumber = 3;
+  const [countValue, setCountValue] = useState(1)
+  const [state] = useUserContext();
+  const userId = state?.authenticatedUser?.id;
   const [cartData, dispatch] = CartContextValue();
-  const [optionData, setOptionData] = useState([
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-  ]);
   const [couponCodeApplied, setCouponCodeApplied] = useState(false);
-
   const getTotalAmount = () => {
     return cartData.cartItems.reduce(
       (prevValue, currentValue) => prevValue + currentValue.price,
@@ -45,32 +37,11 @@ export default function CartDetail() {
     );
   };
 
-  const quantityChange = (cartObj, e) => {
-    console.log(cartObj, e.target.value);
-    let price = cartObj.price * e.target.value;
-    let obj = { cartId: cartObj.id, quantity: e.target.value, price: price };
-    HttpPostwithToken("addToCart/updateQuantityForCart", obj)
-      .then((res) => {
-        res.json().then((data) => {
-          if (res.ok) {
-            dispatch({
-              type: "add_cart",
-              data: data,
-            });
-          } else {
-            alert(data.message);
-          }
-        });
-      })
-      .catch(function (res) {
-        console.log("Error ", res);
-        //alert(error.message);
-      });
-  };
+  
 
   const removeItem = (cartObj, e) => {
     let obj = { cartId: cartObj.id };
-    HttpPostwithToken("addToCart/removeSockFromCart", obj)
+    HttpPostwithToken("addToCart/removeProductFromCart", obj)
       .then((res) => {
         res.json().then((data) => {
           if (res.ok) {
@@ -99,12 +70,44 @@ export default function CartDetail() {
       let campaignManangementService = new CampaignManangementService();
       campaignManangementService
         .verifyCouponCode(couponCode.couponCode)
-        .then((result) => toast.success(result.data.message))
-        // .finally(() => finalMyMethod());
-        couponCodeApply();
+        .then((result) => toast.success(result.data.message));
+      // .finally(() => finalMyMethod());
+      couponCodeApply();
     },
   });
   //DISCOUNT
+
+  const deleteAllCartByUserId = (userId) => {
+    let cartService = new CartService();
+    cartService
+      .deleteAllCartByUserId(userId)
+      .then((result) => toast.success(result.data.message));
+  };
+
+  const incrementQuantityChange = (cartObj, count) => {
+    console.log(cartObj, count);
+    let price = cartObj.price *= count;
+    let obj = { cartId: cartObj.id, quantity: count, price: price };
+    HttpPostwithToken("addToCart/updateQuantityForCart", obj)
+      .then((res) => {
+        res.json().then((data) => {
+          if (res.ok) {
+            dispatch({
+              type: "add_cart",
+              data: data,
+            });
+          } else {
+            alert(data.message);
+          }
+        setCountValue(countValue + 1)
+        });
+      })
+      .catch(function (res) {
+        console.log("Error ", res);
+        //alert(error.message);
+      });
+  };
+
 
   return (
     <div>
@@ -122,48 +125,64 @@ export default function CartDetail() {
                         <th>Toplam Fiyat</th>
                         <th />
                       </tr>
+                      <div
+                        className="continue__btn update__btn"
+                        style={{ float: "right !important" }}
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          onClick={() => deleteAllCartByUserId(userId)}
+                        >
+                          SEPETİ BOŞALT
+                        </a>
+                      </div>
                     </thead>
                     <tbody>
-                      {cartData.cartItems.map((sock, key) => (
+                      {cartData.cartItems.map((product, key) => (
                         <tr key={key}>
                           <td className="product__cart__item">
                             <Link
-                              to={`/sock-detail/${sock.id}`}
+                              to={`/product-detail/${product.productId}`}
                               style={{ color: "#000" }}
                               target="_blank"
                             >
                               <div className="product__cart__item__pic">
-                                <img src={sock.productImage} alt="" />
+                                <img src={product.productImage} alt="" />
                               </div>
                               <div className="product__cart__item__text">
-                                <h6>{sock.sockName}</h6>
-                                <span>Marka: {sock.brandName}</span> <br />
+                                <h6>{product.productName}</h6>
+                                <span>Marka: {product.brandName}</span> <br />
                                 <span>
-                                  Numara / Beden: {sock.bodySize}
+                                  Numara / Beden: {product.bodySize}
                                 </span>{" "}
                                 <br />
-                                <span>Renk: {sock.colorName}</span>
+                                <span>Renk: {product.colorName}</span>
                               </div>
                             </Link>
                           </td>
-                          <td clasName="quantity__item" key={sock.id}>
+                          <td clasName="quantity__item" key={product.id}>
                             <div className="sbmincart-details-quantity">
-                              <select
-                                value={sock.quantity}
-                                onChange={(e) => quantityChange(sock, e)}
-                              >
-                                {optionData.map((d, key) => (
-                                  <option key={key}>{d}</option>
-                                ))}
-                              </select>
+                              <ButtonGroup disableElevation variant="contained">
+                                <Button onClick={() => alert("Adet 1 azaltıldı")}>
+                                  Azalt
+                                </Button>
+                                <Input
+                                  value={product.quantity}
+                                  size="mini"
+                                  disabled
+                                />
+                                <Button onClick={() => incrementQuantityChange(product, countValue)}>
+                                  Arttır
+                                </Button>
+                              </ButtonGroup>
                             </div>
                           </td>
 
-                          <td className="cart__price">{sock.price}₺</td>
+                          <td className="cart__price">{product.price}₺</td>
                           <td className="cart__close">
                             <Close
                               style={{ cursor: "pointer" }}
-                              onClick={() => removeItem(sock)}
+                              onClick={() => removeItem(product)}
                             />
                           </td>
                         </tr>
@@ -173,14 +192,14 @@ export default function CartDetail() {
                 ) : (
                   <p>
                     Sepetinizde henüz ürün yok! Hemen ürünm eklemek için
-                    ürünlere <Link to="/socks">göz atın</Link>
+                    ürünlere <Link to="/products">göz atın</Link>
                   </p>
                 )}
               </div>
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="continue__btn">
-                    <Link to="/socks">Alışverişe Dön</Link>
+                    <Link to="/products">Alışverişe Dön</Link>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6">
@@ -209,7 +228,7 @@ export default function CartDetail() {
                     </div>
                   )}
                 </Form.Field>
-                <button style={{ backgroundColor: "black" }}>Uygula</button>
+                <button style={{ backgroundColor: "#fff" }}>Uygula</button>
               </Form>
               <div className="cart__total">
                 <h6>Fiyat Bilgileri</h6>
@@ -222,7 +241,7 @@ export default function CartDetail() {
                       <li className="discount-li">
                         Toplam Fiyat
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <del>{getTotalAmount()}₺</del>
+                        <del>{getTotalAmount()}₺</del>
                       </li>
                       <li className="discount-li">
                         İndirimli Fiyat<span>{getDiscountedAmount()}₺</span>
@@ -236,8 +255,12 @@ export default function CartDetail() {
                     </>
                   )}
                 </ul>
-                <Link to="#" className="primary-btn" style={{ color: "#fff" }}>
-                  Ödemeye Git
+                <Link
+                  to="/cartsummary"
+                  className="primary-btn"
+                  style={{ color: "#fff" }}
+                >
+                  Devam Et
                 </Link>
               </div>
             </div>

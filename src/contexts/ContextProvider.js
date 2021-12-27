@@ -1,20 +1,21 @@
 import React, { createContext, useContext, useReducer } from "react";
 
-//creating the  cart context...
+//Cart adında bir context oluşturuyoruz.
 let CartContext = createContext();
 
-//initial state of cart
+//Başlangıçta sepetin ilk durumunu belirtiyoruz.
 export const cartState = {
   cartItems: []
 };
 
-//for cart adding and updating...
+//sepet ekleme ve güncelleme işlemlerini gerçekleştirecek olan kod bloklarını yazıyoruz.
 export const reducer = (state, action) => {
   switch (action.type) {
     case "add_cart":
       return { cartItems: [...action.data] };
       break;
     case "delete_cart":
+      // return { cartItems: [] }
       break;
     default:
       return state;

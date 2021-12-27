@@ -10,6 +10,7 @@ export default function BrandDelete({id}) {
     const deleteBrand = () => {
         let brandService = new BrandService();
         brandService.delete(id).then(result=>toast.success(result.data.message));
+        setOpen(false)
     }
 
     return (
@@ -35,7 +36,6 @@ export default function BrandDelete({id}) {
                         labelPosition='right'
                         icon='checkmark'
                         primary
-                        onClick={() => setOpen(false)}
                         onClick={() => deleteBrand()}
                         danger
                     />

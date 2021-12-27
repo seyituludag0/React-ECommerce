@@ -14,10 +14,10 @@ export default function FavoriteItems() {
       .then((result) => setFavorites(result.data.data));
   }, [favorites]);
 
-  const removeFromFavorite = (sockId) => {
+  const removeFromFavorite = (productId) => {
     let favoriteService = new FavoriteService();
     favoriteService
-      .removeFromFavorites(56, sockId)
+      .removeFromFavorites(56, productId)
       .then((result) => toast.success(result.data.message));
   };
 
@@ -41,11 +41,11 @@ export default function FavoriteItems() {
               variant="body2"
             >
               Henüz favori ürününüz yok! Hemen favori ürününü bulmak için
-              ürünler sayfasına <Link to="/socks">göz at</Link>
+              ürünler sayfasına <Link to="/products">göz at</Link>
             </Typography>
           ) : (
             favorites.map((favorite) => (
-              <Link to={`/sock-detail/${favorite.sock.id}`}>
+              <Link to={`/product-detail/${favorite.product.id}`}>
                 
               <Grid container spacing={2} key={favorite.id}>
                 <Grid>
@@ -59,7 +59,7 @@ export default function FavoriteItems() {
                     className="mydiv"
                   >
                     <Img
-                      src={favorite.sock.sockImage.image1}
+                      src={favorite.product.productImage.image1}
                       style={{ width: "35%" }}
                     />
                   </div>
@@ -71,20 +71,20 @@ export default function FavoriteItems() {
                       variant="subtitle1"
                       component="div"
                     >
-                      {/* <Link to="/">{favorite.sock.name}</Link> */}{favorite.sock.name}
+                      {/* <Link to="/">{favorite.product.name}</Link> */}{favorite.product.name}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      Category: {favorite.sock.category.name}
+                      Category: {favorite.product.category.name}
                     </Typography>
                     <Typography variant="body2">
-                      Size: {favorite.sock.bodySize}
+                      Size: {favorite.product.bodySize}
                     </Typography>
                   </Grid>
                   <Grid item style={{ padding: "1rem", marginLeft: "13rem" }}>
                     <Typography
                       sx={{ cursor: "pointer" }}
                       variant="body2"
-                      onClick={() => removeFromFavorite(favorite.sock.id)}
+                      onClick={() => removeFromFavorite(favorite.product.id)}
                     >
                       Kaldır
                     </Typography>
@@ -96,7 +96,7 @@ export default function FavoriteItems() {
                     component="div"
                     style={{ marginLeft: "22rem", marginTop: "-9rem" }}
                   >
-                    {favorite.sock.price}₺
+                    {favorite.product.price}₺
                   </Typography>
                 </Grid>
               </Grid>

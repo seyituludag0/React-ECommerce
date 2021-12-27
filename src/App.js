@@ -6,10 +6,7 @@ import Navi from "./layouts/navi/Navi";
 import Dashboard from "./layouts/dashboard/Dashboard";
 import "react-whatsapp-widget/dist/index.css";
 import WidgetWhatsApp from "./layouts/wp/WidgetWhatsApp";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { styled } from "@material-ui/styles";
-import { useEffect, useState } from "react";
-import { FormControlLabel, FormGroup, Paper, Switch } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { ContextProvider, reducer, cartState } from "./contexts/ContextProvider";
 
 function App() {

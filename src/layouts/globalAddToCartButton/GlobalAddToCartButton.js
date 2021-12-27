@@ -4,16 +4,16 @@ import { useUserContext } from "../../contexts/UserContext";
 import { CartContextValue } from "../../contexts/ContextProvider";
 import { toast } from "react-toastify";
 
-export default function GlobalAddToCartButton({ sock }) {
+export default function GlobalAddToCartButton({ product }) {
   const [cartData, dispatch] = CartContextValue();
 
-  const addCartApi = (sockObj) => {
+  const addCartApi = (productObj) => {
     let obj = {
-      sockId: sockObj.id,
+      productId: productObj.id,
       quantity: 1,
-      price: sockObj.price,
+      price: productObj.price,
     };
-    HttpPostwithToken("addToCart/addSock", obj)
+    HttpPostwithToken("addToCart/addProduct", obj)
       .then((res) => {
         console.log("obj", obj);
         res.json().then((data) => {
@@ -38,7 +38,7 @@ export default function GlobalAddToCartButton({ sock }) {
     <div>
       <a
         className="primary-btn"
-        onClick={() => addCartApi(sock)}
+        onClick={() => addCartApi(product)}
         href="javascript:void(0)"
       >
         Sepete Ekle

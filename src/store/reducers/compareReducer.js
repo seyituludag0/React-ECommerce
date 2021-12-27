@@ -2,7 +2,6 @@ import {
   ADD_TO_COMPARISON_LIST,
   REMOVE_TO_COMPARISON_LIST,
 } from "../actions/compareAction";
-import { compareList } from "../initialValues/compare";
 
 const initialState = []
 

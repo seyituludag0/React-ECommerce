@@ -8,7 +8,7 @@ import CommentService from "../../services/CommentService";
 import { toast } from "react-toastify";
 import { useUserContext } from "../../contexts/UserContext";
 
-export default function CommentForm({ sockId }) {
+export default function CommentForm({ productId }) {
   const labels = {
     1: "Çok Kötü",
     2: "Kötü",
@@ -29,13 +29,11 @@ export default function CommentForm({ sockId }) {
     },
     onSubmit: (values) => {
       values.customerId = userId;
-      values.sockId = sockId;
+      values.productId = productId;
       values.starCount = rating;
       console.log("Values: ", values);
       let commentService = new CommentService();
-      commentService
-        .addComment(values)
-        .then((result) => toast.success(result.data.message));
+      commentService.addComment(values).then((result) => toast.success(result.data.message));
       values.starCount = null;
       values.description = "";
     },
@@ -44,7 +42,6 @@ export default function CommentForm({ sockId }) {
   return (
     <div className="comment-box">
       <form onSubmit={formik.handleSubmit}>
-        {/* <label>Ürünü Değerlendir</label> */}
         <div className="rating">
           {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
