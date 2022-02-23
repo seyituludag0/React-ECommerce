@@ -5,6 +5,7 @@ import ProductCard from './ProductCard';
 import CategoryCard from './CategoryCard';
 import BrandCard from './BrandCard';
 import CampaignManagementCard from './CampaignManagementCard';
+import OrderManagementCard from './OrderManagementCard';
 
 export default function SpacingGrid() {
     return (
@@ -16,7 +17,8 @@ export default function SpacingGrid() {
                <Link to="/producteditpage"><Card variant="outlined"><ProductCard /></Card></Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <Link to="/categoryeditpage"><Card variant="outlined"><CategoryCard /></Card></Link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <Link to="/brandeditpage"><Card variant="outlined"><BrandCard /></Card></Link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               <Link to="/campaignmanagementeditpage"><Card variant="outlined"><CampaignManagementCard /></Card></Link>
+               <Link to="/campaignmanagementeditpage"><Card variant="outlined"><CampaignManagementCard /></Card></Link> 
+               <Link to="/ordermanagementpanel"><Card variant="outlined"><OrderManagementCard /></Card></Link>
               </Grid>
           </Grid>
         </Grid>

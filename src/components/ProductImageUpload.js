@@ -39,6 +39,7 @@ export default class ProductImageUpload extends Component {
     };
     
     getNullImages = () => {
+      console.log("this.state.nullImages: ", this.state.nullImages);
       let productImageService = new ProductImageService();
       productImageService.getAllProductImageNull().then((result)=>this.setState({nullImages: result.data.data}))
     };
@@ -52,9 +53,9 @@ export default class ProductImageUpload extends Component {
         <div>
           {
             this.state.nullImages.map((images)=>(
-              <Card fluid color={"black"}>
+              <Card>
             <Card.Content header="Resim Yükle" />
-            <Card.Content style={{}}>
+            <Card.Content>
               <input
                 style={{ display: "none" }}
                 type="file"

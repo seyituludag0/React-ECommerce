@@ -2,6 +2,10 @@ import axios from "axios";
 
 export default class ProductOrderService{
     
+    getAll(){
+        return axios.get("http://localhost:8080/api/product_orders/getAll")
+    }
+
     getProductOrderByUserId(userId){
         return axios.get("http://localhost:8080/api/product_orders/getProductOrderByUserId?userId=" + userId)
     }
@@ -18,4 +22,9 @@ export default class ProductOrderService{
         return axios.get(`http://localhost:8080/api/product_orders/existsByUserIdAndProductId?productId=${productId}&userId=${userId}`)
     }
 
+    expectedOrders(){
+        return axios.get("http://localhost:8080/api/product_orders/expectedOrders")
+    }
+
 }
+

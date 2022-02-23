@@ -67,7 +67,7 @@ function Row() {
                 </CopyToClipboard>
               </Tooltip>
             </TableCell>
-            <TableCell align="right">{campaign.discountRate}</TableCell>
+            <TableCell align="right">{campaign.discountRate}₺</TableCell>
             <TableCell align="right">{campaign.campaignExpiredDate}</TableCell>
             <TableCell align="right">{campaign.campaignDetails}</TableCell>
             <TableCell align="right">

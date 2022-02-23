@@ -7,33 +7,56 @@ import { Breadcrumb, Icon } from "semantic-ui-react";
 import ProductOrderService from "/react/sock-ecommerce/src/services/ProductOrderService";
 import CommentForm from "../../../layouts/comments/CommentForm";
 import CommentBulb from "../../../layouts/comments/CommentBulb";
-import GlobalAddToCartButton from "../../../layouts/globalAddToCartButton/GlobalAddToCartButton";
+import DetailPageProductAddButton from "../../../layouts/detailPageProductAddButton/DetailPageProductAddButton";
 import ProductByIdImages from "../../productByIdImages/ProductByIdImages";
+import { Rating } from "@mui/material";
+import { Link } from "react-router-dom";
+import CommentService from "../../../services/CommentService";
+import ProductSizeService from "../../../services/ProductSizeService";
+import ColorService from "../../../services/ColorService";
 
 export default function ProductDetail() {
-  const [product, setProduct] = useState(null);
   let { productId } = useParams();
+  const [product, setProduct] = useState(null);
   const [canComment, setCanComment] = useState(false);
+  const [productStarAverage, setProductStarAverage] = useState(0);
+  const [productSizes, setProductSizes] = useState([]);
+  const [currentProductSize, setCurrentProductSize] = useState(null);
+  const [currentProductColor, setCurrentProductColor] = useState(null);
+  const [colors, setColors] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(null);
+
   let productOrderService = new ProductOrderService();
+  let productService = new ProductService();
+  let commentService = new CommentService();
+  let productSizeService = new ProductSizeService();
+  let colorService = new ColorService();
+
   const userId = localStorage.getItem("userId");
+  // console.log("Ürün Bedeni: " + currentProductSize?.size)
+  // console.log("Ürün Rengi: " + currentProductColor?.name)
   useEffect(() => {
-    let productService = new ProductService();
     onChangeCommentState();
     productService
       .getByProductId(productId)
       .then((result) => setProduct(result.data.data));
+    productSizeService
+      .getAll()
+      .then((result) => setProductSizes(result.data.data));
+    colorService.getAll().then((result) => setColors(result.data.data));
   }, []);
-
-  const sections = [
-    { key: "Ürünler", content: "Ürünler", link: true },
-    { key: "Ürün Detayı", content: "Ürün Detayı", link: true, active: true },
-  ];
 
   const onChangeCommentState = () => {
     productOrderService
       .existsByUserIdAndProductId(productId, userId)
       .then((result) => setCanComment(result.data));
   };
+
+  useEffect(() => {
+    commentService
+      .getProductStarAverage(productId)
+      .then((result) => setProductStarAverage(result.data));
+  }, []);
 
   return (
     <div className="sock-detail">
@@ -43,20 +66,30 @@ export default function ProductDetail() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="product__details__breadcrumb">
-                  <Breadcrumb
-                    icon="right angle"
-                    sections={sections}
-                    className="siyah"
-                  />
+                  <Breadcrumb>
+                    <Breadcrumb.Section>
+                      <Link to="/" style={{ color: "black" }}>
+                        Ana Sayfa
+                      </Link>
+                    </Breadcrumb.Section>
+                    <Breadcrumb.Divider icon="right angle" />
+                    <Breadcrumb.Section>
+                      <Link to="/products" style={{ color: "black" }}>
+                        Ürünler
+                      </Link>
+                    </Breadcrumb.Section>
+                    <Breadcrumb.Divider icon="right angle" />
+                    <Breadcrumb.Section active>
+                      Ürün Detayı: {product?.name}
+                    </Breadcrumb.Section>
+                  </Breadcrumb>
                 </div>
               </div>
             </div>
 
-            {/* IMAGES */}
-
             <div className="row">
               <ProductByIdImages />
-              {/* <div className="col-lg-3 col-md-3">
+              <div className="col-lg-3 col-md-3">
                 <ul className="nav nav-tabs" role="tablist">
                   <li className="nav-item">
                     <a
@@ -66,7 +99,10 @@ export default function ProductDetail() {
                       role="tab"
                     >
                       <div className="product__thumb__pic set-bg">
-                        <img src={product?.sockImage.image1} alt={product?.name} />
+                        <img
+                          src={product?.productImage.image1}
+                          alt={product?.name}
+                        />
                       </div>
                     </a>
                   </li>
@@ -79,7 +115,10 @@ export default function ProductDetail() {
                       role="tab"
                     >
                       <div className="product__thumb__pic set-bg">
-                        <img src={product?.sockImage.image2} alt={product?.name} />
+                        <img
+                          src={product?.productImage.image2}
+                          alt={product?.name}
+                        />
                       </div>
                     </a>
                   </li>
@@ -92,7 +131,10 @@ export default function ProductDetail() {
                       role="tab"
                     >
                       <div className="product__thumb__pic set-bg">
-                        <img src={product?.sockImage.image3} alt={product?.name} />
+                        <img
+                          src={product?.productImage.image3}
+                          alt={product?.name}
+                        />
                       </div>
                     </a>
                   </li>
@@ -105,7 +147,10 @@ export default function ProductDetail() {
                       role="tab"
                     >
                       <div className="product__thumb__pic set-bg">
-                        <img src={product?.sockImage.image4} alt={product?.name} />
+                        <img
+                          src={product?.productImage.image4}
+                          alt={product?.name}
+                        />
                       </div>
                     </a>
                   </li>
@@ -118,16 +163,19 @@ export default function ProductDetail() {
                       role="tab"
                     >
                       <div className="product__thumb__pic set-bg">
-                        <img src={product?.sockImage.image5} alt={product?.name} />
+                        <img
+                          src={product?.productImage.image5}
+                          alt={product?.name}
+                        />
                       </div>
                     </a>
                   </li>
                 </ul>
-              </div> */}
+              </div>
 
               <div className="col-lg-6 col-md-9">
                 <div className="tab-content">
-                  <ImageCarousel />
+                  <ImageCarousel productId={productId} />
                 </div>
               </div>
             </div>
@@ -139,41 +187,69 @@ export default function ProductDetail() {
               <div className="col-lg-8">
                 <div className="product__details__text">
                   <h4>{product?.name}</h4>
+                  <Rating
+                    name="read-only"
+                    value={productStarAverage}
+                    precision={0.5}
+                    readOnly
+                  />
+                  <span>
+                    {productStarAverage
+                      .toString()
+                      .replace(productStarAverage.toString()[1], ",")}
+                  </span>
                   <h3>
                     {product?.price}₺<span>70.00₺</span>
                   </h3>
                   <p>{product?.description}</p>
+                  {/* <p>{currentProductSize?.size}-{currentProductColor?.name}</p>  */}
                   <div className="product__details__option">
-                    {/* <div className="product__details__option__size">
-                      <span>Size:</span>
-                      <label for="xxl"
-                        >xxl
-                        <input type="radio" id="xxl" />
-                      </label>
-                      <label className="active" for="xl"
-                        >xl
-                        <input type="radio" id="xl" />
-                      </label>
-                      <label for="l"
-                        >l
-                        <input type="radio" id="l" />
-                      </label>
-                      <label for="sm"
-                        >s
-                        <input type="radio" id="sm" />
-                      </label>
-                    </div> */}
-                  </div>
-                  <div className="product__details__cart__option">
-                    <div className="quantity">
-                      <div className="pro-qty">
-                        <span className="fa fa-angle-up dec qtybtn" />
-                        <input type="number" defaultValue={1} min="1" />
-                      </div>
+                    <div className="product__details__option__size">
+                      <span>Beden:</span>
+                      {productSizes.map((size, key) => (
+                        <div style={{ display: "inline" }} key={key}>
+                          <label
+                            className={
+                              currentProductSize?.id === size.id
+                                ? "selectedSize"
+                                : ""
+                            }
+                            onClick={() => setCurrentProductSize(size)}
+                          >
+                            {size.size}
+                          </label>
+                        </div>
+                      ))}
                     </div>
-
-                    <GlobalAddToCartButton product={product} />
+                    <div className="product__details__option__color">
+                      <span>Renk:</span>
+                      {colors.map((color, key) => (
+                        <label
+                          key={key}
+                          style={{ backgroundColor: `${color.colorCode}` }}
+                          title={`${color.name}`}
+                          className={
+                            currentProductColor?.id === color.id
+                              ? "selectedColor"
+                              : ""
+                          }
+                          onClick={() => setCurrentProductColor(color)}
+                        />
+                      ))}
+                    </div>
                   </div>
+                  {/*  */}
+
+                  {currentProductSize === null ||
+                  currentProductColor === null ? null : (
+                    <DetailPageProductAddButton
+                      product={product}
+                      productId={productId}
+                      productSizeId={currentProductSize?.id}
+                      productColorId={currentProductColor?.id}
+                    />
+                  )}
+
                   <div className="product__details__btns__option">
                     <a href="/">
                       <i className="fa fa-favorite" />
@@ -197,23 +273,26 @@ export default function ProductDetail() {
                   ) : null}
                   <br />
 
-                  {/* <div className="product__details__last__option">
-                      <h5>
-                        <span>Garantili Güvenli Ödeme</span>
-                      </h5>
-                      <img src={payment} alt="" />
-                      <ul style={{ marginBottom: "2rem" }}>
-                        <li>
-                          <span>Ürün Kodu:</span> 3812912
-                        </li>
-                        <li>
-                          <span>Kategori:</span> {product?.category.name}
-                        </li>
-                        <li>
-                          <span>Etiket:</span> Clothes, Skin, Body
-                        </li>
-                      </ul>
-                    </div> */}
+                  <div className="product__details__last__option">
+                    <h5>
+                      <span>Garantili Güvenli Ödeme</span>
+                    </h5>
+                    <img
+                      src="https://res.cloudinary.com/uludag-sock/image/upload/v1645203987/details-payment_vxz6zy.png"
+                      alt=""
+                    />
+                    <ul style={{ marginBottom: "2rem" }}>
+                      <li>
+                        <span>Ürün Kodu:</span> 3812912
+                      </li>
+                      <li>
+                        <span>Kategori:</span> {product?.category.name}
+                      </li>
+                      <li>
+                        <span>Etiket:</span> Clothes, Skin, Body
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>

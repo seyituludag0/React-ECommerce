@@ -3,9 +3,9 @@ import { useParams } from 'react-router';
 import CampaignManagementService from '../../../services/CampaignManagementService';
 import moment from "moment";
 import "moment/locale/tr";
-import GlobalAddToCartButton from "../../../layouts/globalAddToCartButton/GlobalAddToCartButton"
+import DetailPageProductAddButton from "../../../layouts/detailPageProductAddButton/DetailPageProductAddButton"
 import { CartContextValue } from '../../../contexts/ContextProvider';
-import { HttpPostwithToken } from '../../../configs/HttpConfig';
+import { HttpPostWithToken } from '../../../configs/HttpConfig';
 import { toast } from 'react-toastify';
 import { Tooltip } from '@material-ui/core';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -28,7 +28,7 @@ export default function CampaignDetails() {
         quantity: 1,
         price: productObj.price,
       };
-      HttpPostwithToken("addToCart/addProduct", obj)
+      HttpPostWithToken("addToCart/addProduct", obj)
         .then((res) => {
           console.log("obj", obj);
           res.json().then((data) => {
@@ -93,12 +93,14 @@ export default function CampaignDetails() {
                                     <div align="center">
                                       <a target="_blank" className="v-size-width" style={{boxSizing: 'border-box', display: 'inline-block', fontFamily: 'arial,helvetica,sans-serif', textDecoration: 'none', WebkitTextSizeAdjust: 'none', textAlign: 'center', color: '#FFFFFF', backgroundColor: 'gray', borderRadius: '1px', WebkitBorderRadius: '1px', MozBorderRadius: '1px', width: '72%', maxWidth: '100%', overflowWrap: 'break-word', wordBreak: 'break-word', wordWrap: 'break-word', msoBorderAlt: 'none'}}>
                                         <span style={{display: 'block', padding: '10px 20px', lineHeight: '120%'}}><span style={{fontSize: '24px', lineHeight: '28.8px', fontFamily: '"Playfair Display", serif'}}><strong><span style={{lineHeight: '28.8px', fontSize: '24px'}}>
+                                        <span>Kupon Kodunu Kopyala</span>
                                         <Tooltip  title={ copiedText === campaign?.couponCode ? "Kupon Kodu Kopyalandı!"  : "Kupon Kodunu Kopyala" } placement="top">
                                           <CopyToClipboard
                                             onCopy={() => setCopiedText(campaign?.couponCode)}
                                             text={campaign?.couponCode}
                                           >
                                             <FontAwesomeIcon icon={faCopy} />
+                                             
                                           </CopyToClipboard>
                                         </Tooltip>
                                         </span></strong></span></span>

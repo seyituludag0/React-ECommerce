@@ -8,8 +8,12 @@ import "react-whatsapp-widget/dist/index.css";
 import WidgetWhatsApp from "./layouts/wp/WidgetWhatsApp";
 import { Paper } from "@material-ui/core";
 import { ContextProvider, reducer, cartState } from "./contexts/ContextProvider";
+import { useUserContext } from "./contexts/UserContext";
+import { useEffect } from "react";
 
 function App() {
+  
+ 
 
   // const [darkMode, setDarkMode] = useState(false);
 

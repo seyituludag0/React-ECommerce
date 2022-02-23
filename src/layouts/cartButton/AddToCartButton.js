@@ -3,6 +3,7 @@ import { addtoCart } from "../../store/actions/cartAction";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import CartService from "../../services/CartService"
+import { Label } from "semantic-ui-react";
 
 
 export default function AddToCartButton({ product }) {
@@ -25,6 +26,9 @@ export default function AddToCartButton({ product }) {
       >
         + Sepete Ekle
       </a>
+      <Label as='a' color='teal' tag>
+        Son 10 ürün
+      </Label>
     </>
   );
 }

@@ -49,7 +49,7 @@ export default function CommentUpdate({ comment, productId }) {
           {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
             return (
-              <label>
+              <label key={i}>
                 <input
                   key={i}
                   type="radio"

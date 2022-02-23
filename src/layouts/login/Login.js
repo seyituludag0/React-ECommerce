@@ -32,6 +32,7 @@ export default function Login() {
 
   const redirect = ({ data }) => {
     localStorage.setItem("token", data.token);
+    localStorage.setItem("userId", userId);
     const roles = jwt_decode(data.token).roles.split(",");
     return roles.some((it) => it === "ROLE_ADMIN" || it === "ROLE_SUPER_ADMIN")
       ? historyAdmin()

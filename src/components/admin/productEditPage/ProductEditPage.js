@@ -12,10 +12,8 @@ import {
   TableBody,
 } from "@material-ui/core";
 import ProductService from "../../../services/ProductService";
-import ProductImageService from "../../../services/ProductImageService";
 import ProductAdd from "./ProductAdd";
 import ProductUpdate from "./ProductUpdate";
-import ProductImageUpload from "../../ProductImageUpload"
 import ProductDelete from "./ProductDelete";
 import NullImages from "./NullImages";
 const style = {
@@ -30,7 +28,6 @@ const style = {
 };
 function Row() {
   const [products, setProducts] = useState([]);
-  let [image, setImage] = useState({});
   useEffect(() => {
     let productService = new ProductService();
     productService.getAllProduct().then((result) => setProducts(result.data.data));

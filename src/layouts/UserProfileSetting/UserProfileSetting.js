@@ -138,12 +138,12 @@ export default function UserProfileSetting() {
           ) : null}
           </MenuItem>
 
-          <MenuItem>
+          {/* <MenuItem>
             <ListItemIcon>
               <Settings fontSize="small" />
             </ListItemIcon>
             Ayarlar
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <ExitToApp fontSize="small" />

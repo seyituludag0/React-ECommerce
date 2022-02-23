@@ -13,8 +13,6 @@ import { toast } from "react-toastify";
 import empytFavorite from "./img/icon/empytFavorite.png";
 import CommentService from "../../services/CommentService";
 import { Rating } from "@mui/material";
-import GlobalAddToCartButton from "../../layouts/globalAddToCartButton/GlobalAddToCartButton";
-import AllProductPageAddToCartButton from "../../layouts/allProductPageAddToCartButton/AllProductPageAddToCartButton";
 import ProductsPageCategoryList from "../../layouts/productsPageCategoryList/ProductsPageCategoryList";
 import SingleProduct from "./SingleProduct";
 import { addToComparison, removeToComparison } from "../../store/actions/compareAction"

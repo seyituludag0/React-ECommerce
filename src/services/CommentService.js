@@ -18,4 +18,8 @@ export default class CommentService{
         return axios.get("http://localhost:8080/api/comments/getByProductId?productId=" + productId)
     }
 
+    getProductStarAverage(productId){
+        return axios.get("http://localhost:8080/api/comments/calculateAverageStarTheProduct?productId="+ productId)
+    }
 }
+

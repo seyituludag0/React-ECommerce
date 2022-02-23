@@ -54,7 +54,7 @@ export default function ProductUpdate({ product }) {
       .getAllCategory()
       .then((result) => setCategories(result.data.data));
     brandService.getAllBrands().then((result) => setBrands(result.data.data));
-    colorService.getAllColor().then((result) => setColors(result.data.data));
+    colorService.getAll().then((result) => setColors(result.data.data));
   }, []);
 
   const categoryOption = categories.map((category, index) => ({
@@ -244,7 +244,7 @@ export default function ProductUpdate({ product }) {
               )}
             </Form.Field>
             <Button
-              content="Ekle"
+              content="Güncelle"
               labelPosition="right"
               icon="pencil"
               primary

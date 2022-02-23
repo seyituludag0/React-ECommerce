@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, Button, Badge, IconButton, Divider, Alert } from "@mui/material";
 import { Close, ShoppingCart } from "@material-ui/icons";
 import { styled } from "@material-ui/styles";
@@ -9,12 +9,14 @@ import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { CartContextValue } from "../../contexts/ContextProvider";
 import { Link } from "react-router-dom";
-import { HttpPostwithToken } from "../../configs/HttpConfig";
+import CartService from "../../services/CartService";
+import { toast } from "react-toastify";
 
 export default function CartPreview() {
   const [anchorEl, setAnchorEl] = useState(null);
+  const userId = localStorage.getItem("userId");
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,7 +25,15 @@ export default function CartPreview() {
     setAnchorEl(null);
   };
 
-  const [cartData, dispatch] = CartContextValue();
+  // const [cartData, dispatch] = CartContextValue();
+
+  const [cartData, setCartData] = useState([]);
+  let cartService = new CartService();
+  useEffect(() => {
+    cartService
+      .getCartsByUserId(userId)
+      .then((result) => setCartData(result.data));
+  }, []);
 
   // ------------------------------------------------------------------------------------------
 
@@ -48,7 +58,7 @@ export default function CartPreview() {
   }));
 
   const getTotalAmount = () => {
-    return cartData.cartItems.reduce(
+    return cartData.reduce(
       (prevValue, currentValue) => prevValue + currentValue.price,
       0
     );
@@ -69,20 +79,10 @@ export default function CartPreview() {
   }));
 
   const removeItem = (cartObj, e) => {
-    let obj = { cartId: cartObj.id };
-    HttpPostwithToken("addToCart/removeProductFromCart", obj)
-      .then((res) => {
-        res.json().then((data) => {
-          if (res.ok) {
-            dispatch({
-              type: "add_cart",
-              data: data,
-            });
-          } else {
-            alert(data.message);
-          }
-        });
-      })
+    let obj = { cartId: cartObj.productId, userId: 1 };
+    cartService
+      .removeProductFromCart(obj.cartId, obj.userId)
+      .then((result) => toast.success(result.message))
       .catch(function (res) {
         console.log("Error ", res);
         //alert(error.message);
@@ -100,7 +100,7 @@ export default function CartPreview() {
       >
         <IconButton aria-label="cart">
           <StyledBadge
-            badgeContent={cartData.cartItems.length}
+            badgeContent={cartData.length}
             color="secondary"
           >
             <ShoppingCart />
@@ -124,20 +124,22 @@ export default function CartPreview() {
           horizontal: "left",
         }}
       >
-        {cartData.cartItems.length != 0 ? (
+        {cartData.length != 0 ? (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Ürün Resmi</StyledTableCell>
                   <StyledTableCell>Ürün Adı</StyledTableCell>
+                  <StyledTableCell align="right">Beden</StyledTableCell>
+                  <StyledTableCell align="right">Renk</StyledTableCell>
                   <StyledTableCell align="right">Ürün Adedi</StyledTableCell>
                   <StyledTableCell align="right">Fiyat</StyledTableCell>
                   <StyledTableCell align="right">X</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cartData.cartItems.map((cartObj) => (
+                {cartData.map((cartObj) => (
                   <StyledTableRow key={cartObj.id}>
                     <StyledTableCell component="th" scope="row">
                       <img
@@ -148,6 +150,12 @@ export default function CartPreview() {
                     </StyledTableCell>
                     <StyledTableCell component="th" scope="row">
                       {cartObj.productName}
+                    </StyledTableCell>
+                    <StyledTableCell scope="row">
+                      {cartObj.productSize.size}
+                    </StyledTableCell>
+                    <StyledTableCell scope="row">
+                    {cartObj.productColor.name}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {cartObj.quantity}

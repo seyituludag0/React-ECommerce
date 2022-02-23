@@ -15,13 +15,11 @@ import client6 from "./img/clients/client-6.png"
 import client7 from "./img/clients/client-7.png"
 import client8 from "./img/clients/client-8.png"
 import { Breadcrumb } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 export default function About() {
 
-  const sections = [
-    { key: 'Ana Sayfa', content: 'Ana Sayfa', link: true },
-    { key: 'Hakkımızda', content: 'Hakkımızda', link: true, active:true },
-  ]
+
 
     return (
         <div>
@@ -33,11 +31,11 @@ export default function About() {
               <div className="col-lg-12">
                 <div className="breadcrumb__text">
                   <h4>Hakkımızda</h4>
-                  {/* <div className="breadcrumb__links">
-                    <a href="./index.html">Ana Sayfa</a>
-                    <span>About Us</span>
-                  </div> */}
-                  <Breadcrumb icon='right angle' sections={sections} className="siyah"  />
+                  <Breadcrumb>
+                    <Breadcrumb.Section><Link to="/" style={{color:"black"}}>Ana Sayfa</Link></Breadcrumb.Section>
+                    <Breadcrumb.Divider icon="right angle" />
+                    <Breadcrumb.Section>Hakkımızda</Breadcrumb.Section>
+                  </Breadcrumb>
                 </div>
               </div>
             </div>

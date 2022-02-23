@@ -6,17 +6,15 @@ import HomeSlider from "./HomeSlider";
 import HomeCategories from "./HomeCategories";
 import HomeProducts from "./HomeProducts";
 import InstagramPosts from "./InstagramPosts";
-import { useUserContext } from "../../contexts/UserContext";
-import ButtonExample from "../ButtonExample"
-
+import ChangePassword from "../userInfos/ChangePassword"
 export default function Home() {
-  const [state] = useUserContext();
-  const userId = state?.authenticatedUser?.id;
+  // const [state] = useUserContext();
+  // const userId = state?.authenticatedUser?.id;
+  // console.log("state?.authenticatedUser?.id: ", userId)
 
-
-  useEffect(() => {
-    localStorage.setItem("userId", 121);
-  }, []);
+  // useEffect(() => {
+  //   localStorage.setItem("userId", 122);
+  // }, []);
 
   return (
     <div>
@@ -24,7 +22,6 @@ export default function Home() {
       <HomeCategories />
       <HomeProducts />
       <InstagramPosts />
-      {/* <ButtonExample /> */}
     </div>
   );
 }

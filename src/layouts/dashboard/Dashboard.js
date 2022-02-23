@@ -8,7 +8,7 @@ import AllProduct from "../../components/product/AllProduct";
 import Home from "../home/Home";
 import Login from "../login/Login"
 import NotFound from "../404page/NotFound";
-import ActivationCodeVerification from "../../components/activationCodeVerification/ActivationCodeVerification";
+import EmailVerificationTemplate from "../../components/emailVerificationTemplate/EmailVerificationTemplate";
 import Admin from "../../components/admin/Admin";
 import ProductCard from "../../components/admin/cards/ProductCard";
 import CategoryEditPage from "../../components/admin/categoryEditPage/CategoryEditPage";
@@ -32,6 +32,8 @@ import Payment from "../payment/Payment";
 import SavedCardsToPay from "../payment/SavedCardsToPay"
 import MyRegisteredCards from "../payment/mySavedCards/MyRegisteredCards";
 import Unauthorized from "../unauthorized/Unauthorized";
+import ResetPasswordForm from "../resetPasswordForm/ResetPasswordForm";
+import OrderManagementPanel from "../../components/seller/OrderManagementPanel";
 
 
 export default function Dashboard() {
@@ -48,7 +50,7 @@ export default function Dashboard() {
         <Route exact path="/product-detail/:productId" component={ProductDetail} />
         <Route path="/register" component={RegisterLayout} />
         <Route path="/login" component={Login} />
-        <Route path="/activationcodeverification" component={ActivationCodeVerification} />
+        <Route path="/emailVerification" component={EmailVerificationTemplate} />
         <Route path="/productcard" component={ProductCard} />
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/contact" component={Contact} />
@@ -62,13 +64,15 @@ export default function Dashboard() {
         <Route path="/payment" component={Payment} />
         <Route path="/savedCardsToPay" component={SavedCardsToPay} />
         <Route path="/myRegisteredCards" component={MyRegisteredCards} />
+        <Route path="/producteditpage" component={ProductEditPage} />
         <Route exact path="/admin">{ auth !== null && auth.includes("true") ? <Admin /> : <Unauthorized /> }</Route>
-        <Route exact path="/producteditpage">{ auth !== null && auth.includes("true") ? <ProductEditPage /> : <Unauthorized /> }</Route>
+        {/* <Route exact path="/producteditpage">{ auth !== null && auth.includes("true") ? <ProductEditPage /> : <Unauthorized /> }</Route> */}
         <Route exact path="/categoryeditpage">{ auth !== null && auth.includes("true") ? <CategoryEditPage /> : <Unauthorized /> }</Route>
         <Route exact path="/brandeditpage">{ auth !== null && auth.includes("true") ? <BrandEditPage /> : <Unauthorized /> }</Route>
         <Route exact path="/campaignmanagementeditpage">{ auth !== null && auth.includes("true") ? <CampaignManagementEditPage /> : <Unauthorized /> }</Route>
+        <Route exact path="/ordermanagementpanel">{ auth !== null && auth.includes("true") ? <OrderManagementPanel /> : <Unauthorized /> }</Route>
+        <Route exact path="/resetPassword" component={ResetPasswordForm} />
 
-        <Route path="/tokenexpiredalert" component={TokenExpiredAlert} />
         <Route path="*" component={NotFound} />
       </Switch>
     </div>

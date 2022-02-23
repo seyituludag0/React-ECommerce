@@ -33,4 +33,8 @@ export default class CampaignManagementService{
         return axios.get("http://localhost:8080/api/campaignManagement/getByCurrentCategoryId?categoryId=" + categoryId)
     }
 
+    getByCouponCode(couponCode){
+        return axios.get("http://localhost:8080/api/campaignManagement/getByCouponCode?couponCode=" + couponCode)
+    }
+
 }

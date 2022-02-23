@@ -18,14 +18,24 @@ export const UserProvider = ({ children }) => {
   // const isAdmin = localStorage.getItem("isAdmin");
   const userName = localStorage.getItem("userName");
 
+  // useEffect(() => {
+  //   if (userName) {
+  //     let userService = new UserService();
+  //     userService.getByUserName(localStorageUserName()).then((result) => {
+  //       dispatch({ type: "SET_USER", payload: result.data });
+  //       dispatch({ type: "SET_IS_ADMIN", payload: result.data.roles.some((role) => role.name === "ADMIN")});
+  //     });
+  //   }
+  // }, [userName]);
+
   useEffect(() => {
     if (userName) {
       let userService = new UserService();
       userService.getByUserName(localStorageUserName()).then((result) => {
         dispatch({ type: "SET_USER", payload: result.data });
-        dispatch({ type: "SET_IS_ADMIN", payload: result.data.roles.some((role) => role.name === "ADMIN")});
+        // dispatch({ type: "SET_IS_ADMIN", payload: result.data.roles.some((role) => role.name === "ADMIN")});
+        dispatch({ type: "SET_IS_ADMIN", payload: result.data.roles != null ? result.data.roles.some((role) => role.name === "ADMIN"):null});
       });
-      
     }
   }, [userName]);
 

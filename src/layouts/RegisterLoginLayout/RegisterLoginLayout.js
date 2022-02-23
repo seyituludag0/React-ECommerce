@@ -40,11 +40,9 @@ export default function RegisterLoginLayout() {
         <div className="my-menu" style={{ top: "60px", left: "1094px" }}>
           <MenuItem onClick={handleClose}>
              <Link to="/register" className="menu-tabs">Kayıt Ol <Icon name="user plus" /></Link>
-            {/* &nbsp;<img src={registerIcon} style={{ width:"3%" }}/> */}
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <Link to="/login" className="menu-tabs">Giriş Yap <Icon name="sign in" /></Link>
-            {/* &nbsp; <img src={loginIcon} style={{ width:"3%" }} /> */}
           </MenuItem>
         </div>
       </Menu>

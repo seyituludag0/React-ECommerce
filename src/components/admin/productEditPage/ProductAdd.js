@@ -51,7 +51,7 @@ export default function ProductAdd() {
       .getAllCategory()
       .then((result) => setCategories(result.data.data));
     brandService.getAllBrands().then((result) => setBrands(result.data.data));
-    colorService.getAllColor().then((result) => setColors(result.data.data));
+    colorService.getAll().then((result) => setColors(result.data.data));
   }, []);
 
   const categoryOption = categories.map((category, index) => ({
@@ -76,17 +76,17 @@ export default function ProductAdd() {
     formik.setFieldValue(fieldName, value);
   };
 
-  const updateProductImageValues = () => {
-    // cvService.getByCandidateId(id).then((result) => {setCv(result.data.data)})
-    let productService = new ProductService();
-    productService.getByProductId(28).then((result)=>setImage(result.data.data)) 
-  }
+  // const updateProductImageValues = () => {
+  //   // cvService.getByCandidateId(id).then((result) => {setCv(result.data.data)})
+  //   let productService = new ProductService();
+  //   productService.getByProductId(28).then((result)=>setImage(result.data.data)) 
+  // }
 
   return (
     <div className="my-div">
       <Grid.Column>
         <div className="xxxxxxx" style={{marginTop:"-4rem"}}>
-          <Card fluid>
+          <Card fluid style={{height:"45rem"}}>
             <Card.Content header="Ürün Ekle" />
             <Card.Content>
               <Form onSubmit={formik.handleSubmit}>

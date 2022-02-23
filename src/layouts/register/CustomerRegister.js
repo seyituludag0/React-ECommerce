@@ -8,12 +8,9 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
-export default function Register() {
+export default function CustomerRegister() {
 
   let history = useHistory();
-
-  const [user, setUser] = useState({});
-
 
   const formik = useFormik({
     initialValues: {
@@ -31,7 +28,7 @@ export default function Register() {
       userService.customerRegister(values)
         .then((result) => toast.success(result.data.message))
         .catch((error) => toast.error("HATA"));
-      history.push("/activationcodeverification");
+      history.push("/emailVerification");
     },
   });
 

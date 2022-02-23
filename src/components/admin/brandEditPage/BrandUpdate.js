@@ -62,9 +62,9 @@ export default function BrandUpdate({ brand }) {
               )}
             </Form.Field>
             <Button
-              content="Ekle"
+              content="Güncelle"
               labelPosition="right"
-              icon="add"
+              icon="pencil"
               primary
               type="submit"
               style={{ marginLeft: "20px" }}

@@ -9,7 +9,7 @@ import search from "../../components/product/img/icon/search.png";
 import compare from "../../components/product/img/icon/compare.png";
 import { Link } from "react-router-dom";
 import { CartContextValue } from "../../contexts/ContextProvider";
-import { HttpPostwithToken } from "../../configs/HttpConfig";
+import { HttpPostWithToken } from "../../configs/HttpConfig";
 import { toast } from "react-toastify";
 import { Grid, Image } from "semantic-ui-react";
 import CampaignLeftBanner from "../campaigns/campaignbanners/CampaignLeftBanner"
@@ -24,16 +24,16 @@ export default function HomeProducts() {
   let productService = new ProductService();
   let categoryService = new CategoryService();
   let favoriteService = new FavoriteService();
-
+  const userId = localStorage.getItem("userId");
   useEffect(() => {
     productService.getMainProducts().then((result) => setMainProducts(result.data.data));
     categoryService.getAllCategory().then((result) => setCategories(result.data.data));
   }, []);
 
   const handleAddFavorite = (productId) => {
-    // favoriteService.addFavorites(121, productId).then((result) => toast.success(result.data.message));
+    // favoriteService.addFavorites(userId, productId).then((result) => toast.success(result.data.message));
     favoriteService
-      .existsByCustomerIdAndProductId(121, productId)
+      .existsByCustomerIdAndProductId(userId, productId)
       .then((result) => toast.success(result.data.message));
   };
 
@@ -43,7 +43,7 @@ export default function HomeProducts() {
       quantity: 1,
       price: productObj.price,
     };
-    HttpPostwithToken("addToCart/addProduct", obj)
+    HttpPostWithToken("addToCart/addProduct", obj)
       .then((res) => {
         console.log("obj", obj);
         res.json().then((data) => {
@@ -115,7 +115,7 @@ export default function HomeProducts() {
                   {mainProducts.map((product, key) => (
                     <div className="product__item" key={key}>
                       <div className="product__item__pic set-bg">
-                        <img src={product.productImage?.image1} alt={product.name} />
+                        <img src={product.productImage?.image3} alt={product.name} />
                         <ul className="product__hover">
                           <li>
                             <a onClick={() => handleAddFavorite(product.id)}>

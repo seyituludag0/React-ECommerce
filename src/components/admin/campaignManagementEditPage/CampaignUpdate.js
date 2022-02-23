@@ -1,33 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import CampaignManagementService from "../../../services/CampaignManagementService";
+import CategoryService from "../../../services/CategoryService";
 import { toast } from "react-toastify";
 import {
   Button,
   Form,
-  Grid,
   Input,
   TextArea,
   Modal,
-  Icon,
   Dropdown,
 } from "semantic-ui-react";
 
 export default function CampaignUpdate({ campaign }) {
+  let campaignManagementService = new CampaignManagementService();
+  let categoryService = new CategoryService();
+
   const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    categoryService
+      .getAllCategory()
+      .then((result) => setCategories(result.data.data));
+  }, []);
 
   const formik = useFormik({
     initialValues: {
       id: campaign?.id,
       campaignName: campaign?.campaignName,
+      currentCategoryId: campaign?.currentCategoryId,
       couponCode: campaign?.couponCode,
       discountRate: campaign?.discountRate,
       campaignExpiredDate: campaign?.campaignExpiredDate,
       campaignDetails: campaign?.campaignDetails,
+      campaignBannerImage: campaign?.campaignBannerImage
     },
-    // validationSchema: validationRules,
     onSubmit: (campaign) => {
-      let campaignManagementService = new CampaignManagementService();
+      // console.log(campaign)
       campaignManagementService
         .update(campaign)
         .then((result) => toast.success(result.data.message))
@@ -35,8 +45,16 @@ export default function CampaignUpdate({ campaign }) {
     },
   });
 
+  const categoryOption = categories.map((category, index) => ({
+    key: index,
+    text: category.name,
+    value: category.id,
+  }));
 
-  
+  const handleChangeSemantic = (value, fieldName) => {
+    formik.setFieldValue(fieldName, value);
+  };
+
   const myStyle = {
     position: "absolute",
     top: "50%",
@@ -77,7 +95,30 @@ export default function CampaignUpdate({ campaign }) {
                 </div>
               )}
             </Form.Field>
+
             <Form.Field>
+              <Dropdown
+                clearable
+                item
+                placeholder="Kampanyanın geçerli olduğu ürünler"
+                search
+                selection
+                onChange={(event, data) =>
+                  handleChangeSemantic(data.value, "currentCategoryId")
+                }
+                onBlur={formik.onBlur}
+                id="currentCategoryId"
+                value={formik.values.currentCategoryId}
+                options={categoryOption}
+              />
+              {formik.errors.categoryId && formik.touched.currentCategoryId && (
+                <div className={"ui pointing red basic label"}>
+                  {formik.errors.currentCategoryId}
+                </div>
+              )}
+            </Form.Field>
+
+            {/* <Form.Field>
               <Input
                 placeholder="Kupon Kodu"
                 error={Boolean(formik.errors.couponCode).toString()}
@@ -92,23 +133,23 @@ export default function CampaignUpdate({ campaign }) {
                   {formik.errors.couponCode}
                 </div>
               )}
-            </Form.Field>
+            </Form.Field> */}
             <Form.Field>
-                  <Input
-                    placeholder="İndirim Oranı"
-                    error={Boolean(formik.errors.discountRate).toString()}
-                    value={formik.values.discountRate}
-                    name="discountRate"
-                    type="number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.errors.discountRate && formik.touched.discountRate && (
-                    <div className={"ui pointing red basic label"}>
-                      {formik.errors.discountRate}
-                    </div>
-                  )}
-                </Form.Field>
+              <Input
+                placeholder="İndirim Oranı"
+                error={Boolean(formik.errors.discountRate).toString()}
+                value={formik.values.discountRate}
+                name="discountRate"
+                type="number"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.discountRate && formik.touched.discountRate && (
+                <div className={"ui pointing red basic label"}>
+                  {formik.errors.discountRate}
+                </div>
+              )}
+            </Form.Field>
             <Form.Field>
               <Input
                 style={{ width: "100%" }}
@@ -126,6 +167,24 @@ export default function CampaignUpdate({ campaign }) {
                   </div>
                 )}
             </Form.Field>
+
+            <Form.Field>
+              <Input
+                placeholder="Resim Url"
+                error={Boolean(formik.errors.campaignBannerImage).toString()}
+                value={formik.values.campaignBannerImage}
+                name="campaignBannerImage"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.campaignBannerImage &&
+                formik.touched.campaignBannerImage && (
+                  <div className={"ui pointing red basic label"}>
+                    {formik.errors.campaignBannerImage}
+                  </div>
+                )}
+            </Form.Field>
+
             <Form.Field>
               <TextArea
                 placeholder="Açıklama"
@@ -136,11 +195,12 @@ export default function CampaignUpdate({ campaign }) {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              {formik.errors.campaignDetails && formik.touched.campaignDetails && (
-                <div className={"ui pointing red basic label"}>
-                  {formik.errors.campaignDetails}
-                </div>
-              )}
+              {formik.errors.campaignDetails &&
+                formik.touched.campaignDetails && (
+                  <div className={"ui pointing red basic label"}>
+                    {formik.errors.campaignDetails}
+                  </div>
+                )}
             </Form.Field>
             <Button
               content="Güncelle"

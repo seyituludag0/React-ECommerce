@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export default class ProductService {
+
   getAllProduct() {
     return axios.get("http://localhost:8080/api/products/getAll");
   }
@@ -59,6 +60,10 @@ export default class ProductService {
 
   searchKeyword(keyword){
     return axios.get("http://localhost:8080/api/products/searchKeyword?keyword=" + keyword)
+  }
+
+  salableAllProducts() {
+    return axios.get("http://localhost:8080/api/products/salableAllProducts");
   }
 
 }

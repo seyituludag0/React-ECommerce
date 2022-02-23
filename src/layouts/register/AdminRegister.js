@@ -13,13 +13,13 @@ export default function AdminRegister() {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "admin",
-      lastName: "admin",
-      userName: "admin",
+      firstName: "Mr",
+      lastName: "Robot",
+      userName: "mrrobot",
       phoneNumber: "05523657896",
-      email: "admin@uludagcorap.com",
+      email: "mrrobot@gmail.com",
       password: "123456",
-      description: "",
+      description: "My name is Mr.Robot. I think that's enough",
     },
     validationSchema: validationRules,
     onSubmit: (values) => {

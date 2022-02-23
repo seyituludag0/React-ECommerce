@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import BrandService from '../../../services/BrandService';
 import CampaignManagementService from '../../../services/CampaignManagementService';
 
-export default function CampaignDelete( {id} ) {
+export default function CampaignDelete({ id }) {
 
     const [open, setOpen] = useState(false)
 

@@ -33,7 +33,7 @@ function Row() {
     categoryService
       .getAllCategory()
       .then((result) => setCategories(result.data.data));
-  }, []);
+  }, [categories]);
 
   return (
     <>

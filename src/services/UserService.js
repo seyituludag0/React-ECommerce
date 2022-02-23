@@ -26,5 +26,21 @@ export default class UserService{
     customerUpdate(user){
         return axios.post("http://localhost:8080/api/customers/updateDto", user)
     }
-}
 
+    changePassword(passwordInfo){
+        return axios.post("http://localhost:8080/api/users/changePassword", passwordInfo)
+    }
+
+    resetPassword(passwordInfo){
+        return axios.post("http://localhost:8080/api/users/resetPassword", passwordInfo)
+    }
+
+    generateResetPasswordToken(email){
+        return axios.post(`http://localhost:8080/api/users/generateResetPasswordToken?email=${email}`)
+    }
+    
+    getByUserIdResetPasswordToken(userId){
+        return axios.get("http://localhost:8080/api/resetPasswordTokens/getByUserId?userId=" + userId)
+    }
+
+}

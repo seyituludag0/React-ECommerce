@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import React from "react";
 import {
   Button,
   Dropdown,
@@ -12,14 +12,25 @@ import {
 } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import CampaignManagementService from "../../../services/CampaignManagementService";
+import CategoryService from "../../../services/CategoryService";
 export default function CampaignCreate() {
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(()=>{
+  let categoryService = new CategoryService();
+    categoryService.getAllCategory().then((result)=>setCategories(result.data.data))
+  }, [])
+
   const formik = useFormik({
     initialValues: {
       campaignName: "",
+      currentCategoryId:"",
       couponCode: "",
       discountRate:"",
       campaignExpiredDate: "",
       campaignDetails: "",
+      campaignBannerImage: "",
     },
     // validationSchema: validationRules,
     onSubmit: (campaign) => {
@@ -30,6 +41,16 @@ export default function CampaignCreate() {
         .catch("HATA!");
     },
   });
+
+  const categoryOption = categories.map((category, index) => ({
+    key: index,
+    text: category.name,
+    value: category.id,
+  }));
+
+  const handleChangeSemantic = (value, fieldName) => {
+    formik.setFieldValue(fieldName, value);
+  };
 
   return (
     <div className="my-div">
@@ -55,7 +76,30 @@ export default function CampaignCreate() {
                       </div>
                     )}
                 </Form.Field>
+
                 <Form.Field>
+              <Dropdown
+                clearable
+                item
+                placeholder="Kampanyanın geçerli olduğu ürünler"
+                search
+                selection
+                onChange={(event, data) =>
+                  handleChangeSemantic(data.value, "currentCategoryId")
+                }
+                onBlur={formik.onBlur}
+                id="currentCategoryId"
+                value={formik.values.currentCategoryId}
+                options={categoryOption}
+              />
+              {formik.errors.categoryId && formik.touched.currentCategoryId && (
+                <div className={"ui pointing red basic label"}>
+                  {formik.errors.currentCategoryId}
+                </div>
+              )}
+            </Form.Field>
+
+                {/* <Form.Field>
                   <Input
                     placeholder="Kupon Kodu"
                     error={Boolean(formik.errors.couponCode).toString()}
@@ -70,7 +114,7 @@ export default function CampaignCreate() {
                       {formik.errors.couponCode}
                     </div>
                   )}
-                </Form.Field>
+                </Form.Field> */}
                 <Form.Field>
                   <Input
                     placeholder="İndirim Oranı"
@@ -104,6 +148,24 @@ export default function CampaignCreate() {
                       </div>
                     )}
                 </Form.Field>
+
+                <Form.Field>
+                  <Input
+                    placeholder="Resim Url"
+                    error={Boolean(formik.errors.campaignBannerImage).toString()}
+                    value={formik.values.campaignBannerImage}
+                    name="campaignBannerImage"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.errors.campaignBannerImage &&
+                    formik.touched.campaignBannerImage && (
+                      <div className={"ui pointing red basic label"}>
+                        {formik.errors.campaignBannerImage}
+                      </div>
+                    )}
+                </Form.Field>
+
                 <Form.Field>
                   <TextArea
                     placeholder="Açıklama"

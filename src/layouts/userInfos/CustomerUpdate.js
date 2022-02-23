@@ -4,6 +4,7 @@ import UserService from "../../services/UserService";
 import { Form, Grid, Button } from "semantic-ui-react";
 import { Input } from "@material-ui/core";
 import { toast } from "react-toastify";
+import ChangePassword from "./ChangePassword";
 
 export default function CustomerUpdate({ customer }) {
 
@@ -144,31 +145,6 @@ export default function CustomerUpdate({ customer }) {
                       </Grid.Column>
                     </Grid>
                   </Form.Field>
-
-                  <Form.Field>
-                    <Grid stackable>
-                      <Grid.Column>
-                        <Input
-                          style={{ width: "100%" }}
-                          id="password"
-                          name="password"
-                          onChange={formik.handleChange}
-                          value={formik.values.password}
-                          onBlur={formik.handleBlur}
-                          type="password"
-                          error={formik.errors.epasswordmail}
-                          placeholder="Parola"
-                        />
-                         
-                        {formik.errors.password &&
-                          formik.touched.password && (
-                            <div className={"ui pointing red basic label"}>
-                              {formik.errors.password}
-                            </div>
-                          )}
-                      </Grid.Column>
-                    </Grid>
-                  </Form.Field>
                 </div>
                 <Button type="submit"
                   variant="contained"
@@ -180,6 +156,7 @@ export default function CustomerUpdate({ customer }) {
                   Bilgilerimi Güncelle
                 </Button>
         </form>
+        <ChangePassword customer={customer} />
   </div>
   );
 }

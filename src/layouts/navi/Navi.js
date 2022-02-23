@@ -10,8 +10,6 @@ import { CartContextValue } from "../../contexts/ContextProvider";
 import * as authActionType from "../../store/actions/authAction";
 import { useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import TokenExpiredAlert from "../tokenExpiredAlert/TokenExpiredAlert"
-import { HttpGetwithToken } from "../../configs/HttpConfig";
 import CartService from "../../services/CartService";
 
 
@@ -19,6 +17,7 @@ export default function Navi() {
   const [cartData, dispatch] = CartContextValue();
   const [state] = useUserContext();
   const history = useHistory();
+  const userId = localStorage.getItem("userId");
  
   //----------------------------------------------------------------------------------------------------
   useEffect(() => {
@@ -39,27 +38,10 @@ export default function Navi() {
     
   };
 
-  // const getCartApi = () => {
-  //   HttpGetwithToken("addToCart/getCartByUserId", {}).then(
-  //     (res) => {
-  //       res.json().then((data) => {
-  //         if (res.ok) {
-  //           dispatch({
-  //             type: "add_cart",
-  //             data: data,
-  //           });
-  //         } else {
-  //           alert(data.message);
-  //         }
-  //       });
-  //     }
-     
-  //   );
-  // };
 
   const getCartApi = () => {
     let cartService = new CartService();
-    cartService.getCartsByUserId(121).then((result)=>dispatch({type:"add_cart", data:result.data}))
+    cartService.getCartsByUserId(userId).then((result)=>dispatch({type:"add_cart", data:result.data}))
   }
 
   return (

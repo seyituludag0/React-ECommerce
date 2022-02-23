@@ -11,16 +11,17 @@ import Divider from "@mui/material/Divider";
 import CartService from "../../services/CartService";
 import { Alert } from "@mui/material";
 import DeliveryInformation from "../deliveryInformation/DeliveryInformation";
-import { CartContextValue } from "../../contexts/ContextProvider";
+// import { CartContextValue } from "../../contexts/ContextProvider";
 
 export default function CartSummary() {
-  const [cartData, dispatch] = CartContextValue();
+  const [cartData, setCartData] = useState([])
+  const userId = localStorage.getItem("userId");
+  let cartService = new CartService();
 
   useEffect(() => {
-    let cartService = new CartService();
     cartService
-      .getCartsByUserId(121)
-      .then((result) => dispatch({ type: "add_cart", data: result.data }));
+      .getCartsByUserId(userId)
+      .then((result) => setCartData(result.data));
   }, []);
 
   const StyledTableCell = styled(TableCell)(() => ({
@@ -48,7 +49,7 @@ export default function CartSummary() {
   }));
 
   const getTotalAmount = () => {
-    return cartData.cartItems.reduce(
+    return cartData.reduce(
       (prevValue, currentValue) => prevValue + currentValue.price,
       0
     );
@@ -76,7 +77,7 @@ export default function CartSummary() {
                 </TableHead>
                 <TableBody>
                   {
-                    cartData.cartItems.map((cartItem, key)=>(
+                    cartData.map((cartItem, key)=>(
                       <StyledTableRow key={cartItem.id}>
                     <StyledTableCell component="th" scope="row">
                       <img

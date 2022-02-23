@@ -17,10 +17,10 @@ export default function CampaignTopBanner() {
   return (
     <Advertisement unit="large leaderboard">
       <Link to={`/campaigndetails/${campaign.id}`}>
-        <img
+        {/* <img
           src="https://tpc.googlesyndication.com/simgad/2269627605629695107?"
           alt={campaign.campaignName}
-        />
+        /> */}
       </Link>
     </Advertisement>
   );

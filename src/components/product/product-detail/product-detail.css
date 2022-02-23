@@ -29,6 +29,16 @@
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+.selectedSize {
+	color: #fff;
+	background-color: black;
+  }
+
+  .selectedColor {
+	/* border: 2px solid green; */
+	top: -10px;
+  }
+
 
 html,
 body {
@@ -1572,7 +1582,6 @@ ol {
 }
 
 .product__details__option__size label {
-	color: #111111;
 	font-size: 15px;
 	font-weight: 700;
 	text-transform: uppercase;
