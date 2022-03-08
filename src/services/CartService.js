@@ -1,8 +1,13 @@
 import axios from "axios";
+// http://localhost:8080/api/addToCart/addProductToCart
 
 export default class CartService{
-    addProduct(product){
-        return axios.post("http://localhost:8080/api/addToCart/addProduct", product)
+    // addProduct(product){
+    //     return axios.post("http://localhost:8080/api/addToCart/addProduct", product)
+    // }
+
+    addToCart(product){
+        return axios.post("http://localhost:8080/api/addToCart/addProductToCart", product)
     }
 
     getCartsByUserId(userId){
@@ -33,8 +38,8 @@ export default class CartService{
         return axios.post("http://localhost:8080/api/addToCart/updateQuantityForCart", product)
     }
 
-    userIdGetCartId(productId, userId){
-        return axios.get(`http://localhost:8080/api/addToCart/userIdGetCartId?productId=${productId}&userId=${userId}`);
+    getCartIdWithUserIdAndProductId(productId, userId){
+        return axios.get(`http://localhost:8080/api/addToCart/getCartIdWithUserIdAndProductId?productId=${productId}&userId=${userId}`);
     }
 
     existsByUserIdAndProductId(productId, userId){
@@ -47,6 +52,18 @@ export default class CartService{
 
     applyDiscountedPrice(cartId, discountRate){
         return axios.post(`http://localhost:8080/api/addToCart/applyDiscountedPrice?cartId=${cartId}&discountRate=${discountRate}`);
+    }
+
+    deleteCartById(cartId){
+        return axios.post("http://localhost:8080/api/addToCart/deleteCartById?cartId=" + cartId);
+    }
+
+    getProductInTheFromCart(productColorId, productId, productSizeId, userId){
+        return axios.get(`http://localhost:8080/api/addToCart/getProductInTheFromCart?productColorId=${productColorId}&productId=${productId}&productSizeId=${productSizeId}&userId=${userId}`)
+    }
+
+    getCartIdWithProductAndUserIdAndProductSizeIdAndProductColorId(productColorId, productId, productSizeId, userId){
+        return axios.get(`http://localhost:8080/api/addToCart/getCartIdWithProductAndUserIdAndProductSizeIdAndProductColorId?productColorId=${productColorId}&productId=${productId}&productSizeId=${productSizeId}&userId=${userId}`)
     }
     
 }

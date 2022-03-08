@@ -16,7 +16,7 @@ import empytFavorite from "./img/icon/empytFavorite.png";
 import FavoriteService from "../../services/FavoriteService";
 import ProductService from "../../services/ProductService";
 import CommentService from "../../services/CommentService";
-import AllProductPageAddToCartButton from "../../layouts/allProductPageAddToCartButton/AllProductPageAddToCartButton";
+import { AddToCartButton, CannotBeAddedCart } from "../../layouts/allProductPageAddToCartButton/AllProductPageAddToCartButton";
 import { Label } from "semantic-ui-react";
 import ColorService from "../../services/ColorService";
 import ProductSizeService from "../../services/ProductSizeService";
@@ -40,8 +40,6 @@ export default function SingleProduct({ productss }) {
   const [productSizes, setProductSizes] = useState([]);
   const [currentProductSize, setCurrentProductSize] = useState(null);
 
-  console.log("Ürün Bedeni: " + currentProductSize?.size)
-  console.log("Ürün Rengi: " + currentProductColor?.name)
   const product = productss;
   const userId = localStorage.getItem("userId");
   useEffect(() => {
@@ -163,7 +161,7 @@ export default function SingleProduct({ productss }) {
           <h6> {product.name} </h6>
           {/* <AllProductPageAddToCartButton product={product} productSizeId={currentProductSize?.id} productColorId={currentProductColor?.id} /> */}
           {
-            currentProductSize===null || currentProductColor===null ? null : <AllProductPageAddToCartButton product={product} productSizeId={currentProductSize?.id} productColorId={currentProductColor?.id} />
+            currentProductSize===null || currentProductColor===null ? <CannotBeAddedCart/> : <AddToCartButton product={product} productSizeId={currentProductSize?.id} productColorId={currentProductColor?.id} />
           }
             <Rating
               size="small"

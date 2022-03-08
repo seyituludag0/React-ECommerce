@@ -3,85 +3,80 @@ import { CartContextValue } from "../../contexts/ContextProvider";
 import { toast } from "react-toastify";
 import CartService from "../../services/CartService";
 
-export default function DetailPageProductAddButton({ product, productId, productSizeId, productColorId }) {
+export function ProductAddButton({ product, productId, productSizeId, productColorId }) {
   let cartService = new CartService();
 
-  const [countValue] = useState(1);
-  const [isCheck, setIsCheck] = useState(null);
-  const [artacakDeger, setArtacakDeger] = useState(1);
-  const [baseQuantity] = useState(1);
-
+  const [count, setCount] = useState(1);
   const [cartId, setCartId] = useState();
   const [productInCart, setProductInCart] = useState({});
-
-  
+  const [checkIfTheProductIsInTheCart, setCheckIfTheProductIsInTheCart] = useState(null)
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     cartService
-      .userIdGetCartId(productId, 1)
+      .getCartIdWithUserIdAndProductId(productId, 1)
       .then((result) => setCartId(result.data));
-    cartService
-      .existsByUserIdAndProductId(productId, 1)
-      .then((result) => setIsCheck(result.data));
-    cartService
-      .getCartByUserIdAndProductId(productId, 1)
-      .then((result) => setProductInCart(result.data));
   }, []);
 
+  useEffect(()=>{
+    cartService.getProductInTheFromCart(productColorId, product.id, productSizeId, userId)
+    .then((result)=>setCheckIfTheProductIsInTheCart(result.data))
+  }, [])
+
+  useEffect(()=>{
+    cartService.getProductInTheFromCart(productColorId, product.id, productSizeId, userId)
+    .then((result)=>setProductInCart(result.data))
+  })
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
+
   const addCartApi = (productObj) => {
-    console.log("Eklenecek obj: " + productObj)
-    setArtacakDeger(baseQuantity + 1);
+    if (!checkIfTheProductIsInTheCart) {
+      incrementCount();
+    const totalQuantity = count;
+    let unitPrice = productObj.price;
+    console.log("totalQuantity: ", totalQuantity)
+    let totalPrice = unitPrice * totalQuantity;
     let obj = {
-      userId: 1,
       productId: productObj.id,
+      quantity: totalQuantity,
+      price: totalPrice,
       productSizeId: productSizeId,
       productColorId: productColorId,
-      quantity: baseQuantity,
-      price: productObj.price,
+      userId: userId,
     };
     cartService
       .addProduct(obj)
       .then((result) => {
         toast.success(result.data.message);
-      })
-      .catch(function (res) {
-        console.log("Error ", res);
-        // alert(error.message);
       });
-  };
-
-  const incrementQuantityChange = (cartObj) => {
-    // setToplamUrunAdedi(toplamUrunAdedi + 1)
-    const totalQuantity = productInCart.quantity + 1;
-    let unitPrice = cartObj.price;
-    let totalPrice = unitPrice * totalQuantity;
-    let obj = {
-      cartId: cartId,
-      userId: 1,
-      productSizeId: productSizeId,
-      productColorId: productColorId,
-      quantity: totalQuantity,
-      price: totalPrice,
-    };
-    cartService
-      .updateQuantityForCart(obj)
+    }   else{
+      // alert(productInCart?.quantity)
+      const totalQuantity = productInCart?.quantity + count;
+      let unitPrice = productObj.price;
+      let totalPrice = unitPrice * productInCart?.quantity;
+      let obj = {
+        productId: productObj.id,
+        quantity: totalQuantity,
+        price: totalPrice,
+        productSizeId: productSizeId,
+        productColorId: productColorId,
+        userId: userId,
+      };
+      cartService
+      .addProduct(obj)
       .then((result) => {
-        toast.success(result.message);
-      })
-      .catch(function (res) {
-        console.log("Error ", res);
-        //  alert(error.message);
+        toast.success(result.data.message);
       });
+    } 
   };
 
   const sepeteEkle = () => {
-    if (!isCheck) {
       addCartApi(product);
-    } else {
-      toast.info("Sepetiniz Güncellendi");
-      incrementQuantityChange(product, countValue);
     }
-  };
+  
 
   return (
     <div>
@@ -101,4 +96,19 @@ export default function DetailPageProductAddButton({ product, productId, product
       </div>
     </div>
   );
+}
+
+export function ProductCannotBeAddedCart() {
+  return(
+      <>
+     <div className="product__details__cart__option">
+        <button disabled 
+          className="primary-btn"
+          style={{ cursor: "not-allowed" }}
+        >
+          Sepete Ekle
+        </button>
+      </div>
+      </>
+  )
 }

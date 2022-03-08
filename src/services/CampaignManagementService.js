@@ -17,9 +17,11 @@ export default class CampaignManagementService{
         return axios.post(`http://localhost:8080/api/campaignManagement/delete/${id}`)
     }
 
-    verifyCouponCode(couponCode){
-        return axios.post(`http://localhost:8080/api/campaignManagement/verifyCouponCode?couponCode=${couponCode}`)
+    verifyCouponCode(cartId, couponCode){
+        return axios.post(`http://localhost:8080/api/campaignManagement/verifyCouponCode?cartId=${cartId}&couponCode=${couponCode}`)
     }
+
+    
 
     getRandomCampaign(){
         return axios.get("http://localhost:8080/api/campaignManagement/getRandomCampaign?limit=1")

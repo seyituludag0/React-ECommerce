@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import CampaignManangementService from "../../services/CampaignManagementService";
 import { toast } from "react-toastify";
 import { Form, Input } from "semantic-ui-react";
-import { CartContextValue } from "../../contexts/ContextProvider";
 
 export default function DiscountCouponForm() {
   const formik = useFormik({

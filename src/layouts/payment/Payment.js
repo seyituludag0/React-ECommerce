@@ -65,7 +65,7 @@ export default function Payment() {
         .then((result) => toast.success(result.data.message));
     }
     await sleep(300)
-    history.push("/");
+    // history.push("/");
   };
 
   // Switch

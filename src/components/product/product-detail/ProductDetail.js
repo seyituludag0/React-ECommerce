@@ -7,13 +7,15 @@ import { Breadcrumb, Icon } from "semantic-ui-react";
 import ProductOrderService from "/react/sock-ecommerce/src/services/ProductOrderService";
 import CommentForm from "../../../layouts/comments/CommentForm";
 import CommentBulb from "../../../layouts/comments/CommentBulb";
-import DetailPageProductAddButton from "../../../layouts/detailPageProductAddButton/DetailPageProductAddButton";
+// import DetailPageProductAddButton from "../../../layouts/detailPageProductAddButton/DetailPageProductAddButton";
 import ProductByIdImages from "../../productByIdImages/ProductByIdImages";
 import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
 import CommentService from "../../../services/CommentService";
 import ProductSizeService from "../../../services/ProductSizeService";
 import ColorService from "../../../services/ColorService";
+import { ProductAddButton, ProductCannotBeAddedCart } from "../../../layouts/detailPageProductAddButton/DetailPageProductAddButton";
+
 
 export default function ProductDetail() {
   let { productId } = useParams();
@@ -241,8 +243,8 @@ export default function ProductDetail() {
                   {/*  */}
 
                   {currentProductSize === null ||
-                  currentProductColor === null ? null : (
-                    <DetailPageProductAddButton
+                  currentProductColor === null ? <ProductCannotBeAddedCart /> : (
+                    <ProductAddButton
                       product={product}
                       productId={productId}
                       productSizeId={currentProductSize?.id}

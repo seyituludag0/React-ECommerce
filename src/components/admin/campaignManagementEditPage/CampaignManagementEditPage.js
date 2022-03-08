@@ -107,7 +107,7 @@ export default function CampaignManagementEditPage() {
               <TableCell>Kampanya Id</TableCell>
               <TableCell>Kampanya Adı</TableCell>
               <TableCell align="right">Kupon kodu</TableCell>
-              <TableCell align="right">İndirim Oranı</TableCell>
+              <TableCell align="right">İndirim Oranı(TL)</TableCell>
               <TableCell align="right">Kampanyanın Bitiş Tarihi</TableCell>
               <TableCell align="center">Kampanya Detayları</TableCell>
               <TableCell align="right">Güncelle</TableCell>

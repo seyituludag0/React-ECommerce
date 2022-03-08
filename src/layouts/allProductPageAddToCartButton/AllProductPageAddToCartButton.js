@@ -1,67 +1,77 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import CartService from "../../services/CartService"
+import CartService from "../../services/CartService";
 
-export default function AllProductPageAddToCartButton({ product, productSizeId, productColorId }) {
+export function AddToCartButton({ product, productSizeId, productColorId }) {
+  const [count, setCount] = useState(1)
+  const [cartId, setCartId] = useState();
+  const [checkIfTheProductIsInTheCart, setCheckIfTheProductIsInTheCart] = useState(null)
+  const [productInCart, setProductInCart] = useState()
 
-  const [countValue, setCountValue] = useState(1)
-  const [isCheck, setIsCheck] = useState(null);
-  const [artacakDeger, setArtacakDeger] = useState(1)
-  const [baseQuantity, setBaseQuantity] = useState(1)
-  const [toplamUrunAdedi, setToplamUrunAdedi] = useState(1)
-  const [cartId, setCartId] = useState()
-  const [productInCart, setProductInCart] = useState({})
   const userId = localStorage.getItem("userId");
   let cartService = new CartService();
 
+
   useEffect(()=>{
-    cartService.userIdGetCartId(product.id, userId).then((result)=>setCartId(result.data));
-    cartService.existsByUserIdAndProductId(product.id, userId).then((result)=>setIsCheck(result.data));
-    cartService.getCartByUserIdAndProductId(product.id, userId).then((result)=>setProductInCart(result.data));
-  },[])
-  
+    cartService.getProductInTheFromCart(productColorId, product.id, productSizeId, userId)
+    .then((result)=>setCheckIfTheProductIsInTheCart(result.data))
+  }, [])
+
+  useEffect(()=>{
+    cartService.getProductInTheFromCart(productColorId, product.id, productSizeId, userId)
+    .then((result)=>setProductInCart(result.data))
+  }, [])
+
+
+  // const incrementCount = () => {
+    // console.log("count: ", count)
+    // setCount(count + 1);
+  // };
+
   const addCartApi = (productObj) => {
-    setArtacakDeger(baseQuantity + 1)
+    if (!checkIfTheProductIsInTheCart) { // sepette aynı üründen varsa
+      
+    const totalQuantity = count;
+    let unitPrice = productObj.price;
+    let totalPrice = unitPrice * totalQuantity;
     let obj = {
       productId: productObj.id,
-      quantity: baseQuantity,
-      price: productObj.price,
+      quantity: totalQuantity,
+      price: totalPrice / totalQuantity,
       productSizeId: productSizeId,
       productColorId: productColorId,
-      userId:userId
+      userId: userId,
     };
-    cartService.addProduct(obj).then((result) => {
-         toast.success(result.data.message)
-    })
-      .catch(function (res) {
-        console.log("Error ", res);
-        // alert(error.message);
+    cartService
+      .addToCart(obj)
+      .then((result) => {
+        toast.success(result.data.message);
       });
+    }   else{
+      setCount(count + 1)
+      console.log("count: ", count)
+      const totalQuantity = productInCart?.quantity + count; // ÜRÜN MİKTARI
+      let unitPrice = productObj.price; //ÜRÜN BİRİM FİYATI
+      let totalPrice = unitPrice * productInCart?.quantity; // TOPLAM FİYAT
+      let obj = {
+        productId: productObj.id,
+        quantity: totalQuantity,
+        price: totalPrice / productInCart?.quantity,
+        productSizeId: productSizeId,
+        productColorId: productColorId,
+        userId: userId,
+      };
+      cartService
+      .addToCart(obj)
+      .then((result) => {
+        toast.success(result.data.message);
+      });
+    } 
   };
 
-  
-  const incrementQuantityChange = (cartObj) => {
-    // setToplamUrunAdedi(toplamUrunAdedi + 1)
-    const totalQuantity = productInCart.quantity + 1
-    let unitPrice = cartObj.price;
-    let totalPrice = unitPrice * totalQuantity;
-    let obj = { cartId: cartId, userId:userId, quantity: totalQuantity, price: totalPrice };
-    cartService.updateQuantityForCart(obj).then((result) => {
-      toast.success(result.message)
- })
-   .catch(function (res) {
-     console.log("Error ", res);
-    //  alert(error.message);
-   });
-  };
 
   const sepeteEkle = () => {
-    if (!isCheck) {
-      addCartApi(product)
-    } else {
-      toast.info("Sepetiniz Güncellendi")
-      incrementQuantityChange(product, countValue)
-    }
+    addCartApi(product);
   };
 
   return (
@@ -74,7 +84,20 @@ export default function AllProductPageAddToCartButton({ product, productSizeId, 
       >
         + Sepete Ekle
       </a>
-      
+    </div>
+  );
+}
+
+export function CannotBeAddedCart() {
+  return (
+    <div>
+      <a
+        className="add-cart"
+        style={{ color: "gray", cursor: "not-allowed" }}
+        href="javascript:void(0)"
+      >
+        + Sepete Ekle
+      </a>
     </div>
   );
 }
