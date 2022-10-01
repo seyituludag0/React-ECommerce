@@ -16,17 +16,17 @@ import empytFavorite from "./img/icon/empytFavorite.png";
 import FavoriteService from "../../services/FavoriteService";
 import ProductService from "../../services/ProductService";
 import CommentService from "../../services/CommentService";
+import VariantOptionService from "../../services/VariantOptionService";
 import { AddToCartButton, CannotBeAddedCart } from "../../layouts/allProductPageAddToCartButton/AllProductPageAddToCartButton";
 import { Label } from "semantic-ui-react";
-import ColorService from "../../services/ColorService";
-import ProductSizeService from "../../services/ProductSizeService";
+import ProductImageService from "../../services/ProductImageService";
 
 export default function SingleProduct({ productss }) {
   let favoriteService = new FavoriteService();
   let productService = new ProductService();
   let commentService = new CommentService();
-  let colorService = new ColorService();
-  let productSizeService = new ProductSizeService();
+  let variantOptionService = new VariantOptionService();
+  let productImageService = new ProductImageService();
 
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
@@ -39,22 +39,43 @@ export default function SingleProduct({ productss }) {
   const [currentProductColor, setCurrentProductColor] = useState(null);
   const [productSizes, setProductSizes] = useState([]);
   const [currentProductSize, setCurrentProductSize] = useState(null);
+  const [variantId, setVariantId] = useState(null)
+  const [productImages, setProductImages] = useState([])
 
   const product = productss;
-  const userId = localStorage.getItem("userId");
+
+
+  const userId  = localStorage.getItem("userId");
+  let  colorId  = currentProductColor?.id;
+  // console.log("variantId: ", variantId)
+  // console.log("colorId: ", colorId)
+  // console.log("selectedVariantId: ", selectedVariantId)
+
   useEffect(() => {
     productService
       .getAllPagination(activePage, pageSize)
       .then((result) => setProducts(result.data.data));
   }, [activePage, pageSize]);
 
-  useEffect(() => {
-    colorService.getAll().then((result) => setColors(result.data.data));
-    productSizeService.getAll().then((result)=>setProductSizes(result.data.data))
+  useEffect(()=>{
     commentService
       .getProductStarAverage(product.id)
       .then((result) => setProductStarAverage(result.data));
+  }, [])
+
+  useEffect(() => {
+    variantOptionService.getProductSizeByProductId(product.id).then((result)=>setProductSizes(result.data))
+    variantOptionService.getProductColorByProductId(product.id).then((result)=>setColors(result.data))
   }, []);
+
+  useEffect(()=>{
+      variantOptionService.getVariantId(11, product.id).then((res)=>setVariantId(res.data.id))
+  }, [])
+
+  // useEffect(()=>{
+  //   productImageService.getByProductVariantId(13).then((res)=>setProductImages(res.data))
+  // }, [])
+  
 
   const handleAddFavorite = (productId) => {
     setAddedFavorite(true);
@@ -91,11 +112,14 @@ export default function SingleProduct({ productss }) {
     checkFavoriteByCustomer(product.id);
   };
 
+
+
   return (
     <div>
       <div className="product__item" key={product.id}>
         <div className="product__item__pic set-bg">
-          <img src={product.productImage.image1} alt={product.name} />
+          <img src={product.productImage?.image1} alt={product.name} />
+          {/* <img src={currentProductColor===null ? productImages[0].imageUrl : productImages?.imageUrl} /> */}
           {product.unitsInStocks <= 10 ? (
             <Label color="black" tag>
               Son {product.unitsInStocks} ürün
@@ -159,9 +183,8 @@ export default function SingleProduct({ productss }) {
         </div>
         <div className="product__item__text">
           <h6> {product.name} </h6>
-          {/* <AllProductPageAddToCartButton product={product} productSizeId={currentProductSize?.id} productColorId={currentProductColor?.id} /> */}
           {
-            currentProductSize===null || currentProductColor===null ? <CannotBeAddedCart/> : <AddToCartButton product={product} productSizeId={currentProductSize?.id} productColorId={currentProductColor?.id} />
+            currentProductSize===null || currentProductColor===null ? <CannotBeAddedCart/> : <AddToCartButton product={product} productVariantId={variantId} />
           }
             <Rating
               size="small"
@@ -186,7 +209,9 @@ export default function SingleProduct({ productss }) {
               className={currentProductColor?.id === color.id ? "selectedColor" : ""}
                 style={{ backgroundColor: `${color.colorCode}` }}
                 title={`${color.name}`}
-                onClick={() => setCurrentProductColor(color)}
+                // onClick={() => myFunc(color)}
+                onClick={()=>{setCurrentProductColor(color); }}
+                
               />
             ))}
           </div>

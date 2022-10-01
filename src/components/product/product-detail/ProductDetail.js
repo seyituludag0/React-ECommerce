@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./product-detail.css";
 import { useParams } from "react-router";
 import ProductService from "/react/sock-ecommerce/src/services/ProductService";
 import ImageCarousel from "../../../layouts/carousel/ImageCarousel";
@@ -7,15 +6,13 @@ import { Breadcrumb, Icon } from "semantic-ui-react";
 import ProductOrderService from "/react/sock-ecommerce/src/services/ProductOrderService";
 import CommentForm from "../../../layouts/comments/CommentForm";
 import CommentBulb from "../../../layouts/comments/CommentBulb";
-// import DetailPageProductAddButton from "../../../layouts/detailPageProductAddButton/DetailPageProductAddButton";
 import ProductByIdImages from "../../productByIdImages/ProductByIdImages";
 import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
 import CommentService from "../../../services/CommentService";
-import ProductSizeService from "../../../services/ProductSizeService";
-import ColorService from "../../../services/ColorService";
+import VariantOptionService from "../../../services/VariantOptionService";
 import { ProductAddButton, ProductCannotBeAddedCart } from "../../../layouts/detailPageProductAddButton/DetailPageProductAddButton";
-
+import { Helmet } from "react-helmet"
 
 export default function ProductDetail() {
   let { productId } = useParams();
@@ -25,14 +22,13 @@ export default function ProductDetail() {
   const [productSizes, setProductSizes] = useState([]);
   const [currentProductSize, setCurrentProductSize] = useState(null);
   const [currentProductColor, setCurrentProductColor] = useState(null);
-  const [colors, setColors] = useState([]);
+  const [productColors, setProductColors] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
 
   let productOrderService = new ProductOrderService();
   let productService = new ProductService();
   let commentService = new CommentService();
-  let productSizeService = new ProductSizeService();
-  let colorService = new ColorService();
+  let variantOptionService = new VariantOptionService();
 
   const userId = localStorage.getItem("userId");
   // console.log("Ürün Bedeni: " + currentProductSize?.size)
@@ -42,11 +38,12 @@ export default function ProductDetail() {
     productService
       .getByProductId(productId)
       .then((result) => setProduct(result.data.data));
-    productSizeService
-      .getAll()
-      .then((result) => setProductSizes(result.data.data));
-    colorService.getAll().then((result) => setColors(result.data.data));
   }, []);
+
+  useEffect(()=>{
+    variantOptionService.getProductSizeByProductId(productId).then((result)=>setProductSizes(result.data))
+    variantOptionService.getProductColorByProductId(productId).then((result)=>setProductColors(result.data))
+  }, [])
 
   const onChangeCommentState = () => {
     productOrderService
@@ -61,14 +58,17 @@ export default function ProductDetail() {
   }, []);
 
   return (
+    <>
+      <Helmet>
+        <title>{ `ULUDAĞ ÇORAP - ${ product?.name }` }</title>
+      </Helmet>
     <div className="sock-detail">
       <section className="shop-details">
         <div className="product__details__pic">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
-                <div className="product__details__breadcrumb">
-                  <Breadcrumb>
+                <Breadcrumb>
                     <Breadcrumb.Section>
                       <Link to="/" style={{ color: "black" }}>
                         Ana Sayfa
@@ -85,7 +85,6 @@ export default function ProductDetail() {
                       Ürün Detayı: {product?.name}
                     </Breadcrumb.Section>
                   </Breadcrumb>
-                </div>
               </div>
             </div>
 
@@ -225,7 +224,7 @@ export default function ProductDetail() {
                     </div>
                     <div className="product__details__option__color">
                       <span>Renk:</span>
-                      {colors.map((color, key) => (
+                      {productColors.map((color, key) => (
                         <label
                           key={key}
                           style={{ backgroundColor: `${color.colorCode}` }}
@@ -302,5 +301,6 @@ export default function ProductDetail() {
         </div>
       </section>
     </div>
+    </>
   );
 }

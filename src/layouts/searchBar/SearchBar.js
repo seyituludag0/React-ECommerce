@@ -43,17 +43,10 @@ export default function SearchBar() {
 
   return (
     <section>
-      <div className="rt-container" style={{ marginLeft: "-3rem" }}>
+      <div className="rt-container">
         <div className="col-rt-3 equal-height">
           <div className="sb-example-3">
             <div className="search__container">
-              {/* <Input
-                action={{ icon: "search", onClick: () => searchData() }}
-                className="search__input"
-                placeholder="Kelime Ara..."
-                onChange={(e)=>setSearchTerm(e.target.value)}
-              /> */}
-              
                 <Link to="/search" style={{ color:"#000" }}>
                   <Icon name="search" style={{cursor:"pointer"}} />
                 </Link>

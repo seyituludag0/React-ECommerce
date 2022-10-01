@@ -19,6 +19,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import CampaignDelete from "./CampaignDelete";
 import CampaignCreate from "./CampaignCreate";
+import { ArrowLeftSharp } from "@material-ui/icons"
+import { useHistory } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -67,7 +69,7 @@ function Row() {
                 </CopyToClipboard>
               </Tooltip>
             </TableCell>
-            <TableCell align="right">{campaign.discountRate}₺</TableCell>
+            <TableCell align="right">%{campaign.discountRate}</TableCell>
             <TableCell align="right">{campaign.campaignExpiredDate}</TableCell>
             <TableCell align="right">{campaign.campaignDetails}</TableCell>
             <TableCell align="right">
@@ -83,11 +85,16 @@ function Row() {
 
 export default function CampaignManagementEditPage() {
   const [open, setOpen] = useState(false);
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const history = useHistory();
+
+
   return (
     <div className="my-component" style={{ marginTop: "4rem" }}>
+      <Button onClick={()=> history.goBack()} variant="outlined" startIcon={<ArrowLeftSharp />}>
+          Bir Önceki Sayfaya Dön
+      </Button>
       <Button style={{ float: "right" }} onClick={handleOpen}>
         EKLE
       </Button>
@@ -107,7 +114,7 @@ export default function CampaignManagementEditPage() {
               <TableCell>Kampanya Id</TableCell>
               <TableCell>Kampanya Adı</TableCell>
               <TableCell align="right">Kupon kodu</TableCell>
-              <TableCell align="right">İndirim Oranı(TL)</TableCell>
+              <TableCell align="right">İndirim Oranı</TableCell>
               <TableCell align="right">Kampanyanın Bitiş Tarihi</TableCell>
               <TableCell align="center">Kampanya Detayları</TableCell>
               <TableCell align="right">Güncelle</TableCell>

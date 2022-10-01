@@ -1,12 +1,10 @@
-// EDİTED PAYMENT
-
 import React, { useEffect, useState } from "react";
 import Styles from "./Styles";
 import { Form, Field } from "react-final-form";
 import PayCard from "./PayCard";
 import {
   formatCreditCardNumber,
-  formatCVV,
+  formatCVC,
   formatExpirationDate,
 } from "./CardUtils";
 import ProductOrderService from "../../services/ProductOrderService";
@@ -24,16 +22,14 @@ import validationRules from "./ValidationRules";
 export default function Payment() {
   const history = useHistory();
   const [isChecked, setIsChecked] = useState(false);
-
   const [showCards, setShowCards] = useState(false);
   const [myCards, setMyCards] = useState([]);
   const userId = localStorage.getItem("userId");
   const [selectedCard, setSelectedCard] = useState({});
-
   const [enteredCardNumber, setEnteredCardNumber] = useState(null)
   const [enteredFullName, setEnteredFullName] = useState(null)
   const [enteredExpirationDate, setEnteredExpirationDate] = useState(null)
-  const [enteredCvv, setEnteredCvv] = useState(null)
+  const [enteredCvc, setEnteredCvc] = useState(null)
 
   const handleOnChange = () => {
     setIsChecked(!isChecked);
@@ -124,7 +120,7 @@ export default function Payment() {
     setEnteredCardNumber(data.cardNumber)
     setEnteredFullName(data.fullName)
     setEnteredExpirationDate(data.expirationDate)
-    setEnteredCvv(data.cvv)
+    setEnteredCvc(data.cvc)
   };
 
   return (
@@ -199,8 +195,8 @@ export default function Payment() {
                 <PayCard
                   number={values.cardNumber || ""}
                   name={values.fullName || ""}
-                  expirationDate={values.expirationDate || ""}
-                  cvv={values.cvv || ""}
+                  expiry={values.expirationDate || ""}
+                  cvc={values.cvc || ""}
                   focused={active}
                 />
                 <div>
@@ -209,6 +205,7 @@ export default function Payment() {
                     component="input"
                     type="text"
                     pattern="[\d| ]{16,22}"
+                    maxlength={19}
                     placeholder="Kart Numarası"
                     initialValue={enteredCardNumber}
                     format={formatCreditCardNumber}
@@ -235,13 +232,14 @@ export default function Payment() {
                     format={formatExpirationDate}
                   />
                   <Field
-                    name="cvv"
+                    name="cvc"
                     component="input"
                     type="text"
-                    pattern="\d{3,4}"
-                    initialValue={enteredCvv}
+                    pattern="\d{3}"
+                    maxLength="3"
+                    initialValue={enteredCvc}
                     placeholder="CVV"
-                    format={formatCVV}
+                    format={formatCVC}
                   />
                 </div>
                 <div className="buttons">

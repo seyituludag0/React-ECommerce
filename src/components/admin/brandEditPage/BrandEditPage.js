@@ -15,6 +15,8 @@ import BrandService from "../../../services/BrandService";
 import BrandAdd from "./BrandAdd"
 import BrandUpdate from "./BrandUpdate"
 import BrandDelete from "./BrandDelete"
+import { ArrowLeftSharp } from "@material-ui/icons"
+import { useHistory } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -27,6 +29,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 function Row() {
     const [brands, setBrands] = useState([])
     useEffect(() => {
@@ -60,8 +63,14 @@ export default function BrandEditPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const history = useHistory();
   return (
     <div className="my-component" style={{ marginTop: "4rem" }}>
+      
+        
+      <Button onClick={()=> history.goBack()} variant="outlined" startIcon={<ArrowLeftSharp />}>
+          Bir Önceki Sayfaya Dön
+      </Button>
        <Button style={{float:"right"}} onClick={handleOpen}>EKLE</Button>
       <Modal
         open={open}

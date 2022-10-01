@@ -34,6 +34,7 @@ import MyRegisteredCards from "../payment/mySavedCards/MyRegisteredCards";
 import Unauthorized from "../unauthorized/Unauthorized";
 import ResetPasswordForm from "../resetPasswordForm/ResetPasswordForm";
 import OrderManagementPanel from "../../components/seller/OrderManagementPanel";
+import MyAddresses from "../myAddresses/MyAddresses";
 
 
 export default function Dashboard() {
@@ -72,6 +73,7 @@ export default function Dashboard() {
         <Route exact path="/campaignmanagementeditpage">{ auth !== null && auth.includes("true") ? <CampaignManagementEditPage /> : <Unauthorized /> }</Route>
         <Route exact path="/ordermanagementpanel">{ auth !== null && auth.includes("true") ? <OrderManagementPanel /> : <Unauthorized /> }</Route>
         <Route exact path="/resetPassword" component={ResetPasswordForm} />
+        <Route exact path="/myAddresses" component={MyAddresses} />
 
         <Route path="*" component={NotFound} />
       </Switch>

@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 // import ValidationRules from "./ValidationRules";
 import ContactService from "../../services/ContactService";
 import { toast } from "react-toastify";
+import {Helmet} from "react-helmet"
+
 
 export default function Contact() {
   const formik = useFormik({
@@ -21,7 +23,9 @@ export default function Contact() {
   });
 
   return (
-    <div>
+    <div>      <Helmet>
+    <title>ULUDAĞ ÇORAP - İletişim</title>
+  </Helmet>
       <div className="map">
         <iframe
           src="https://www.google.com/maps/embed?pb=!4v1620254753811!6m8!1m7!1sQ8MEiPRsHwaj0934XRFxHQ!2m2!1d41.02990062631284!2d28.9045327963736!3f257.2!4f-6.189999999999998!5f0.4000000000000002"

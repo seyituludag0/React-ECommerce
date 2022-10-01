@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./styles/styles.css";
 import { useFormik } from "formik";
 import UserService from "../../services/UserService";
@@ -155,6 +155,7 @@ export default function CustomerRegister() {
                             type="tel"
                             error={formik.errors.phoneNumber}
                             placeholder="Telefon Numarası"
+                            maxLength="11"
                           />
                           {formik.errors.phoneNumber &&
                             formik.touched.phoneNumber && (

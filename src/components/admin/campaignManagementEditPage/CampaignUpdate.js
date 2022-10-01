@@ -14,16 +14,14 @@ import {
 
 export default function CampaignUpdate({ campaign }) {
   let campaignManagementService = new CampaignManagementService();
-  let categoryService = new CategoryService();
 
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    categoryService
-      .getAllCategory()
-      .then((result) => setCategories(result.data.data));
-  }, []);
+  const getCategories = () => {
+    let categoryService = new CategoryService();
+    categoryService.getAllCategory().then((result)=>setCategories(result.data.data))
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -88,6 +86,7 @@ export default function CampaignUpdate({ campaign }) {
                 name="campaignName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                onOpen={()=>getCategories()}
               />
               {formik.errors.campaignName && formik.touched.campaignName && (
                 <div className={"ui pointing red basic label"}>

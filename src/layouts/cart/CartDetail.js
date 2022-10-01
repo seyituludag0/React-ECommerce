@@ -8,39 +8,27 @@ import { Form, Input } from "semantic-ui-react";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import CartService from "../../services/CartService";
-import ProductService from "../../services/ProductService";
-import "../../components/product/product-detail/product-detail.css"
+import validationRules from "./validationRules";
+import { Helmet } from "react-helmet";
+
+
 
 export default function CartDetail() {
-  const [countValue, setCountValue] = useState(1);
   const userId = localStorage.getItem("userId");
   const [couponCodeApplied, setCouponCodeApplied] = useState(false);
-  const [product, setProduct] = useState([]);
   const [campaign, setCampaign] = useState({});
   const [cartData, setCartData] = useState([]);
-  const [cartId, setCartId] = useState();
+  // const [cartId, setCartId] = useState();
   const [productInCart, setProductInCart] = useState()
   const [count, setCount] = useState(1)
+  const [couponCodeInput, setCouponCodeInput] = useState('');
 
-
-  let productService = new ProductService();
   let cartService = new CartService();
-
-  
-
+  let campaignManangementService = new CampaignManangementService();
   useEffect(() => {
-    cartService.getCartIdWithProductAndUserIdAndProductSizeIdAndProductColorId(2, 1, 1, 1)
-      .then((result) => setCartId(result.data));
-    cartService
-      .getCartsByUserId(userId)
-      .then((result) => setCartData(result.data));
-  }, [cartData]);
-
-  useEffect(()=>{
-    cartService.getProductInTheFromCart(2, 1, 1, 1)
-    .then((result)=>setProductInCart(result.data))
-  }, [productInCart])
-
+    cartService.getCartsByUserId(userId).then((res)=>setCartData(res.data))
+  }, [cartData])
+ 
   const getTotalAmount = () => {
     return cartData.reduce(
       (prevValue, currentValue) => prevValue + currentValue.price,
@@ -51,19 +39,7 @@ export default function CartDetail() {
   const couponCodeApply = () => {
     setCouponCodeApplied(true);
   };
-  const getDiscountedAmount = () => {
-    // Matematiksel hesaplama formülü: İndirim Oranı = Toplam Fiyat * İndirim Oranı / 100 || Toplam Fiyat - İndirimli Fiyat
-    const discountRate = campaign?.discountRate;
-    const totalFiyat = getTotalAmount();
-
-    // const discountPrice = (totalFiyat * discountRate != null ? discountRate: null) / 100;
-    const discountPrice = (totalFiyat * discountRate) / 100;
-
-    const discountedPrice = totalFiyat - discountPrice;
-
-    return discountedPrice;
-  };
-
+  
   const removeItem = (cartObj, e) => {
     cartService
     .deleteCartById(cartObj.id)
@@ -75,15 +51,15 @@ export default function CartDetail() {
     initialValues: {
       couponCode: "",
     },
+    validationSchema:validationRules,
     onSubmit: (couponCode) => {
-      let campaignManangementService = new CampaignManangementService();
       campaignManangementService
         .getByCouponCode(couponCode.couponCode)
         .then((campaign) => setCampaign(campaign.data.data));
       campaignManangementService
-        .verifyCouponCode(cartId, couponCode.couponCode)
+        .verifyCouponCode(49, couponCode.couponCode)
         .then((result) => toast.success(result.data.message));
-        cartService.applyDiscountedPrice(cartId, 50).then((result)=>result.data.message)
+        cartService.applyDiscountedPrice(49, 50).then((result)=>result.data.message)
       couponCodeApply();
     },
   });
@@ -137,15 +113,18 @@ export default function CartDetail() {
       });
   };
 
+
   const clearCouponCode = () => {
     setCampaign(null);
     setCouponCodeApplied(false);
+    campaignManangementService.cancelCouponCode(49, campaign.couponCode).then((res)=>toast.info(res.data.message))
   }
-
-  
 
   return (
     <div>
+      <Helmet>
+        <title>{ `ULUDAĞ ÇORAP - Sepet Detayı` }</title>
+      </Helmet>
       <section className="shopping-cart spad">
         <div className="container">
           <div className="row">
@@ -188,11 +167,6 @@ export default function CartDetail() {
                               <div className="product__cart__item__text">
                                 <h6>{product.productName}</h6>
                                 <span>Marka: {product.brandName}</span> <br />
-                                <span>
-                                  Numara / Beden: {product.productSize.size}
-                                </span>{" "}
-                                <br />
-                                <span>Renk: {product.colorName}</span>
                               </div>
                             </Link>
                           </td>
@@ -237,14 +211,14 @@ export default function CartDetail() {
                               <span>Beden:</span>
                                 <div style={{ display: "inline" }}>
                                   <label style={{cursor:"default", backgroundColor:"black", color:"#fff"}}>
-                                    {product.productSize.size}
+                                    {product.productVariant.productSize.size}
                                     </label>
                                 </div>
                             </div>
                               <div className="product__details__option__color">
                                 <span>Renk: </span>
                                   <label
-                                    style={{ backgroundColor: `${product.productColor.colorCode}`, cursor:"default"}}
+                                    style={{ backgroundColor: `${product.productVariant.color.colorCode}`, cursor:"default"}}
                                   />
                               </div>
                           </div>
@@ -281,10 +255,10 @@ export default function CartDetail() {
               <Form.Field>
                   <Input
                     placeholder="Kupon Kodu"
-                    error={Boolean(formik.errors.couponCode).toString()}
+                    error={Boolean(formik.errors.couponCode)}
                     value={formik.values.couponCode}
                     name="couponCode"
-                    // onChange={formik.handleChange}
+                    maxLength="10"
                     onChange={formik.handleChange ? formik.handleChange : null }
                     onBlur={formik.handleBlur}
                   />
@@ -293,11 +267,10 @@ export default function CartDetail() {
                       {formik.errors.couponCode}
                     </div>
                   )}
-                  { couponCodeApplied ? <button disabled className="primary-btn">Uygula</button> : <button className="primary-btn">Uygula</button> }
+                  <button className="primary-btn">Uygula</button>
                 </Form.Field>
 
                 <Form.Field>
-                  {/* <Button onClick={()=> clearCouponCode()} secondary>Temizle</Button> */}
                   { couponCodeApplied ? <Button onClick={()=> clearCouponCode()} secondary>Temizle</Button> : <Button style={{backgroundColor:"black", color:"#fff", cursor: "not-allowed"}} disabled>Temizle</Button> }
                 </Form.Field>
               </Form>
@@ -307,16 +280,20 @@ export default function CartDetail() {
                 <ul>
                   {couponCodeApplied ? (
                     <>
-                      {/* <li className="discount-li">
-                      İndirim Öncesi Fiyat
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <del>{getTotalAmount()}₺</del>
-                      </li> */}
+                    <li className="discount-li">
+                      İndirim Öncesi Fiyat <span>
+                      <span>{cartData.map((c)=>(
+                      <del>{c.priceBeforeDiscount}</del>
+                    ))}₺</span>
+                      </span>
+                    </li>
                       <li className="discount-li">
                         İndirim Oranı<span>%{campaign?.discountRate}</span>
                       </li>
                       <li className="discount-li">
-                      İndirimli Fiyat <span>{getDiscountedAmount()}₺</span>
+                      İndirimli Fiyat <span>{cartData.map((c)=>(
+                      <span>{c.price}</span>
+                    ))}₺</span>
                       </li>
                     </>
                   ) : (

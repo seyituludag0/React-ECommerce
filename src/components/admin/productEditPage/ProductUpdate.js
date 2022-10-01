@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import ProductService from "../../../services/ProductService";
 import CategoryService from "../../../services/CategoryService";
 import BrandService from "../../../services/BrandService";
-import ColorService from "../../../services/ColorService";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -15,9 +14,34 @@ import {
   Icon,
   Dropdown,
 } from "semantic-ui-react";
+import ProductSizeService from "../../../services/ProductSizeService";
+import ColorService from "../../../services/ColorService";
 
 export default function ProductUpdate({ product }) {
   const [open, setOpen] = useState(false);
+  const [productSizes, setProductSizes] = useState([]);
+  const [productColors, setProductColors] = useState([]);
+  
+  const getCategories = () => {
+    let categoryService = new CategoryService();
+    categoryService.getAllCategory()
+    .then((result) => setCategories(result.data.data));
+  }
+
+  const getBrands = () => {
+    let brandService = new BrandService();
+    brandService.getAllBrands().then((result) => setBrands(result.data.data));
+  }
+
+  const getProductSizes = () => {
+    let productSizeService = new ProductSizeService();
+    productSizeService.getAll().then((result) => setProductSizes(result.data.data));
+  }
+
+  const getColors = () => {
+    let colorService = new ColorService();
+    colorService.getAll().then((result) => setProductColors(result.data.data));
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -25,8 +49,6 @@ export default function ProductUpdate({ product }) {
       name: product?.name,
       categoryId: product?.category.id,
       brandId: product?.brand.id,
-      colorId: product?.color.id,
-      bodySize: product?.bodySize,
       unitsInStocks: product?.unitsInStocks,
       description: product?.description,
       price: product?.price,
@@ -43,18 +65,15 @@ export default function ProductUpdate({ product }) {
 
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
-  const [colors, setColors] = useState([]);
 
   useEffect(() => {
     let categoryService = new CategoryService();
     let brandService = new BrandService();
-    let colorService = new ColorService();
 
     categoryService
       .getAllCategory()
       .then((result) => setCategories(result.data.data));
     brandService.getAllBrands().then((result) => setBrands(result.data.data));
-    colorService.getAll().then((result) => setColors(result.data.data));
   }, []);
 
   const categoryOption = categories.map((category, index) => ({
@@ -69,11 +88,6 @@ export default function ProductUpdate({ product }) {
     value: brand.id,
   }));
 
-  const colorOption = colors.map((color, index) => ({
-    key: index,
-    text: color.name,
-    value: color.id,
-  }));
 
   const handleChangeSemantic = (value, fieldName) => {
     formik.setFieldValue(fieldName, value);
@@ -158,28 +172,7 @@ export default function ProductUpdate({ product }) {
                 </div>
               )}
             </Form.Field>
-            <Form.Field>
-              <Dropdown
-                clearable
-                item
-                placeholder="Renk"
-                search
-                selection
-                onChange={(event, data) =>
-                  handleChangeSemantic(data.value, "colorId")
-                }
-                onBlur={formik.onBlur}
-                id="colorId"
-                value={formik.values.colorId}
-                options={colorOption}
-              />
-
-              {formik.errors.colorId && formik.touched.colorId && (
-                <div className={"ui pointing red basic label"}>
-                  {formik.errors.colorId}
-                </div>
-              )}
-            </Form.Field>
+            
             <Form.Field>
               <Input
                 placeholder="Beden/Numara"

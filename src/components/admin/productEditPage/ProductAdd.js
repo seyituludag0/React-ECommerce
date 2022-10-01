@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import ProductService from "../../../services/ProductService";
 import CategoryService from "../../../services/CategoryService";
 import BrandService from "../../../services/BrandService";
+import ProductSizeService from "../../../services/ProductSizeService";
 import ColorService from "../../../services/ColorService";
-// import validationRules from "./validationRules";
 import {
   Button,
   Dropdown,
@@ -13,46 +13,59 @@ import {
   TextArea,
   Card,
   Form,
-  Grid,
-  Image,
+  Grid
 } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router";
+import validationRules from "./validationRules"
+
+
 export default function ProductAdd() {
-  let [image, setImage] = useState({});
+
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [productSizes, setProductSizes] = useState([]);
+  const [productColors, setProductColors] = useState([]);
+  let { id } = useParams();
+  
   const formik = useFormik({
     initialValues: {
       name: "",
       categoryId: "",
       brandId: "",
-      colorId: "",
-      bodySize: "",
       unitsInStocks: "",
       description: "",
       price: "",
     },
-    // validationSchema: validationRules,
+    validationSchema: validationRules,
     onSubmit: (product) => {
         let productService = new ProductService();
         productService.add(product).then((result)=>toast.success(result.data.message)).catch("HATA!")
     },
   });
 
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [colors, setColors] = useState([]);
-  let { id } = useParams();
-  useEffect(() => {
-    let categoryService = new CategoryService();
-    let brandService = new BrandService();
-    let colorService = new ColorService();
 
-    categoryService
-      .getAllCategory()
-      .then((result) => setCategories(result.data.data));
+  
+  const getCategories = () => {
+    let categoryService = new CategoryService();
+    categoryService.getAllCategory()
+    .then((result) => setCategories(result.data.data));
+  }
+
+  const getBrands = () => {
+    let brandService = new BrandService();
     brandService.getAllBrands().then((result) => setBrands(result.data.data));
-    colorService.getAll().then((result) => setColors(result.data.data));
-  }, []);
+  }
+
+  const getProductSizes = () => {
+    let productSizeService = new ProductSizeService();
+    productSizeService.getAll().then((result) => setProductSizes(result.data.data));
+  }
+
+  const getColors = () => {
+    let colorService = new ColorService();
+    colorService.getAll().then((result) => setProductColors(result.data.data));
+  }
 
   const categoryOption = categories.map((category, index) => ({
     key: index,
@@ -66,21 +79,23 @@ export default function ProductAdd() {
     value: brand.id,
   }));
 
-  const colorOption = colors.map((color, index) => ({
+  const productSizeOption = productSizes.map((productSize, index) => ({
     key: index,
-    text: color.name,
-    value: color.id,
+    text: productSize.size,
+    value: productSize.id,
   }));
+
+  const productColorOption = productColors.map((productColor, index) => ({
+    key: index,
+    text: productColor.name,
+    value: productColor.id,
+  }));
+
+ 
 
   const handleChangeSemantic = (value, fieldName) => {
     formik.setFieldValue(fieldName, value);
   };
-
-  // const updateProductImageValues = () => {
-  //   // cvService.getByCandidateId(id).then((result) => {setCv(result.data.data)})
-  //   let productService = new ProductService();
-  //   productService.getByProductId(28).then((result)=>setImage(result.data.data)) 
-  // }
 
   return (
     <div className="my-div">
@@ -119,6 +134,7 @@ export default function ProductAdd() {
                     id="categoryId"
                     value={formik.values.categoryId}
                     options={categoryOption}
+                    onOpen={()=>getCategories()}
                   />
                   {formik.errors.categoryId && formik.touched.categoryId && (
                     <div className={"ui pointing red basic label"}>
@@ -140,6 +156,7 @@ export default function ProductAdd() {
                     id="brandId"
                     value={formik.values.brandId}
                     options={brandOption}
+                    onOpen={()=>getBrands()}
                   />
                   {formik.errors.brandId && formik.touched.brandId && (
                     <div className={"ui pointing red basic label"}>
@@ -151,36 +168,43 @@ export default function ProductAdd() {
                   <Dropdown
                     clearable
                     item
-                    placeholder="Renk"
+                    placeholder="Beden"
                     search
                     selection
                     onChange={(event, data) =>
-                      handleChangeSemantic(data.value, "colorId")
+                      handleChangeSemantic(data.value, "productSizeId")
                     }
                     onBlur={formik.onBlur}
-                    id="colorId"
-                    value={formik.values.colorId}
-                    options={colorOption}
+                    id="productSizeId"
+                    value={formik.values.productSizeId}
+                    options={productSizeOption}
+                    onOpen={()=>getProductSizes()}
                   />
-
-                  {formik.errors.colorId && formik.touched.colorId && (
+                  {formik.errors.productSizeId && formik.touched.productSizeId && (
                     <div className={"ui pointing red basic label"}>
-                      {formik.errors.colorId}
+                      {formik.errors.productSizeId}
                     </div>
                   )}
                 </Form.Field>
                 <Form.Field>
-                  <Input
-                    placeholder="Beden/Numara"
-                    error={Boolean(formik.errors.bodySize).toString()}
-                    value={formik.values.bodySize}
-                    name="bodySize"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                  <Dropdown
+                    clearable
+                    item
+                    placeholder="Renk"
+                    search
+                    selection
+                    onChange={(event, data) =>
+                      handleChangeSemantic(data.value, "productColorId")
+                    }
+                    onBlur={formik.onBlur}
+                    id="productColorId"
+                    value={formik.values.productColorId}
+                    options={productColorOption}
+                    onOpen={()=>getColors()}
                   />
-                  {formik.errors.bodySize && formik.touched.bodySize && (
+                  {formik.errors.productColorId && formik.touched.productColorId && (
                     <div className={"ui pointing red basic label"}>
-                      {formik.errors.bodySize}
+                      {formik.errors.productColorId}
                     </div>
                   )}
                 </Form.Field>

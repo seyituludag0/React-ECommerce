@@ -11,11 +11,14 @@ import {
   Paper,
   TableBody,
 } from "@material-ui/core";
+import { ArrowLeftSharp } from "@material-ui/icons"
 import ProductService from "../../../services/ProductService";
 import ProductAdd from "./ProductAdd";
 import ProductUpdate from "./ProductUpdate";
 import ProductDelete from "./ProductDelete";
 import NullImages from "./NullImages";
+import { useHistory } from "react-router-dom";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,6 +29,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 function Row() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
@@ -44,8 +48,8 @@ function Row() {
             </TableCell>
             <TableCell align="right">{product.category.name}</TableCell>
             <TableCell align="right">{product.brand.name}</TableCell>
-            <TableCell align="right">{product.color.name}</TableCell>
-            <TableCell align="right">{product.bodySize}</TableCell>
+            <TableCell align="right">Renk</TableCell>
+            <TableCell align="right">Beden</TableCell>
             <TableCell align="right">{product.unitsInStocks}</TableCell>
             <TableCell align="right">{product.price}₺</TableCell>
             <TableCell align="right">
@@ -71,9 +75,15 @@ export default function ProductEditPage() {
   const handleOpenImage = () => setOpenImage(true);
   const handleCloseImage = () => setOpenImage(false);
 
+  const history = useHistory();
 
   return (
     <div className="my-component" style={{ marginTop: "4rem" }}>
+      
+      <Button onClick={()=> history.goBack()} variant="outlined" startIcon={<ArrowLeftSharp />}>
+         Bir Önceki Sayfaya Dön
+      </Button>
+
       <Button style={{float:"right"}} onClick={handleOpenProduct}>EKLE</Button>
       <Modal
         open={openProduct}
@@ -110,7 +120,7 @@ export default function ProductEditPage() {
               <TableCell align="right">Kategori</TableCell>
               <TableCell align="right">Marka</TableCell>
               <TableCell align="right">Renk</TableCell>
-              <TableCell align="right">Size</TableCell>
+              <TableCell align="right">Beden</TableCell>
               <TableCell align="right">Stok Adedi</TableCell>
               <TableCell align="right">Fiyat</TableCell>
               <TableCell align="right">Güncelle</TableCell>

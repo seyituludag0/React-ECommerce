@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Table,
-  Button,
-  Label,
-  Icon,
-  Dropdown,
-  Form,
-} from "semantic-ui-react";
+import { Card, Table } from "semantic-ui-react";
+import { Button } from "@material-ui/core";
 import ProductOrderService from "../../services/ProductOrderService";
 import OrderStateService from "../../services/OrderStateService";
 import ProductOrderStateUpdate from "./ProductOrderStateUpdate";
+import { useHistory } from "react-router-dom"
+import { ArrowLeftSharp } from "@material-ui/icons"
 
 export default function ProductOrderList() {
   const [orders, setOrders] = useState([]);
   const [orderStates, setOrderStates] = useState([]);
+  const history = useHistory();
 
   let orderService = new ProductOrderService();
   let orderStateService = new OrderStateService();
@@ -28,6 +24,9 @@ export default function ProductOrderList() {
 
   return (
     <div>
+      <Button onClick={()=> history.goBack()} variant="outlined" startIcon={<ArrowLeftSharp />}>
+          Bir Önceki Sayfaya Dön
+      </Button>
       <Card
         fluid
         color="blue"

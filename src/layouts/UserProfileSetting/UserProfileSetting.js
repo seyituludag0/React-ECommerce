@@ -9,7 +9,7 @@ import {
   Divider,
   ListItemIcon,
 } from "@material-ui/core";
-import { Settings, ExitToApp } from "@material-ui/icons";
+import { ExitToApp } from "@material-ui/icons";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
@@ -40,12 +40,9 @@ export default function UserProfileSetting() {
 
   const userId = state?.authenticatedUser?.id;
 
-  // if (token) {
   var token = localStorage.getItem("token");
   const decodedToken = jwtDecode(token);
-  //   if (decodedToken.roles == "ROLE_ADMIN") {
 
-  //   }
 
   return (
     <div
@@ -121,14 +118,23 @@ export default function UserProfileSetting() {
             </Link>
           </MenuItem>
 
+          <MenuItem>
+            <ListItemIcon>
+              <Icon name="map marker alternate" />
+            </ListItemIcon>
+            <Link to="/myAddresses" style={{ color: "#000" }}>
+              Adreslerim
+            </Link>
+          </MenuItem>
+
           <MenuItem>Seçenekler</MenuItem>
           <Divider />
 
-          {/* {  decodedToken.roles == "ROLE_ADMIN" ? <FontAwesomeIcon icon={faWrench} style={{ fontSize: "1.3rem" }} >dfg</FontAwesomeIcon> : null } */}
+
           
 
           <MenuItem>
-          {decodedToken.roles || "ROLE_ADMIN" || "ROLE_USER"  ? (
+          {decodedToken.roles && "ROLE_ADMIN"  ? (
              <Link to="/admin" style={{ color: "#000" }}>
            <ListItemIcon>
             <FontAwesomeIcon icon={faWrench} style={{ fontSize: "1.3rem" }} />
@@ -137,6 +143,12 @@ export default function UserProfileSetting() {
            </Link>
           ) : null}
           </MenuItem>
+
+          {/* <MenuItem>
+            {
+              decodedToken
+            }
+          </MenuItem> */}
 
           {/* <MenuItem>
             <ListItemIcon>

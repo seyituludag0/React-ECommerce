@@ -40,8 +40,8 @@ class CompareTable extends React.Component {
               <StyledTableCell>Ürün Adı</StyledTableCell>
               <StyledTableCell>Kategori</StyledTableCell>
               <StyledTableCell>Marka</StyledTableCell>
-              <StyledTableCell>Renk</StyledTableCell>
-              <StyledTableCell>Beden/Numara</StyledTableCell>
+              {/* <StyledTableCell>Renk</StyledTableCell>
+              <StyledTableCell>Beden/Numara</StyledTableCell> */}
               <StyledTableCell>Fiyat</StyledTableCell>
               <StyledTableCell align="right">X</StyledTableCell>
             </TableRow>
@@ -59,8 +59,8 @@ class CompareTable extends React.Component {
                    <StyledTableCell>{product.name}</StyledTableCell>
                    <StyledTableCell>{product.category.name}</StyledTableCell>
                    <StyledTableCell>{product.brand.name}</StyledTableCell>
-                   <StyledTableCell>{product.color.name}</StyledTableCell>
-                   <StyledTableCell>{product.bodySize}</StyledTableCell>
+                   {/* <StyledTableCell>{product.color.name}</StyledTableCell> */}
+                   {/* <StyledTableCell>{product.bodySize}</StyledTableCell> */}
                    <StyledTableCell>{product.price}₺</StyledTableCell>
                   </StyledTableRow>
               );

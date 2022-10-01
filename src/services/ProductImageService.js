@@ -38,4 +38,8 @@ export default class ProductImageService {
     return axios.post(`http://localhost:8080/api/productimages/uploadPhoto5?id=${id}`,file5)
   }
 
+  getByProductVariantId(productVariantId){
+    return axios.get(`http://localhost:8080/api/productimages/getByProductVariantId?productVariantId=${productVariantId}`)
+  }
+
 }

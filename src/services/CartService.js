@@ -18,10 +18,6 @@ export default class CartService{
         return axios.post("http://localhost:8080/api/addToCart/deleteAllCartByUserId?userId=" + userId)
     }
 
-    // deleteProductFromCart(productId){
-    //     return axios.post("http://localhost:8080/api/addToCart/deleteProductFromCart?productId=" + productId)
-    // }
-
     deleteProductFromCart(cartId, productId, userId){
         return axios.post(`http://localhost:8080/api/addToCart/deleteProductFromCart?cartId=${cartId}&productId=${productId}&userId=${userId}`)
     }
@@ -58,13 +54,18 @@ export default class CartService{
         return axios.post("http://localhost:8080/api/addToCart/deleteCartById?cartId=" + cartId);
     }
 
-    getProductInTheFromCart(productColorId, productId, productSizeId, userId){
-        return axios.get(`http://localhost:8080/api/addToCart/getProductInTheFromCart?productColorId=${productColorId}&productId=${productId}&productSizeId=${productSizeId}&userId=${userId}`)
+    getCartId(productVariantId, userId){
+        return axios.get(`http://localhost:8080/api/addToCart/getCartId?productVariantId=7&userId=${userId}`)
     }
 
-    getCartIdWithProductAndUserIdAndProductSizeIdAndProductColorId(productColorId, productId, productSizeId, userId){
-        return axios.get(`http://localhost:8080/api/addToCart/getCartIdWithProductAndUserIdAndProductSizeIdAndProductColorId?productColorId=${productColorId}&productId=${productId}&productSizeId=${productSizeId}&userId=${userId}`)
+    checkIfTheProductIsInTheCart(productColorId, productId, productSizeId, userId){
+        return axios.get(`http://localhost:8080/api/addToCart/checkIfTheProductIsInTheCart?productColorId=${productColorId}&productId=${productId}&productSizeId=${productSizeId}&userId=${userId}`)
     }
+
+    getProductInTheFromCart(productId, productVariantId, userId){
+        return axios.get(`http://localhost:8080/api/addToCart/getProductInTheFromCart?productId=${productId}&productVariantId=${productVariantId}&userId=${userId}`)
+    }
+
     
 }
 

@@ -43,15 +43,10 @@ export default function CampaignDetails({
       .then((result) => setCartId(result.data));
   }, []);
 
-  useEffect(() => {
-    cartService
-      .getProductInTheFromCart(2, 1, 1, userId)
-      .then((result) => setCheckIfTheProductIsInTheCart(result.data));
-  }, [checkIfTheProductIsInTheCart]);
 
   useEffect(() => {
     cartService
-      .getProductInTheFromCart(2, 1, 1, userId)
+      .getProductInTheFromCart(7, 13, 1)
       .then((result) => setProductInCart(result.data));
   }, []);
 

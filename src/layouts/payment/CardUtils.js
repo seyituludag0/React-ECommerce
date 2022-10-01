@@ -4,7 +4,6 @@ function clearNumber(value = "") {
   if (value != null) {
     return value.replace(/\D+/g, "");
   }
-  // return value.replace(/\D+/g, '')
 }
 
 export function formatCreditCardNumber(value) {
@@ -40,7 +39,7 @@ export function formatCreditCardNumber(value) {
   return nextValue.trim();
 }
 
-export function formatCVV(value, prevValue, allValues = {}) {
+export function formatCVC(value, prevValue, allValues = {}) {
   const clearValue = clearNumber(value);
   let maxLength = 3;
 
@@ -52,8 +51,6 @@ export function formatCVV(value, prevValue, allValues = {}) {
     }
     return clearValue.slice(0, maxLength);
   }
-
-  
 }
 
 export function formatExpirationDate(value) {
@@ -64,6 +61,5 @@ export function formatExpirationDate(value) {
       return `${clearValue.slice(0, 2)}/${clearValue.slice(2, 4)}`;
     }
   }
-
   return clearValue;
 }

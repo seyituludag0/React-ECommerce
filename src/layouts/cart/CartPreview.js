@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import CartService from "../../services/CartService";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 export default function CartPreview() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -25,14 +26,14 @@ export default function CartPreview() {
     setAnchorEl(null);
   };
 
-  // const [cartData, dispatch] = CartContextValue();
+  // const { cartItems } = useSelector((state) => state.cart);
 
-  const [cartData, setCartData] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   let cartService = new CartService();
   useEffect(() => {
     cartService
       .getCartsByUserId(userId)
-      .then((result) => setCartData(result.data));
+      .then((result) => setCartItems(result.data));
   }, []);
 
   // ------------------------------------------------------------------------------------------
@@ -57,13 +58,6 @@ export default function CartPreview() {
     },
   }));
 
-  const getTotalAmount = () => {
-    return cartData.reduce(
-      (prevValue, currentValue) => prevValue + currentValue.price,
-      0
-    );
-  };
-
   const StyledBadge = styled(Badge)(() => ({
     "& .MuiBadge-badge": {
       left: 5,
@@ -75,8 +69,16 @@ export default function CartPreview() {
   }));
 
   const MyDivider = styled("div")(() => ({
-    width: "265%",
+    width: "400%",
   }));
+
+  const getTotalAmount = () => {
+    return cartItems.reduce(
+      (prevValue, currentValue) => prevValue + currentValue.price,
+      0
+    );
+  };
+  
 
   const removeItem = (cartObj, e) => {
     let obj = { cartId: cartObj.productId, userId: 1 };
@@ -89,6 +91,7 @@ export default function CartPreview() {
       });
   };
 
+
   return (
     <div>
       <Button
@@ -99,10 +102,7 @@ export default function CartPreview() {
         onClick={handleClick}
       >
         <IconButton aria-label="cart">
-          <StyledBadge
-            badgeContent={cartData.length}
-            color="secondary"
-          >
+          <StyledBadge badgeContent={cartItems.length} color="secondary">
             <ShoppingCart />
           </StyledBadge>
         </IconButton>
@@ -124,7 +124,7 @@ export default function CartPreview() {
           horizontal: "left",
         }}
       >
-        {cartData.length != 0 ? (
+        {cartItems.length != 0 ? (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
@@ -139,29 +139,36 @@ export default function CartPreview() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cartData.map((cartObj) => (
-                  <StyledTableRow key={cartObj.id}>
+                {cartItems.map((cartObj, key) => (
+                  <StyledTableRow key={key}>
                     <StyledTableCell component="th" scope="row">
                       <img
-                        src={cartObj.productImage}
+                        // src={cartObj.product.productImage.image1}
                         style={{ width: "100px" }}
                       />
-                      {/* <img src="https://res.cloudinary.com/uludag-sock/image/upload/v1634503267/cart-1_xp67iz.jpg"/> */}
                     </StyledTableCell>
                     <StyledTableCell component="th" scope="row">
-                      {cartObj.productName}
+                      {cartObj.product.name}
                     </StyledTableCell>
                     <StyledTableCell scope="row">
-                      {cartObj.productSize.size}
+                      {cartObj.productVariant.productSize.size}
                     </StyledTableCell>
-                    <StyledTableCell scope="row">
-                    {cartObj.productColor.name}
+                     <StyledTableCell scope="row">
+                      <div className="product__details__option__color">
+                        <label
+                          style={{
+                            backgroundColor: `${cartObj.productVariant.color.colorCode}`,
+                            cursor: "default",
+                          }}
+                          title={`${cartObj.productVariant.color.name}`}
+                        />
+                      </div>
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {cartObj.quantity}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {cartObj.price}₺
+                      {cartObj.product.price}₺
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       <Close
@@ -183,7 +190,7 @@ export default function CartPreview() {
           </TableContainer>
         ) : (
           <Alert severity="info">
-            Sepetinizde henüz ürün yok! Hemen ürün eklemek için ürünlere {" "}
+            Sepetinizde henüz ürün yok! Hemen ürün eklemek için ürünlere{" "}
             <Link to="/products">göz atın</Link>
           </Alert>
         )}

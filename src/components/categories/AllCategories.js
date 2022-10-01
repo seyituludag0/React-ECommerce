@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../categories/categories.css";
 import CategoryService from "../../services/CategoryService";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet"
 
 export default function AllCategories() {
   const [categories, setCategories] = useState([]);
@@ -16,6 +17,9 @@ export default function AllCategories() {
 
   return (
     <div>
+      <Helmet>
+        <title>ULUDAĞ ÇORAP - Kategoriler</title>
+      </Helmet>
       <section className="product spad">
         <div className="container">
           <div className="row product__filter">

@@ -1,118 +1,128 @@
-import React, { useEffect, useState } from "react";
-import { styled } from "@material-ui/styles";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
-import CartService from "../../services/CartService";
-import { Alert } from "@mui/material";
-import DeliveryInformation from "../deliveryInformation/DeliveryInformation";
-// import { CartContextValue } from "../../contexts/ContextProvider";
+import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import CartService from "../../services/CartService"
+import CityService from "../../services/CityService"
+import DistrictService from "../../services/DistrictService"
+import validationRules from '../myAddresses/validationRules';
+import { Button, Dropdown, Input, TextArea, Card, Form, Grid } from "semantic-ui-react";
+import { Helmet } from 'react-helmet';
+import AcilirForm from '../myAddresses/AcilirForm';
+import SavedAddressMiniCard from '../myAddresses/SavedAddressMiniCard';
 
 export default function CartSummary() {
-  const [cartData, setCartData] = useState([])
-  const userId = localStorage.getItem("userId");
-  let cartService = new CartService();
+    const userId  = localStorage.getItem("userId");
 
-  useEffect(() => {
-    cartService
-      .getCartsByUserId(userId)
-      .then((result) => setCartData(result.data));
-  }, []);
+    let cartService = new CartService();
+    
+    let districtService = new DistrictService();
 
-  const StyledTableCell = styled(TableCell)(() => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#000",
-      color: "#fff",
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
+    const [cartData, setCartData] = useState([])
+
+    useEffect(()=>{
+        cartService.getCartsByUserId(userId).then((result)=>setCartData(result.data))
+    }, [])
+
+    const getTotalAmount = () => {
+        return cartData.reduce(
+          (prevValue, currentValue) => prevValue + currentValue.price,
+          0
+        );
+      };
+
+      const formik = useFormik({
+        initialValues: {
+          customerId: 1,
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          cityId: "",
+          districtId: "",
+          neighbourhood:"",
+          openAddress:"",
+          addressTitle:""
+        },
+        validationSchema: validationRules,
+        onSubmit: (address) => {
+            // userAddressService.add(address).then((result)=>toast.success(result.data.message));
+            console.log(address)
+        },
+      });
+
+      const [cities, setCities] = useState([])
+  const [districts, setDistricts] = useState([])
+  const selectedCityId = formik.values.cityId
+  useEffect(()=>{
+    
+  }, [])
+
+  const getDistricts = (cityId) => {
+    districtService.getDistrictsWithCityId(cityId).then((result)=>setDistricts(result.data))
+  }
+
+  const cityOption = cities.map((city, index) => ({
+    key: index,
+    text: city.name,
+    value: city.id,
   }));
 
-  const StyledTableRow = styled(TableRow)(() => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: "#fff",
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
+  const districtOption = districts.map((district, index) => ({
+    key: index,
+    text: district.name,
+    value: district.id,
   }));
 
-  const MyDivider = styled("div")(() => ({
-    width: "400%",
-  }));
-
-  const getTotalAmount = () => {
-    return cartData.reduce(
-      (prevValue, currentValue) => prevValue + currentValue.price,
-      0
-    );
+  const handleChangeSemantic = (value, fieldName) => {
+    formik.setFieldValue(fieldName, value);
   };
 
-  return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-8">
-            <Alert variant="outlined" severity="info">
-              Sipariş özetiniz aşağıda gösterilmektedir
-            </Alert>
-            <br />
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell>Ürün Resmi</StyledTableCell>
-                    <StyledTableCell>Ürün Adı</StyledTableCell>
-                    <StyledTableCell>Marka Adı</StyledTableCell>
-                    <StyledTableCell align="right">Ürün Adedi</StyledTableCell>
-                    <StyledTableCell align="right">Fiyat</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {
-                    cartData.map((cartItem, key)=>(
-                      <StyledTableRow key={cartItem.id}>
-                    <StyledTableCell component="th" scope="row">
-                      <img
-                        src={cartItem.productImage}
-                        style={{ width: "100px" }}
-                      />
-                      {/* <img src="https://res.cloudinary.com/uludag-sock/image/upload/v1634503267/cart-1_xp67iz.jpg"/> */}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                    {cartItem.productName}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                    {cartItem.brandName}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {cartItem.quantity}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {cartItem.price}₺
-                    </StyledTableCell>
-                  </StyledTableRow>
-                    ))
-                  }
+  const getCities = () => {
+    let cityService = new CityService();
+    cityService.getAll().then((result)=>setCities(result.data));
+  }
 
-                  <MyDivider>
-                    <Divider>Toplam Tutar: {getTotalAmount()}₺</Divider>
-                  </MyDivider>
-                </TableBody>
-              </Table>
-            </TableContainer>
+  return (
+    <div>
+      <Helmet>
+        <title>{ `ULUDAĞ ÇORAP - Sepet Özeti` }</title>
+      </Helmet>
+        <section className="checkout spad">
+        <div className="container">
+          <div className="checkout__form">
+            <form action="#">
+              <div className="row">
+                {/* form burda açılır kapanır form alanı olacak */}
+                <AcilirForm />
+                <SavedAddressMiniCard />
+
+                {/* form */}
+                <div className="col-lg-4 col-md-6">
+                  <div className="checkout__order">
+                    <h4 className="order__title">Urunleriniz</h4>
+                    <div className="checkout__order__products">Ürünler <span className='toplam-span'>Toplam</span></div>
+                    <ul className="checkout__total__products">
+                      {
+                          cartData.map((cart, key)=>(
+                            <li key={key}>{key+1}. {cart.product.name} * {cart.quantity} <span>{cart.product.price}₺</span></li>
+                          ))
+                      }
+                    </ul>
+                    <ul className="checkout__total__all">
+                      <li>Aratoplam <span>{getTotalAmount()}₺</span></li>
+                      <li>Toplam <span>{getTotalAmount()}₺</span></li>
+                    </ul>
+                    {/* <button type="submit" className="site-btn">ÖDEME SAYFASINA GİT</button> */}
+                    <Link to="/payment">
+                        <button className="site-btn">ÖDEME SAYFASINA GİT</button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
-          <DeliveryInformation />
         </div>
-      </div>
-      {/*  */}
-    </>
-  );
+      </section>
+    </div>
+  )
 }

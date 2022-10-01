@@ -6,7 +6,7 @@ import search from "../product/img/icon/search.png";
 import favoriteAdded from "../product/img/icon/favoriteAdded.png";
 import compare from "../product/img/icon/compare.png";
 import { Link } from "react-router-dom";
-import { Grid, Pagination } from "semantic-ui-react";
+import { Breadcrumb, Grid, Pagination } from "semantic-ui-react";
 import FilterProduct from "../../layouts/filterProduct/FilterProduct";
 import FavoriteService from "../../services/FavoriteService";
 import { toast } from "react-toastify";
@@ -15,9 +15,13 @@ import CommentService from "../../services/CommentService";
 import { Rating } from "@mui/material";
 import ProductsPageCategoryList from "../../layouts/productsPageCategoryList/ProductsPageCategoryList";
 import SingleProduct from "./SingleProduct";
-import { addToComparison, removeToComparison } from "../../store/actions/compareAction"
+import {
+  addToComparison,
+  removeToComparison,
+} from "../../store/actions/compareAction";
 import CompareTable from "./CompareTable";
 import CampaignTopBanner from "../../layouts/campaigns/campaignbanners/CampaignTopBanner";
+import { Helmet } from "react-helmet";
 
 export default function AllProduct() {
   let productService = new ProductService();
@@ -40,32 +44,65 @@ export default function AllProduct() {
       .then((result) => setCategories(result.data.data));
   }, [activePage, pageSize]);
 
-
   const handleOnFilter = (filter) => {
     setFilter(filter);
     console.log("filter: ", filter);
   };
 
-
   const onChange = (e, pageInfo) => {
     setActivePage(pageInfo.activePage);
   };
-  
+
   const getProducts = (categoryId) => {
     let url = "http://localhost:8080/api/products/";
-    if(categoryId){
-        url += "getProductByCategoryId?categoryId=" + categoryId
+    if (categoryId) {
+      url += "getProductByCategoryId?categoryId=" + categoryId;
     }
-    productService.getProductByCategoryId(categoryId).then((result)=>setProducts(result.data.data))
+    productService
+      .getProductByCategoryId(categoryId)
+      .then((result) => setProducts(result.data.data));
   };
 
   const changeCategory = (category) => {
     getProducts(category.id);
-  }
+  };
 
   return (
     <>
-    <CompareTable />
+      {/* Breadcrumb Section Begin */}
+      <Helmet>
+        <title>ULUDAĞ ÇORAP - Ürünler</title>
+        <meta name="description" content="Alışverişin güvenli adresi" />
+        {/* ---------------------------------------------------------------- */}
+      </Helmet>
+      <section className="breadcrumb-option">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="breadcrumb__text">
+                <h4>Ürünler</h4>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <Breadcrumb>
+                      <Breadcrumb.Section>
+                        <Link to="/" style={{ color: "black" }}>
+                          Ana Sayfa
+                        </Link>
+                      </Breadcrumb.Section>
+                      <Breadcrumb.Divider icon="right angle" />
+                      <Breadcrumb.Section active>Ürünler</Breadcrumb.Section>
+                    </Breadcrumb>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Breadcrumb Section End */}
+
+     {/* Shop Section Begin */}
+      <CompareTable />
       <Grid columns={3} padded>
         <Grid.Column width={3} style={{ background: "#d1d8e0" }}>
           <FilterProduct handleOnFilter={handleOnFilter} urun={products} />
@@ -108,6 +145,7 @@ export default function AllProduct() {
           </section>
         </Grid.Column>
       </Grid>
+      {/* Shop Section End */}
     </>
   );
 }

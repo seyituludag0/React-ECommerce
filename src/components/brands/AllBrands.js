@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./brands.css";
 import BrandService from "../../services/BrandService";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet"
 
 export default function AllBrands() {
 const [brands, setBrands] = useState([])
@@ -14,15 +15,19 @@ const [brands, setBrands] = useState([])
 
   return (
     <div>
+      <Helmet>
+        <title>ULUDAĞ ÇORAP - Markalar</title>
+      </Helmet>
+      
       <section className="product spad">
         <div className="container">
           <div className="row product__filter">
             <div className="col-lg-3 box">
               {brands.map((brand) => (
                 <div className="product__item" key={brand.id}>
-                  <h2 style={{ textAlign: "center" }}>
+                  {/* <h2 style={{ textAlign: "center" }}>
                     {brand.name}
-                  </h2>
+                  </h2> */}
                   <div className="product__item__pic set-bg">
                     <Link to={`/brand/${brand.id}`}>
                       <img

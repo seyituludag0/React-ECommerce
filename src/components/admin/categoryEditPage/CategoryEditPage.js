@@ -15,7 +15,8 @@ import CategoryService from "../../../services/CategoryService";
 import CategoryAdd from "./CategoryAdd"
 import CategoryUpdate from "./CategoryUpdate"
 import CategoryDelete from "./CategoryDelete"
-
+import { ArrowLeftSharp } from "@material-ui/icons"
+import { useHistory } from "react-router-dom";
 const style = {
   position: "absolute",
   top: "50%",
@@ -60,9 +61,13 @@ export default function CategoryEditPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const history = useHistory();
+  
   return (
     <div className="my-component" style={{ marginTop: "4rem" }}>
+      <Button onClick={()=> history.goBack()} variant="outlined" startIcon={<ArrowLeftSharp />}>
+     Bir Önceki Sayfaya Dön
+  </Button>
       <Button style={{ float: "right" }} onClick={handleOpen}>
         Ekle
       </Button>

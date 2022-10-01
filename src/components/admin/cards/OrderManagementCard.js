@@ -15,7 +15,7 @@ export default function OrderManagement() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Link to="/ordermanagement" style={{ color:"#000" }} size="small">Sipariş takip sayfasına git</Link>
+          <Link to="/ordermanagementpanel" style={{ color:"#000" }} size="small">Sipariş takip sayfasına git</Link>
         </CardActions>
       </React.Fragment>
   );

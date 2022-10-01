@@ -3,29 +3,30 @@ import { useFormik } from "formik";
 import OrderStateService from "../../services/OrderStateService";
 import { Table, Button, Icon, Dropdown, Form } from "semantic-ui-react";
 import { toast } from "react-toastify";
+import "./styles.css"
 
 
 export default function ProductOrderStateUpdate({ order }) {
-    let orderStateService = new OrderStateService();
     const [orderStates, setOrderStates] = useState([]);
 
-  useEffect(()=>{
-    orderStateService.getAll().then((result)=>setOrderStates(result.data.data))
-},[orderStates])
+    let orderStateService = new OrderStateService();
+    const getOrderStates = () => {
+      orderStateService.getAll().then((result)=>setOrderStates(result.data.data))
+    }
 
-  const formik = useFormik({
-    initialValues: {
-      orderId: order.id,
-      orderStateId: order.orderState?.id,
-    },
-    onSubmit: (values) => {
-      console.log(values);
-      console.log(orderStates);
-      orderStateService
-        .productOrderStateUpdate(values)
-        .then((result) => toast.success(result.data.message));
-    },
-  });
+    const formik = useFormik({
+      initialValues: {
+        orderId: order.id,
+        orderStateId: order.orderState?.id,
+      },
+      onSubmit: (values) => {
+        console.log(values);
+        console.log(orderStates);
+        orderStateService
+          .productOrderStateUpdate(values)
+          .then((result) => toast.success(result.data.message));
+      },
+    });
 
 
   
@@ -40,11 +41,19 @@ export default function ProductOrderStateUpdate({ order }) {
     formik.setFieldValue(fieldName, value);
   };
 
+  const style = {
+    position:"relative",
+    width:"100%",
+    border:0,
+    paddingTop:"10px",
+    boxShadow:"none"
+  };
+
   return (
     <div>
         <Table.Cell collapsing>
                 <Form onSubmit={formik.handleSubmit}>
-                <Form.Field>
+                <Form.Field style={style}>
                   <Dropdown
                     item
                     placeholder="Sipariş Durumu"
@@ -54,8 +63,10 @@ export default function ProductOrderStateUpdate({ order }) {
                     }
                     onBlur={formik.onBlur}
                     id="orderStateId"
+                    style={{position:"relative"}}
                     value={formik.values.orderStateId}
                     options={orderStatesOption}
+                    onOpen={()=> getOrderStates()}
                   />
 
                   {formik.errors.orderStateId &&
@@ -65,7 +76,7 @@ export default function ProductOrderStateUpdate({ order }) {
                       </div>
                     )}
                 </Form.Field>
-                <br /><br /><br /><br /><br /><br /><br />
+                {/* <br /><br /><br /><br /><br /><br /><br /> */}
                 <Button
                   color="green"
                   icon

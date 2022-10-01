@@ -17,10 +17,10 @@ export default function CampaignCreate() {
 
   const [categories, setCategories] = useState([]);
 
-  useEffect(()=>{
-  let categoryService = new CategoryService();
+  const getCategories = () => {
+    let categoryService = new CategoryService();
     categoryService.getAllCategory().then((result)=>setCategories(result.data.data))
-  }, [])
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -91,6 +91,7 @@ export default function CampaignCreate() {
                 id="currentCategoryId"
                 value={formik.values.currentCategoryId}
                 options={categoryOption}
+                onOpen={()=>getCategories()}
               />
               {formik.errors.categoryId && formik.touched.currentCategoryId && (
                 <div className={"ui pointing red basic label"}>

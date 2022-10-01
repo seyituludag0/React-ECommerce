@@ -6,9 +6,9 @@ import NavItems from './userProfileMenu/NavItems'
 
 export default function UserProfileMenuExample() {
     return (
-        <div>
+        <>
             <NavItems />
             <UserProfileSetting />
-        </div>
+        </>
     )
 }
